@@ -1,24 +1,65 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Register from "./components/Register";
+import Login from "./components/Login";
+import Dashboard from "./components/Dashboard";
+import PrivateRoute from "./components/PrivateRoute";
+import { AuthProvider } from "./context/AuthContext";
+import HomePage from "./pages/HomePage";
+import NotFound from "./components/NotFound";
+import Navbar from "./components/Navbar";
+import ForgotPasswordForm from "./components/ForgotPasswordForm";
+import Toast from "./components/Toast";
+import Profile from "./pages/Profile/Profile";
+import TransactionsList from "./pages/TransactionsList/TransactionsList";
+import AddCustomer from "./pages/AddCustomer/AddCustomer";
+import AddTransaction from "./pages/AddTransaction/AddTransaction";
+import AboutPage from "./pages/AboutPage/AboutPage";
+import HistoryPage from "./pages/HistoryPage/HistoryPage";
+import "./App.css";
+import ContactUsPage from "./pages/ContactUsPage/ContactUsPage";
+import TermsAndConditions from "./pages/TermsAndConditions/TermsAndConditions";
+import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <Router future={{ v7_relativeSplatPath: true }}>
+        <Navbar />
+        <Toast />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact-us" element={<ContactUsPage />} />
+          <Route path="/terms" element={<TermsAndConditions />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPasswordForm />} />
+
+          {/* ✅ Protected Route */}
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          >
+            {/* Default route for /dashboard */}
+            <Route index element={<TransactionsList />} />
+
+            {/* Nested dashboard pages */}
+            <Route path="profile" element={<Profile />} />
+            <Route path="add-customer" element={<AddCustomer />} />
+            <Route path="add-transaction" element={<AddTransaction />} />
+            <Route path="history/:id" element={<HistoryPage />} />
+          </Route>
+
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

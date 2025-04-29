@@ -1,0 +1,81 @@
+/* CardHeroSection.css */
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+  }
+  
+  /* Hero Section Styles */
+  .hero-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    padding: 0 20px;
+    position: relative;
+    overflow: hidden;
+   
+  }
+  .moneylog-highlight {
+    color: #0077b6;
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 2px 6px;
+    border-radius: 6px;
+  }
+  
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    padding: 90px;
+    max-width: 90%; /* Make the content area responsive */
+    width: 100%;
+    border-radius: 40px;
+    background: linear-gradient(to right, #0077b6, transparent); /* Gradient from white to transparent */
+    overflow: hidden; /* Ensure content stays within the box */
+ 
+  }
+  
+  /* Title and description */
+  .hero-title {
+    font-size: 48px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  .hero-description {
+    font-size: 18px;
+    color: #080808;
+    margin-bottom: 30px;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .hero-title {
+      font-size: 36px;
+    }
+  
+    .hero-description {
+      font-size: 16px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .hero-title {
+      font-size: 28px;
+    }
+  
+    .hero-description {
+      font-size: 14px;
+    }
+  }
+  

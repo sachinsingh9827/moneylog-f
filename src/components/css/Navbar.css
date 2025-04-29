@@ -1,0 +1,165 @@
+.navbar {
+  background-color: #0a0b02;
+  padding: 10px 20px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  border-radius: 5px;
+}
+
+.navbar-logo a {
+  color: white;
+  font-size: 20px;
+  text-decoration: none;
+  font-family: 'Arial', sans-serif;
+  font-weight: 500;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 15px;
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar-links a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.navbar-links a:hover {
+  color: #f39c12;
+  transform: scale(1.1);
+}
+
+/* Profile Link and Icon Styling */
+.profile-link {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  text-decoration: none;
+}
+
+.profile-link svg {
+  margin-right: 8px;
+}
+
+.navbar-links a,
+.logout-btn {
+  color: white;
+  text-decoration: none;
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.menu-toggle {
+  display: none;
+  cursor: pointer;
+}
+
+/* Hamburger icon */
+.menu-icon .bar {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  margin: 4px 0;
+}
+
+/* Manual close (X) icon */
+.close-icon {
+  position: relative;
+  width: 25px;
+  height: 25px;
+}
+
+.close-icon .line1,
+.close-icon .line2 {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 25px;
+  height: 3px;
+  background-color: white;
+}
+
+.close-icon .line1 {
+  transform: rotate(45deg);
+}
+
+.close-icon .line2 {
+  transform: rotate(-45deg);
+}
+
+/* Mobile responsive styles */
+@media screen and (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .navbar-links {
+    position: absolute;
+    top: 50px;
+    right: 3px;
+    flex-direction: column;
+    background-color: #4f46e5;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    width: 150px;
+    z-index: 1000;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0.3s;
+  }
+
+  .navbar-links::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #4f46e5;
+  }
+
+  .navbar-links.active {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0s;
+  }
+}
+
+/* Tooltip Styling */
+.tooltip {
+  position: absolute;
+  bottom: -50px;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  transition: opacity 0.3s ease;
+}
+
+.logout-btn-wrapper {
+  position: relative;
+}
+
+.logout-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}

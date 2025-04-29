@@ -1,0 +1,143 @@
+/* AboutPage.css */
+.about-page {
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    background-image: 
+        linear-gradient(
+            to bottom right, 
+            #b7ebb9 50%, /* Green color for the top-left half */
+            #9cdfc7 50%  /* Orange color for the bottom-right half */
+        );
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+
+.about-header {
+    background-color: rgba(76, 175, 80, 0.8); /* Green with transparency */
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.about-header h1 {
+    font-size: 2.5em;
+    margin: 0;
+}
+
+.about-header p {
+    font-size: 1.2em;
+}
+
+.about-container {
+    width: 96%;
+    margin: 40px auto;
+    background-color: #fff; /* White background to make content more readable */
+    padding: 20px;
+    border-radius: 8px; /* Optional, to add rounded corners */
+}
+
+.about-container h2 {
+    font-size: 2em;
+    margin-bottom: 15px;
+}
+
+.about-container p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.about-container ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.about-container ul li {
+    font-size: 1.1em;
+    margin: 10px 0;
+}
+
+.transaction-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 20px;
+}
+
+.transaction-list li {
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border-left: 5px solid #4CAF50; /* Green color for emphasis */
+}
+
+.transaction-list li strong {
+    color: #333;
+    font-weight: bold;
+}
+
+.about-footer {
+    /* background-color: rgba(76, 175, 80, 0.8); */
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+.about-footer p {
+    margin: 0;
+    font-size: 1em;
+}
+
+@media (max-width: 768px) {
+    .about-container {
+        padding: 0 20px;
+    }
+
+    .about-container h2 {
+        font-size: 1.8em;
+    }
+
+    .about-container p {
+        font-size: 1em;
+    }
+
+    .about-container ul li {
+        font-size: 1em;
+    }
+
+    .transaction-list li {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-header h1 {
+        font-size: 2em;
+    }
+
+    .about-header p {
+        font-size: 1.1em;
+    }
+
+    .about-container h2 {
+        font-size: 1.5em;
+    }
+
+    .about-container p {
+        font-size: 0.9em;
+    }
+
+    .about-container ul li {
+        font-size: 0.9em;
+    }
+
+    .transaction-list li {
+        padding: 8px;
+    }
+}

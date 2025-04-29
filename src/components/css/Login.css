@@ -1,0 +1,15 @@
+.login{
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  background-image: 
+      linear-gradient(
+          to bottom right, 
+          #9cdfc7 50%, /* Green color for the top-left half */
+          #b7ebb9 50%  /* Orange color for the bottom-right half */
+      );
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 95.3vh;
+}

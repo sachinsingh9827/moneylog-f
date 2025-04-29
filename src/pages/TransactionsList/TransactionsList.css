@@ -1,0 +1,285 @@
+.page{
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  background-image: 
+      linear-gradient(
+          to bottom right, 
+          #b7ebb9 50%, /* Green color for the top-left half */
+          #9cdfc7 50%  /* Orange color for the bottom-right half */
+      );
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+.back-button {
+  position: absolute;
+  top: 60px;
+  left: 10px;
+  padding: 10px 20px;
+  font-size: 1em;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.back-button:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+
+.transactions-container {
+    max-width: 900px;
+    margin: auto;
+    padding: 1.5rem;
+    background-color: transparent;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  }
+  
+  .transactions-heading {
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #333;
+    text-align: center;
+  }
+  
+  .no-transactions {
+    color: #888;
+    text-align: center;
+    font-style: italic;
+  }
+  
+  .table-wrapper {
+    overflow-x: auto;
+  }
+  
+  .transactions-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .transactions-table thead {
+    background-color: #f6f6f6;
+  }
+  
+  .transactions-table th,
+  .transactions-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  .transactions-table th {
+    color: #555;
+    font-weight: 600;
+  }
+  
+  .transactions-table td {
+    color: #333;
+  }
+  
+  .transactions-table .received {
+    color: green;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+  
+  .transactions-table .spent {
+    color: red;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+  
+  .view-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .view-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .pagination {
+    text-align: center;
+    margin-top: 1rem;
+  }
+  
+  .pagination-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    margin: 0.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .pagination-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    position: relative; /* Add this so .close-btn can be absolutely positioned */
+    padding: 2rem;
+    background: white;
+    border-radius: 10px;
+    max-width: 500px;
+    margin: auto;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  
+  .close-btn:hover {
+    background-color: #e60000;
+  }
+  
+  @media (max-width: 768px) {
+    .transactions-heading {
+      font-size: 1.6rem;
+    }
+  
+    .transactions-table th,
+    .transactions-table td {
+      padding: 0.5rem;
+      font-size: 0.9rem;
+    }
+  
+    .modal-content {
+      position: relative; /* Ensure close-btn is positioned relative to this */
+      padding: 1.5rem;
+      max-width: 90%;
+    }
+  
+    .modal .close-btn {
+      position: absolute;
+      max-width: 60px;
+      top: 10px;
+      right: 10px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  
+  
+  @media (max-width: 600px) {
+    .transactions-heading {
+      font-size: 1.4rem;
+    }
+  
+    .transactions-table th,
+    .transactions-table td {
+      padding: 0.5rem;
+      font-size: 0.85rem;
+    }
+  
+    .pagination-btn {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.85rem;
+    }
+  
+    .modal-content {
+      padding: 1rem;
+      max-width: 95%;
+    }
+  
+    .modal .close-btn {
+      font-size: 1.1rem;
+    }
+  }
+  .total-summary {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .total-item {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .add-customer-btn{
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 55px;
+    height: 55px;
+    border: none;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+    z-index: 1000;
+  }
+
+  .add-transaction-btn{
+    position: fixed;
+    bottom: 110px;
+    right: 30px;
+    width: 55px;
+    height: 55px;
+    border: none;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+    z-index: 1000;
+  }
+  
+  .add-customer-btn:hover {
+    background-color: #0056b3;
+  }
+  

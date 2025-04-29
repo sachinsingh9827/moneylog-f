@@ -1,0 +1,144 @@
+/* Container for the whole MoneyLog section */
+.moneylog-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 90%;
+  padding: 30px 20px;
+  box-sizing: border-box;
+  border: 2px solid lightblue;
+  border-radius: 12px;
+  margin: 20px auto;
+  background-color: #fdfefe;
+}
+
+/* Main title */
+.moneylog-title {
+  font-size: 2.2rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* Paragraphs under the title */
+.moneylog-description {
+  font-size: 1.1rem;
+  color: #555;
+  max-width: 700px;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+/* Divider with center text */
+.divider-with-text {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 40px 0 30px;
+}
+
+.divider-with-text::before,
+.divider-with-text::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+
+  
+}
+
+.divider-with-text span {
+  margin: 0 15px;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #0077b6;
+  white-space: nowrap;
+}
+
+/* Features section */
+.features-section {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1100px;
+  position: relative;
+}
+
+/* Each feature card */
+.feature-box {
+  flex: 1 1 300px;
+  padding: 25px 20px;
+  text-align: left;
+  transition: transform 0.3s ease;
+}
+
+.feature-box:hover {
+  transform: translateY(-5px);
+}
+
+.feature-box h3 {
+  color: #0077b6;
+  margin-bottom: 10px;
+  font-size: 1.25rem;
+}
+
+.feature-box p {
+  color: #444;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+
+  .moneylog-container {
+    border: none; /* Remove border on mobile */
+    background: none;
+  }
+  /* Mobile-specific layout for swiper */
+  .features-section.swiper {
+    flex-direction: column;
+    align-items: stretch;
+    overflow: hidden;
+    width: 100%;
+    max-width: none;
+  }
+
+  .feature-box {
+    width: 100%;
+    transition: transform 0.3s ease;
+  }
+
+  .swiper-btn {
+    position: absolute;
+    top: 70%;
+    color: rgb(12, 12, 12);
+    padding: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 10;
+    transform: translateY(-50%);
+    display: block;
+  }
+  
+  
+  
+
+  .swiper-btn.prev {
+    left: 10px;
+  }
+
+  .swiper-btn.next {
+    right: 10px;
+  }
+}
+
+/* Desktop styles - Show all features statically */
+@media (min-width: 769px) {
+  .static-features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+  }
+}
