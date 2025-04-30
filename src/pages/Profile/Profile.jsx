@@ -22,7 +22,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { showToast } from "../../components/Toast";
 import axios from "axios";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000";
+const BASE_URL = "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);

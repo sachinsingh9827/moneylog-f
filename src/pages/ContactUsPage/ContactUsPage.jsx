@@ -19,7 +19,9 @@ import Toast, { showToast } from "../../components/Toast";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000";
+const BASE_URL =
+  process.env.REACT_APP_BASE_URL ||
+  "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
 
 const ContactUsPage = () => {
   const [formData, setFormData] = useState({

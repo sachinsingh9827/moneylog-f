@@ -21,7 +21,9 @@ import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Toast, { showToast } from "../../components/Toast";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000";
+const BASE_URL =
+  process.env.REACT_APP_BASE_URL ||
+  "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
 
 const columns = [
   { id: "#", label: "#", minWidth: 5, align: "left" },

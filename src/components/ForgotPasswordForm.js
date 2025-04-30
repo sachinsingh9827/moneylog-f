@@ -19,7 +19,9 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000";
+const BASE_URL =
+  process.env.REACT_APP_BASE_URL ||
+  "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
 
 // API functions
 const sendOtpApi = async (email) => {

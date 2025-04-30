@@ -12,7 +12,9 @@ import { Formik, Field, Form } from "formik";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000";
+const BASE_URL =
+  process.env.REACT_APP_BASE_URL ||
+  "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
 
 const resetPasswordApi = async (email, password) => {
   const response = await fetch(`${BASE_URL}/moneylog/users/reset-password`, {
