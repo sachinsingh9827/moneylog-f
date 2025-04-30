@@ -18,10 +18,7 @@ import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { showToast } from "../../components/Toast";
-
-const BASE_URL =
-  process.env.REACT_APP_BASE_URL ||
-  "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
+const BASE_URL = "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
 
 // Validation schema
 const validationSchema = Yup.object().shape({

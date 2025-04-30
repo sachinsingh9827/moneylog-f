@@ -31,9 +31,7 @@ import { MdRefresh } from "react-icons/md";
 import Loader from "../../components/Loader";
 import Toast, { showToast } from "../../components/Toast";
 
-const BASE_URL =
-  process.env.REACT_APP_BASE_URL ||
-  "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
+const BASE_URL = "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
 
 const columns = [
   { id: "#", label: "#", minWidth: 5, align: "left" },

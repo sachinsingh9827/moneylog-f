@@ -23,9 +23,7 @@ import axios from "axios";
 import PersonIcon from "@mui/icons-material/Person";
 import { showToast } from "./Toast";
 
-const BASE_URL =
-  process.env.REACT_APP_BASE_URL ||
-  "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
+const BASE_URL = "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
 
 // ======= Custom Fields =======
 function CustomEmailField() {

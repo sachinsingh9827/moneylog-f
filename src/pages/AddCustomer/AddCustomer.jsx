@@ -15,9 +15,7 @@ import Toast, { showToast } from "../../components/Toast";
 import { useNavigate } from "react-router-dom";
 import InstructionsPage from "../InstructionsPage";
 
-const BASE_URL =
-  process.env.REACT_APP_BASE_URL ||
-  "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
+const BASE_URL = "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
 
 // Validation schema
 const validationSchema = Yup.object().shape({

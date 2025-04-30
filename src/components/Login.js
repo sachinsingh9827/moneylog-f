@@ -26,9 +26,7 @@ import Toast, { showToast } from "./Toast"; // Assuming you've created this for 
 import { useAuth } from "../context/AuthContext";
 import "./css/Login.css";
 
-const BASE_URL =
-  process.env.REACT_APP_BASE_URL ||
-  "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
+const BASE_URL = "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
 
 function CustomEmailField() {
   return (
