@@ -8,9 +8,18 @@ import {
   Typography,
   FormControl,
   Paper,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
 } from "@mui/material";
 import Banner from "../../components/Banner";
 import "./ContactUsPage.css";
+import Toast, { showToast } from "../../components/Toast";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000";
 
 const ContactUsPage = () => {
   const [formData, setFormData] = useState({
@@ -21,6 +30,7 @@ const ContactUsPage = () => {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [openModal, setOpenModal] = useState(false); // State to control modal visibility
 
   const handleChange = (e) => {
     setFormData({
@@ -37,21 +47,45 @@ const ContactUsPage = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validate the form data
     const validationErrors = validate();
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
       setIsSubmitting(true);
-      // Handle form submission logic here (e.g., send data to API)
-      setTimeout(() => {
-        setIsSubmitting(false);
-        setFormData({ name: "", email: "", message: "" });
-        alert("Thank you for contacting us!");
-      }, 2000);
+      try {
+        // Make an API call to submit the contact form
+        const response = await axios.post(
+          `${BASE_URL}/moneylog/contact-us`,
+          formData
+        );
+
+        if (response.data.success) {
+          // If the message is successfully saved
+          setFormData({ name: "", email: "", message: "" }); // Clear the form
+          showToast("Thank you for contacting us!", "success"); // Success message
+          setOpenModal(true); // Open the modal after successful submission
+        } else {
+          showToast("Something went wrong. Please try again later.", "error"); // Handle failure if any
+        }
+      } catch (error) {
+        console.error("Error submitting contact form:", error);
+        showToast(
+          "An error occurred while submitting the form. Please try again later.",
+          "error"
+        );
+      } finally {
+        setIsSubmitting(false); // Reset the submitting state
+      }
     }
+  };
+  const navigate = useNavigate();
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    navigate("/");
   };
 
   return (
@@ -61,27 +95,10 @@ const ContactUsPage = () => {
         heading="Get in Touch with MoneyLog"
         description="We'd love to hear from you. Fill out the form below and we will respond as soon as possible."
       />
-
+      <Toast />
       {/* Main Content Section */}
       <Container sx={{ py: 6 }}>
         <Grid container spacing={4} justifyContent="center">
-          {/* Image Section */}
-          {/* <Grid
-            item
-            xs={12}
-            md={6}
-            sx={{ display: "flex", justifyContent: "center" }}
-          >
-            <Paper sx={{ padding: 2, maxWidth: 400 }}>
-              <img
-                src="your-image-url-here.jpg" // Replace with a relevant image URL
-                alt="Contact Us"
-                className="contact-image"
-                style={{ width: "100%", height: "auto" }}
-              />
-            </Paper>
-          </Grid> */}
-
           {/* Form Section */}
           <Grid item xs={12} md={6}>
             <Paper sx={{ padding: 3, boxShadow: 3 }}>
@@ -152,6 +169,26 @@ const ContactUsPage = () => {
           </Grid>
         </Grid>
       </Container>
+
+      {/* Modal (Dialog) for Success Message */}
+      <Dialog open={openModal} onClose={handleCloseModal}>
+        <DialogTitle>Message Received</DialogTitle>
+        <DialogContent>
+          <Typography variant="body1" sx={{ mb: 2 }}>
+            MoneyLog is reviewing your message. You will receive a response
+            within 3 days. Please wait for a response in your email.
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            If you don't hear from us within 3 days, please feel free to reach
+            out again.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseModal} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

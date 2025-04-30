@@ -11,7 +11,7 @@ import {
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { showToast } from "../../components/Toast";
+import Toast, { showToast } from "../../components/Toast";
 import { useNavigate } from "react-router-dom";
 import InstructionsPage from "../InstructionsPage";
 
@@ -71,7 +71,9 @@ export default function SlotsAddCustomer() {
       );
       showToast("Customer added successfully!", "success");
       resetForm();
-      navigate("/dashboard");
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 1000);
     } catch (error) {
       showToast("Failed to add customer. Please try again.", "error");
     } finally {
@@ -92,6 +94,7 @@ export default function SlotsAddCustomer() {
       >
         Back
       </Button>
+      <Toast />
       <Box
         sx={{
           minHeight: "90vh",

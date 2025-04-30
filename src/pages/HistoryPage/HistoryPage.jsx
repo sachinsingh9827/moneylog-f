@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Paper,
   Table,
@@ -29,7 +29,7 @@ import axios from "axios";
 import { purple } from "@mui/material/colors";
 import { MdRefresh } from "react-icons/md";
 import Loader from "../../components/Loader";
-import { showToast } from "../../components/Toast";
+import Toast, { showToast } from "../../components/Toast";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000";
 
@@ -251,6 +251,7 @@ const HistoryPage = () => {
   return (
     <div style={{ padding: 10 }} className="page">
       {" "}
+      <Toast />
       <div style={{ display: "flex", alignItems: "center", margin: 16 }}>
         <Button
           variant="outlined"
@@ -303,7 +304,7 @@ const HistoryPage = () => {
         <div
           style={{
             marginTop: "10%",
-            maxWidth: "70%",
+            maxWidth: "95%",
             border: "1px solid #ccc", // light gray border
             backgroundColor: "#fff", // transparent background
             margin: "0 auto", // center the form horizontally
@@ -312,6 +313,13 @@ const HistoryPage = () => {
             display: "block", // make margin auto work
           }}
         >
+          <Typography
+            variant="h5"
+            align="center"
+            style={{ marginBottom: "1rem" }}
+          >
+            Add New Transaction
+          </Typography>
           <TextField
             label="Date"
             type="date"
@@ -353,8 +361,8 @@ const HistoryPage = () => {
               }
               label="Type" // <-- Important: Add this label prop
             >
-              <MenuItem value="credit">Credit</MenuItem>
-              <MenuItem value="debit">Debit</MenuItem>
+              <MenuItem value="credit">Recive</MenuItem>
+              <MenuItem value="debit">Send</MenuItem>
             </Select>
           </FormControl>
 
@@ -396,8 +404,8 @@ const HistoryPage = () => {
                 fullWidth
               >
                 <MenuItem value="all">All</MenuItem>
-                <MenuItem value="credit">Credit</MenuItem>
-                <MenuItem value="debit">Debit</MenuItem>
+                <MenuItem value="credit">Receive</MenuItem>
+                <MenuItem value="debit">Send</MenuItem>
               </Select>
             </FormControl>
             <Button
@@ -473,7 +481,7 @@ const HistoryPage = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {paginatedTransactions.map((transaction, i) => (
+                {paginatedTransactions.reverse().map((transaction, i) => (
                   <TableRow
                     hover
                     key={transaction._id}
@@ -499,14 +507,13 @@ const HistoryPage = () => {
                         color: transaction.type === "credit" ? "green" : "red",
                       }}
                     >
-                      {transaction.type}
+                      {transaction.type === "credit" ? "recive " : "send"}
                     </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
-
           <TablePagination
             component="div"
             count={sortedTransactions.length}

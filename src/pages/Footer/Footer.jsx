@@ -120,6 +120,20 @@ const Footer = () => {
                 }}
               >
                 Privacy Policy
+              </Link>{" "}
+              <Link
+                href="/help"
+                sx={{
+                  display: "block",
+                  color: "inherit",
+                  textDecoration: "none",
+                  transition: "color 0.3s ease",
+                  "&:hover": {
+                    color: "#f39c12",
+                  },
+                }}
+              >
+                Help
               </Link>
             </Typography>
           </Grid>

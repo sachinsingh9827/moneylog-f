@@ -135,7 +135,7 @@ export default function AddTransaction() {
                         <FormControlLabel
                           value="debit"
                           control={<Radio />}
-                          label="Debit"
+                          label="Recive"
                         />
                         <FormControlLabel
                           value="credit"

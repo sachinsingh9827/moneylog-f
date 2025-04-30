@@ -23,7 +23,9 @@ import axios from "axios";
 import PersonIcon from "@mui/icons-material/Person";
 import { showToast } from "./Toast";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000";
+const BASE_URL =
+  process.env.REACT_APP_BASE_URL ||
+  "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
 
 // ======= Custom Fields =======
 function CustomEmailField() {
@@ -255,7 +257,7 @@ export default function RegisterForm() {
       // Redirect to the login page
       window.location.href = "/login"; // Adjust based on your routing
     } catch (err) {
-      console.error(err);
+      console.error("Registration failed:", err);
 
       const errorMessage =
         err.response?.data?.message || "Registration failed. Please try again.";

@@ -5,6 +5,7 @@ import "./css/Navbar.css";
 import { HiOutlineLogout, HiOutlineUser } from "react-icons/hi"; // Import profile icon
 import { IoHomeOutline } from "react-icons/io5";
 import { Typography } from "@mui/material";
+import { showToast } from "./Toast";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -13,6 +14,7 @@ const Navbar = () => {
   const [userName, setUserName] = useState(""); // <-- State for username
 
   const handleLogout = () => {
+    showToast("You have been logged out successfully.", "info");
     logout();
     setMenuOpen(false);
   };

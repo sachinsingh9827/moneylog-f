@@ -22,11 +22,13 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Formik, Field, Form } from "formik";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { showToast } from "./Toast"; // Assuming you've created this for showing toast messages
+import Toast, { showToast } from "./Toast"; // Assuming you've created this for showing toast messages
 import { useAuth } from "../context/AuthContext";
 import "./css/Login.css";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000";
+const BASE_URL =
+  process.env.REACT_APP_BASE_URL ||
+  "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
 
 function CustomEmailField() {
   return (
@@ -162,9 +164,19 @@ export default function SlotsSignIn() {
           error.response.data?.message?.includes("User not found"))
       ) {
         showToast("User not found. Redirecting to registration...", "info");
-        // setTimeout(() => {
-        //   navigate("/register");
-        // }, 1000);
+        setTimeout(() => {
+          navigate("/register");
+        }, 1000);
+      } else if (error.response && error.response.status === 403) {
+        // Handle the 403 Forbidden case (account deactivated)
+        showToast(
+          error.response.data?.message ||
+            "Your account has been deactivated. Please contact support for assistance.",
+          "error"
+        );
+        setTimeout(() => {
+          navigate("/contact-us"); // Navigate to the contact us page
+        }, 3000);
       } else {
         showToast("Login failed. Please check credentials.", "error");
       }
@@ -184,6 +196,7 @@ export default function SlotsSignIn() {
       }}
       className="login"
     >
+      <Toast />
       <Container maxWidth="sm">
         <Box
           sx={{

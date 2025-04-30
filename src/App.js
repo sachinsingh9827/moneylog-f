@@ -20,6 +20,7 @@ import "./App.css";
 import ContactUsPage from "./pages/ContactUsPage/ContactUsPage";
 import TermsAndConditions from "./pages/TermsAndConditions/TermsAndConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
+import HelpCenter from "./pages/HelpCenter/HelpCenter";
 
 function App() {
   return (
@@ -34,6 +35,8 @@ function App() {
           <Route path="/terms" element={<TermsAndConditions />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/help" element={<HelpCenter />} />
+
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPasswordForm />} />
 

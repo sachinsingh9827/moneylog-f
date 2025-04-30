@@ -19,7 +19,7 @@ import { purple, red } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
 import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { showToast } from "../../components/Toast";
+import Toast, { showToast } from "../../components/Toast";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000";
 
@@ -113,6 +113,7 @@ export default function TransactionsList() {
         prev.filter((customer) => customer._id !== selectedCustomerId)
       );
       showToast("Customers deleted successfully!", "success");
+      fetchCustomer();
     } catch (error) {
       console.error("Error deleting customer:", error);
       showToast("Failed to delete customer. Try again.");
@@ -135,7 +136,7 @@ export default function TransactionsList() {
       <Typography variant="h6" style={{ marginBottom: "20px", height: "10vh" }}>
         Welcome, {userSecName || userName}
       </Typography>
-
+      <Toast />
       <div
         style={{
           margin: 10,
@@ -147,13 +148,13 @@ export default function TransactionsList() {
         }}
       >
         <Typography variant="body1">
-          <strong>Total Credit:</strong>{" "}
+          <strong>Total Recive:</strong>{" "}
           <span style={{ color: "green", fontWeight: "bold" }}>
             ₹ {totalCredit}
           </span>{" "}
         </Typography>
         <Typography variant="body1">
-          <strong>Total Debit:</strong>{" "}
+          <strong>Total Send:</strong>{" "}
           <span style={{ color: "red", fontWeight: "bold" }}>
             ₹ {totalDebit}
           </span>
@@ -228,8 +229,8 @@ export default function TransactionsList() {
                           customer.transactions[
                             customer.transactions.length - 1
                           ]?.type === "credit"
-                            ? "You will send"
-                            : "Remaining"}
+                            ? "Received"
+                            : "Sent"}
                         </span>
                       </TableCell>
                       <TableCell align="right">
