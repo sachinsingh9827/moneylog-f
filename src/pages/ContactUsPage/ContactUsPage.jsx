@@ -88,7 +88,7 @@ const ContactUsPage = () => {
   };
 
   return (
-    <div className="contact-us-page page">
+    <div className="image">
       {/* Banner Section */}
       <Banner
         heading="Get in Touch with MoneyLog"
@@ -97,17 +97,33 @@ const ContactUsPage = () => {
       <Toast />
       {/* Main Content Section */}
       <Container sx={{ py: 6 }}>
-        <Grid container spacing={4} justifyContent="center">
-          {/* Form Section */}
-          <Grid item xs={12} md={6}>
-            <Paper sx={{ padding: 3, boxShadow: 3 }}>
-              <Typography variant="h5" sx={{ fontWeight: "bold", mb: 3 }}>
+        <Grid container justifyContent="center">
+          <Grid item>
+            <Paper
+              sx={{
+                padding: 4,
+                width: "full",
+                margin: "0 auto",
+                boxShadow: 2,
+              }}
+            >
+              <Typography
+                variant="h5"
+                sx={{
+                  fontWeight: "bold",
+                  mb: 3,
+                  textAlign: "center",
+                  color: "#004080",
+                  textTransform: "uppercase",
+                }}
+              >
                 Get in Touch
               </Typography>
+
               <form onSubmit={handleSubmit}>
-                <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                  {/* Name Field */}
-                  <FormControl fullWidth>
+                <Grid container spacing={2}>
+                  {/* Name and Email in one row */}
+                  <Grid item xs={12} md={6}>
                     <TextField
                       label="Your Name"
                       name="name"
@@ -115,13 +131,12 @@ const ContactUsPage = () => {
                       onChange={handleChange}
                       variant="outlined"
                       size="small"
+                      fullWidth
                       error={!!errors.name}
                       helperText={errors.name}
                     />
-                  </FormControl>
-
-                  {/* Email Field */}
-                  <FormControl fullWidth>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
                     <TextField
                       label="Your Email"
                       name="email"
@@ -130,13 +145,14 @@ const ContactUsPage = () => {
                       onChange={handleChange}
                       variant="outlined"
                       size="small"
+                      fullWidth
                       error={!!errors.email}
                       helperText={errors.email}
                     />
-                  </FormControl>
+                  </Grid>
 
-                  {/* Message Field */}
-                  <FormControl fullWidth>
+                  {/* Message in next row */}
+                  <Grid item xs={12}>
                     <TextField
                       label="Your Message"
                       name="message"
@@ -146,23 +162,25 @@ const ContactUsPage = () => {
                       size="small"
                       multiline
                       rows={4}
+                      fullWidth
                       error={!!errors.message}
                       helperText={errors.message}
                     />
-                  </FormControl>
+                  </Grid>
 
                   {/* Submit Button */}
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    fullWidth
-                    disabled={isSubmitting}
-                    sx={{ mt: 2 }}
-                  >
-                    {isSubmitting ? "Submitting..." : "Send Message"}
-                  </Button>
-                </Box>
+                  <Grid item xs={12}>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? "Submitting..." : "Send Message"}
+                    </Button>
+                  </Grid>
+                </Grid>
               </form>
             </Paper>
           </Grid>
