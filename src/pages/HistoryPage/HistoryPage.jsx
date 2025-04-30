@@ -35,10 +35,10 @@ const BASE_URL = "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
 
 const columns = [
   { id: "#", label: "#", minWidth: 5, align: "left" },
-  { id: "date", label: "Date", minWidth: 50, align: "left" },
-  { id: "time", label: "Time", minWidth: 50, align: "left" },
-  { id: "amount", label: "Amount", minWidth: 50, align: "right" },
-  { id: "type", label: "Type", minWidth: 50, align: "right" },
+  { id: "date", label: "Date", minWidth: 10, align: "left" },
+  { id: "time", label: "Time", minWidth: 10, align: "left" },
+  { id: "amount", label: "Amount", minWidth: 10, align: "right" },
+  { id: "type", label: "Type", minWidth: 10, align: "right" },
 ];
 
 const HistoryPage = () => {
