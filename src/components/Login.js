@@ -192,7 +192,7 @@ export default function SlotsSignIn() {
         alignItems: "center",
         justifyContent: "center",
       }}
-      className="login"
+      className="image"
     >
       <Toast />
       <Container maxWidth="sm">
@@ -261,7 +261,7 @@ export default function SlotsSignIn() {
                   sx={{ my: 2 }}
                   disabled={isSubmitting}
                 >
-                  Sign In
+                  Login
                 </Button>
                 <Box sx={{ textAlign: "center" }}>
                   <p>

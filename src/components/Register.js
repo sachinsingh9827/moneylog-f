@@ -269,12 +269,12 @@ export default function RegisterForm() {
     <Box
       sx={{
         backgroundColor: "#f5f5f5",
-        minHeight: "95vh",
+        minHeight: "95.4vh",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
       }}
-      className="page"
+      className="image"
     >
       <Container maxWidth="sm">
         <Box

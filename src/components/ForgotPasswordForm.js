@@ -266,14 +266,16 @@ export default function ForgotPasswordForm() {
 
   return (
     <Container
-      maxWidth="sm"
+      maxWidth="full"
       sx={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         minHeight: "100vh",
         textAlign: "center",
+        backgroundColor: "#f5f5f5",
       }}
+      className="image"
     >
       <Box
         sx={{
@@ -281,8 +283,9 @@ export default function ForgotPasswordForm() {
           borderRadius: 2,
           boxShadow: 3,
           p: 3,
-          width: "100%",
           maxWidth: 400,
+          mx: "auto",
+          backgroundColor: "#fff",
         }}
       >
         <Title text={"Forgot Password"} />
