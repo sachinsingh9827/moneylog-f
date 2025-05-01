@@ -268,7 +268,6 @@ export default function RegisterForm() {
   return (
     <Box
       sx={{
-        backgroundColor: "#f5f5f5",
         minHeight: "95.4vh",
         display: "flex",
         alignItems: "center",
@@ -279,16 +278,21 @@ export default function RegisterForm() {
       <Container maxWidth="sm">
         <Box
           sx={{
-            border: "1px solid #ccc",
-            borderRadius: 2,
-            boxShadow: 3,
-            p: 3,
-            maxWidth: 400,
+            border: "1px solid rgba(255, 255, 255, 0.3)",
+            borderRadius: 3,
+            boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
+            p: 4,
+            maxWidth: 500,
             mx: "auto",
-            backgroundColor: "#fff",
+            backgroundColor: "rgba(255, 255, 255, 0.15)", // Glassmorphism feel
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)", // Safari support
+            marginTop: "20px",
           }}
         >
-          <h2 style={{ marginBottom: 16, textAlign: "center" }}>Register</h2>
+          <h2 style={{ marginBottom: 24, textAlign: "center", color: "#000" }}>
+            Register
+          </h2>
           <Formik
             initialValues={initialValues}
             validate={validate}
@@ -316,7 +320,7 @@ export default function RegisterForm() {
                   handleClickShowPassword={handleClickShowPassword}
                   handleMouseDownPassword={handleMouseDownPassword}
                 />
-                <Box sx={{ mt: 1 }}>
+                <Box sx={{ mt: 2 }}>
                   <AgreeWithTerms />
                 </Box>
 
@@ -324,8 +328,7 @@ export default function RegisterForm() {
                   type="submit"
                   variant="contained"
                   fullWidth
-                  size="small"
-                  sx={{ mt: 2 }}
+                  sx={{ mt: 3 }}
                   disabled={isSubmitting}
                 >
                   Register
@@ -335,7 +338,7 @@ export default function RegisterForm() {
                   href="/login"
                   variant="body2"
                   display="block"
-                  sx={{ mt: 2, textAlign: "center" }}
+                  sx={{ mt: 2, textAlign: "center", color: "#333" }}
                 >
                   Back to login
                 </Link>

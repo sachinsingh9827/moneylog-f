@@ -198,16 +198,20 @@ export default function SlotsSignIn() {
       <Container maxWidth="sm">
         <Box
           sx={{
-            border: "1px solid #ccc",
-            borderRadius: 2,
-            boxShadow: 3,
-            p: 3,
-            maxWidth: 400,
+            border: "1px solid rgba(255, 255, 255, 0.3)",
+            borderRadius: 3,
+            boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
+            p: 4,
+            maxWidth: 500,
             mx: "auto",
-            backgroundColor: "#fff",
+            backgroundColor: "rgba(255, 255, 255, 0.15)", // semi-transparent
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)", // Safari support
           }}
         >
-          <h2 style={{ marginBottom: 8, textAlign: "center" }}>Login</h2>
+          <h2 style={{ marginBottom: 16, textAlign: "center", color: "#000" }}>
+            Login
+          </h2>
 
           <Formik
             initialValues={initialValues}
@@ -223,11 +227,13 @@ export default function SlotsSignIn() {
                     ))}
                   </Alert>
                 )}
+
                 <CustomEmailField />
                 <CustomPasswordField
                   showPassword={showPassword}
                   toggleShowPassword={toggleShowPassword}
                 />
+
                 <Box
                   sx={{
                     display: "flex",
@@ -244,17 +250,19 @@ export default function SlotsSignIn() {
                       />
                     )}
                   </Field>
+
                   <Link
                     href="/forgot-password"
                     variant="body2"
-                    style={{ marginTop: "10px" }}
+                    style={{ marginTop: "10px", color: "#333" }}
                   >
                     Forgot password?
                   </Link>
                 </Box>
+
                 <Button
                   type="submit"
-                  variant="outlined"
+                  variant="contained"
                   color="info"
                   size="small"
                   fullWidth
@@ -263,8 +271,9 @@ export default function SlotsSignIn() {
                 >
                   Login
                 </Button>
+
                 <Box sx={{ textAlign: "center" }}>
-                  <p>
+                  <p style={{ color: "#000" }}>
                     Don't have an account?{" "}
                     <Link href="/register" variant="body2">
                       Register here

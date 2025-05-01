@@ -1,0 +1,94 @@
+/* WelcomePage.css */
+
+/* Container setup */
+.welcome-container {
+    background: rgba(109, 106, 106, 0.3); /* Semi-transparent background */
+    backdrop-filter: blur(10px); /* Blur effect */
+    min-height: 70vh; /* Maximum height of 70vh */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #004080;
+    border-radius: 15px; /* Rounded corners */
+  }
+  
+  /* Heading style */
+  .welcome-heading {
+    font-weight: bold;
+    font-size: 3rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  /* Subheading style */
+  .subheading {
+    font-size: 1.2rem;
+    font-weight: 300;
+    margin-bottom: 40px;
+  }
+  
+  /* Button style */
+  .register-button {
+    background: linear-gradient(45deg, #ff6f61, #ff8c00); /* Button gradient */
+    color: white;
+    font-size: 1.5rem;
+    padding: 20px 40px;
+    border: none;
+    border-radius: 50px; /* Rounded corners */
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    width: 250px; /* Set a fixed width */
+    text-align: center; /* Ensure text is centered */
+  }
+  
+  .register-button:hover {
+    background: linear-gradient(45deg, #f39c12, #e74c3c); /* Darker gradient on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+  }
+  
+  .register-button:focus {
+    outline: none;
+  }
+  
+  /* Responsive design for mobile screens */
+  @media (max-width: 600px) {
+    .welcome-heading {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+  
+    .subheading {
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+  
+    .register-button {
+      width: 100%; /* Full width on small screens */
+      padding: 15px 20px;
+      font-size: 1.2rem;
+    }
+  }
+  
+  /* Grid layout for larger screens */
+  @media (min-width: 600px) {
+    .welcome-container {
+      min-height: 70vh;
+    }
+  
+    .welcome-heading {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+  
+    .subheading {
+      font-size: 1.2rem;
+      margin-bottom: 40px;
+    }
+  
+    .register-button {
+      width: 250px;
+    }
+  }
+  

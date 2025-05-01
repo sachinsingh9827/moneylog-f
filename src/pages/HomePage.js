@@ -2,9 +2,8 @@ import React from "react";
 import { Box } from "@mui/material";
 import Footer from "./Footer/Footer";
 import HeroSection from "./HeroSection/HeroSection";
-import MoneyLogSwiper from "./MoneyLogSwiper/MoneyLogSwiper";
 import GstinPage from "./GstinPage/GstinPage";
-import AboutPage from "./AboutPage/AboutPage";
+import WelcomePage from "./WelcomePage/WelcomePage";
 
 export default function HomePage() {
   // const navigate = useNavigate();
@@ -12,6 +11,7 @@ export default function HomePage() {
   return (
     <Box className="image">
       <HeroSection />
+      <WelcomePage />
       <GstinPage />
       {/* <MoneyLogSwiper /> */}
       <Footer />
