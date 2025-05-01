@@ -252,6 +252,7 @@ const Profile = () => {
                 color="primary"
                 onClick={handleSave}
                 disabled={loading}
+                style={{ fontSize: "10px" }}
               >
                 {loading ? "Saving..." : "Save"}
               </Button>
@@ -262,6 +263,7 @@ const Profile = () => {
                   setEditing(false);
                 }}
                 disabled={loading}
+                style={{ fontSize: "10px" }}
               >
                 Close
               </Button>
@@ -270,6 +272,7 @@ const Profile = () => {
                 variant="contained"
                 color="error"
                 onClick={() => setOpenConfirmModal(true)}
+                style={{ fontSize: "10px" }}
               >
                 Delete Account
               </Button>

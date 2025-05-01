@@ -14,20 +14,27 @@ const termsAndConditionsData = [
 
 const TermsAndConditions = () => {
   return (
-    <Box className="page">
+    <Box className="image">
       <Banner
         heading="Your Agreement with MoneyLog"
         description="By using our services, you agree to comply with the terms outlined below. Please review them carefully."
       />
-      <Container sx={{ py: 6 }}>
+      <Container
+        sx={{ py: 2 }}
+        style={{
+          backgroundColor: "#fff",
+          borderRadius: "10px",
+          marginTop: "10px",
+        }}
+      >
         <Typography
           variant="h4"
-          sx={{ fontWeight: "bold", mb: 3, textAlign: "center" }}
+          sx={{ fontWeight: "bold", textAlign: "center", color: "#004080" }}
         >
           Terms & Conditions
         </Typography>
 
-        <Box sx={{ lineHeight: 1.8, fontSize: "1rem", color: "#333" }}>
+        <Box sx={{ lineHeight: 1.8, fontSize: "1rem", color: "" }}>
           {termsAndConditionsData.map((item, index) => (
             <Box key={index} sx={{ mb: 3 }}>
               <Typography variant="body1">{item}</Typography>

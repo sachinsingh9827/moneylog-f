@@ -144,8 +144,24 @@ const Footer = () => {
               Contact
             </Typography>
             <Typography variant="body2" sx={{ mt: 1 }}>
-              Email: support@moneylog.com
+              Email:&nbsp;
+              <Box
+                component="a"
+                href="mailto:moneylog.team@gmail.com"
+                sx={{
+                  textDecoration: "none",
+                  color: "inherit",
+                  textDecoration: "none",
+                  transition: "color 0.3s ease",
+                  "&:hover": {
+                    color: "#f39c12",
+                  },
+                }}
+              >
+                moneylog.team@gmail.com
+              </Box>
             </Typography>
+
             <Typography variant="body2" sx={{ mt: 1 }}>
               Phone: +123 456 789
             </Typography>

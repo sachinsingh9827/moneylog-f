@@ -140,7 +140,10 @@ export default function HelpCenter() {
   };
 
   return (
-    <div>
+    <div
+      className="image
+    "
+    >
       {" "}
       <Banner
         heading="Need Help? Find Solutions to Your Issues"
@@ -152,9 +155,23 @@ export default function HelpCenter() {
           margin: "0 auto",
           padding: "2rem",
         }}
-        className="page"
+        style={{
+          backgroundColor: "#fff",
+          borderRadius: "10px",
+          marginTop: "10px",
+        }}
       >
-        <Typography variant="h4" gutterBottom align="center">
+        <Typography
+          variant="h4"
+          gutterBottom
+          align="center"
+          style={{
+            fontWeight: "bold",
+            mb: 3,
+            textAlign: "center",
+            color: "#004080",
+          }}
+        >
           Help Center
         </Typography>
         <Typography variant="body1" align="center" sx={{ mb: 2 }}>
@@ -283,6 +300,22 @@ export default function HelpCenter() {
           Start Over
         </Button>
         <Divider sx={{ my: 4 }} />
+        <Box sx={{ textAlign: "center", mt: 2 }}>
+          <Typography
+            variant="body2"
+            align="center"
+            sx={{
+              backgroundColor: "#f1f1f1",
+              padding: "10px 20px",
+              borderRadius: 2,
+              fontSize: "0.875rem",
+              color: "#757575",
+              mt: 4, // Added margin-top for spacing
+            }}
+          >
+            © 2025 MoneyLog. All rights reserved.
+          </Typography>
+        </Box>
         <style>
           {`
           @keyframes dot1 {

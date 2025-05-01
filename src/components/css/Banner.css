@@ -18,6 +18,7 @@
     margin-bottom: 20px;
     font-weight: bold;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Added text shadow for better readability */
+    color: #004080;
   }
   
   .banner p {

@@ -4,7 +4,7 @@ import Banner from "../../components/Banner";
 
 const AboutPage = () => {
   return (
-    <div className="about-page">
+    <div className="image">
       {/* Banner Section */}
       <Banner
         heading="Track Your Transactions with MoneyLog"

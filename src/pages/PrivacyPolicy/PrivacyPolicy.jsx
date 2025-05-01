@@ -14,41 +14,55 @@ const privacyPolicyData = [
 
 const PrivacyPolicy = () => {
   return (
-    <Box>
-      <Banner
-        heading="Your Privacy Matters at MoneyLog"
-        description="We value your privacy and are committed to keeping your personal data safe. Learn how we protect your information."
-      />
-      <Container sx={{ py: 6 }}>
-        <Typography
-          variant="h4"
-          sx={{ fontWeight: "bold", mb: 3, textAlign: "center" }}
+    <div className="image">
+      <Box>
+        <Banner
+          heading="Your Privacy Matters at MoneyLog"
+          description="We value your privacy and are committed to keeping your personal data safe. Learn how we protect your information."
+        />
+        <Container
+          sx={{ py: 2 }}
+          style={{
+            backgroundColor: "#fff",
+            borderRadius: "10px",
+            marginTop: "10px",
+          }}
         >
-          Privacy Policy
-        </Typography>
-
-        <Box sx={{ lineHeight: 1.8, fontSize: "1rem", color: "#333" }}>
-          {privacyPolicyData.map((item, index) => (
-            <Box key={index} sx={{ mb: 3 }}>
-              <Typography variant="body1">{item}</Typography>
-              {/* Add divider for visual separation between points */}
-              {index !== privacyPolicyData.length - 1 && (
-                <Divider sx={{ my: 2 }} />
-              )}
-            </Box>
-          ))}
-        </Box>
-
-        <Box sx={{ mt: 5, textAlign: "center" }}>
           <Typography
-            variant="body2"
-            sx={{ fontSize: "0.875rem", color: "#757575" }}
+            variant="h4"
+            sx={{
+              fontWeight: "bold",
+              mb: 3,
+              textAlign: "center",
+              color: "#004080",
+            }}
           >
-            © 2025 MoneyLog. All rights reserved.
+            Privacy Policy
           </Typography>
-        </Box>
-      </Container>
-    </Box>
+
+          <Box sx={{ lineHeight: 1.8, fontSize: "1rem", color: "#333" }}>
+            {privacyPolicyData.map((item, index) => (
+              <Box key={index} sx={{ mb: 3 }}>
+                <Typography variant="body1">{item}</Typography>
+                {/* Add divider for visual separation between points */}
+                {index !== privacyPolicyData.length - 1 && (
+                  <Divider sx={{ my: 2 }} />
+                )}
+              </Box>
+            ))}
+          </Box>
+
+          <Box sx={{ mt: 5, textAlign: "center" }}>
+            <Typography
+              variant="body2"
+              sx={{ fontSize: "0.875rem", color: "#757575" }}
+            >
+              © 2025 MoneyLog. All rights reserved.
+            </Typography>
+          </Box>
+        </Container>
+      </Box>
+    </div>
   );
 };
 

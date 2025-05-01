@@ -11,7 +11,7 @@ const Banner = ({ heading, description }) => {
     <div className="banner">
       {/* Back Button */}
       <button className="back-button" onClick={handleBack}>
-        &lt; Back
+        Back
       </button>
 
       <div className="banner-content">

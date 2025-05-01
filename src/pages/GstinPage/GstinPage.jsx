@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
-import "./MoneyLogPage.css";
-import { IoIosArrowBack } from "react-icons/io";
-import { IoIosArrowForward } from "react-icons/io";
+import { Box, Button, Grid, Typography, Paper } from "@mui/material";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const MoneyLogPage = () => {
-  // Set initial slide state
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Define the features array
   const features = [
     {
       title: "Track Transactions in Real-time",
@@ -30,7 +27,6 @@ const MoneyLogPage = () => {
       description:
         "Easily generate and send professional invoices. Track paid and outstanding invoices in real-time for better financial control.",
     },
-
     {
       title: "Cashflow Monitoring",
       description:
@@ -38,102 +34,161 @@ const MoneyLogPage = () => {
     },
   ];
 
-  // Check if the screen is mobile
   const checkMobile = () => {
-    if (window.innerWidth <= 768) {
-      setIsMobile(true);
-    } else {
-      setIsMobile(false);
-    }
+    setIsMobile(window.innerWidth <= 768);
   };
 
-  // Add event listener on resize to update the screen size
   useEffect(() => {
-    checkMobile(); // Check screen size on initial load
-    window.addEventListener("resize", checkMobile); // Add resize event listener
+    checkMobile(); // Initial check
+    window.addEventListener("resize", checkMobile); // Listen for window resize events
 
     return () => {
-      window.removeEventListener("resize", checkMobile); // Cleanup on component unmount
+      window.removeEventListener("resize", checkMobile); // Clean up listener on component unmount
     };
   }, []);
 
-  // Function to handle next slide
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % features.length);
   };
 
-  // Function to handle previous slide
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + features.length) % features.length);
   };
 
-  // Set up an interval to change slide every 2 seconds if on mobile
-  useEffect(() => {
-    if (isMobile) {
-      const intervalId = setInterval(() => {
-        nextSlide();
-      }, 2000); // Change slide every 2 seconds
-
-      // Cleanup the interval when the component unmounts or isMobile changes
-      return () => clearInterval(intervalId);
-    }
-  }, [isMobile]); // Runs only when isMobile changes
-
   return (
-    <div className="moneylog-container">
-      <h1 className="moneylog-title">
+    <Box
+      sx={{
+        backgroundColor: "#cbd5db",
+        borderRadius: "10px",
+        padding: "20px",
+        marginTop: "10px",
+      }}
+    >
+      <Typography
+        variant="h4"
+        gutterBottom
+        style={{ color: "#004080", fontSize: "40px", fontWeight: "bold" }}
+      >
         MoneyLog - Simplifying Your Business Finances
-      </h1>
+      </Typography>
 
-      <p className="moneylog-description">
+      <Typography variant="body1" paragraph>
         Manage your business finances effortlessly with MoneyLog. Track
         transactions, generate reports, and streamline your financial workflows
         in one place.
-      </p>
+      </Typography>
 
-      <p className="moneylog-description">
+      <Typography variant="body1" paragraph>
         With MoneyLog, automate tracking and invoicing to grow your business
         efficiently.
-      </p>
+      </Typography>
 
-      {/* <div className="divider-with-text">
-        <span>AND THERE'S EVEN MORE...</span>
-      </div> */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: "20px",
+          position: "relative",
+          flexDirection: "column",
+          width: "100%",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "20px",
+            backgroundColor: "#f4f4f4",
+            borderRadius: "10px",
+            boxShadow: 2,
+            width: "100%",
+            maxWidth: isMobile ? "80%" : "100%",
+            flexDirection: "column", // Stack content vertically
+          }}
+        >
+          <Typography
+            variant="h6"
+            sx={{ textAlign: "center", color: "#004080", fontWeight: "bold" }}
+          >
+            {features[currentSlide].title}
+          </Typography>
+          <Typography variant="body2" sx={{ textAlign: "center" }}>
+            {features[currentSlide].description}
+          </Typography>
+        </Box>
 
-      {/* Updated features section */}
-      <div className={`features-section ${isMobile ? "swiper" : ""}`}>
-        {/* Add a previous button for mobile screens */}
+        {/* Mobile Navigation */}
         {isMobile && (
-          <div className="swiper-btn prev" onClick={prevSlide}>
-            <IoIosArrowBack />
-          </div>
+          <Box
+            sx={{
+              width: "100%",
+              maxHeight: "100px",
+              textAlign: "center",
+              marginTop: "10px", // Add space between content and buttons
+              display: "flex",
+              justifyContent: "space-between",
+              gap: "auto",
+            }}
+          >
+            <Button
+              variant="contained"
+              sx={{
+                padding: "",
+              }}
+              onClick={prevSlide}
+            >
+              <IoIosArrowBack />
+            </Button>
+            <Button
+              variant="contained"
+              sx={{
+                padding: "",
+              }}
+              onClick={nextSlide}
+            >
+              <IoIosArrowForward />
+            </Button>
+          </Box>
         )}
-
-        <div className="feature-box">
-          <h3>{features[currentSlide].title}</h3>
-          <p>{features[currentSlide].description}</p>
-        </div>
-
-        {/* Add a next button for mobile screens */}
-        {isMobile && (
-          <div className="swiper-btn next" onClick={nextSlide}>
-            <IoIosArrowForward />
-          </div>
+        {/* Static features for Desktop */}
+        {!isMobile && (
+          <Grid container spacing={3} sx={{ marginTop: "20px" }}>
+            {features.map((feature, index) => (
+              <Grid item xs={12} sm={6} md={4} key={index}>
+                <Paper
+                  elevation={3}
+                  sx={{
+                    padding: "20px",
+                    textAlign: "center",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      backgroundColor: "#e0f7fa", // light blue on hover
+                      boxShadow: "0 6px 20px rgba(0,0,0,0.2)", // deeper shadow on hover
+                      transform: "scale(1.03)", // slight zoom effect
+                      cursor: "pointer",
+                    },
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    style={{ color: "#004080", fontWeight: "bold" }}
+                  >
+                    {feature.title}
+                  </Typography>
+                  <Typography variant="body2">{feature.description}</Typography>
+                </Paper>
+              </Grid>
+            ))}
+          </Grid>
         )}
-      </div>
-
-      {/* For desktop, show all features statically */}
-      {!isMobile && (
-        <div className="static-features">
-          {features.map((feature, index) => (
-            <div className="feature-box" key={index}>
-              <h3>{feature.title}</h3>
-              <p>{feature.description}</p>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
+      </Box>
+    </Box>
   );
 };
 
