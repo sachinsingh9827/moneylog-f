@@ -151,7 +151,6 @@ const Footer = () => {
                 sx={{
                   textDecoration: "none",
                   color: "inherit",
-                  textDecoration: "none",
                   transition: "color 0.3s ease",
                   "&:hover": {
                     color: "#f39c12",
