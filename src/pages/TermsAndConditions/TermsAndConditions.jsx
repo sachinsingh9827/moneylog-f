@@ -10,6 +10,7 @@ const termsAndConditionsData = [
   "Users are responsible for ensuring their account information is kept confidential. We are not liable for unauthorized access to accounts.",
   "The use of our services must comply with our acceptable usage policies and should not violate the rights of others.",
   "MoneyLog is not responsible for any losses or damages arising from the misuse of the service or unauthorized access to your account.",
+  "To provide accurate and secure services, MoneyLog may collect certain user data such as device information, browser type, IP address, and geographic location (latitude and longitude). This data is used solely for enhancing the user experience, ensuring account security, and preventing unauthorized access. By using our services, you consent to this data collection as outlined in our Privacy Policy.",
 ];
 
 const TermsAndConditions = () => {

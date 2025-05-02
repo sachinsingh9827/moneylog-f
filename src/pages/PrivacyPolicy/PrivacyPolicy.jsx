@@ -10,6 +10,8 @@ const privacyPolicyData = [
   "MoneyLog does not sell, rent, or lease your personal data to third parties. We may share your information only when required by law or for necessary service provisions.",
   "We use state-of-the-art security technologies to protect your data, including encryption protocols and regular security audits.",
   "You have full control over your personal data. You can view, update, and request deletion of your information at any time by contacting our support team.",
+  "The MoneyLog team is committed to protecting your privacy. We do not exploit, misuse, or disclose your personal data. Your data is stored securely and handled with the utmost confidentiality.",
+  "We may use certain non-sensitive data, such as location or device type, to enhance your overall experience with MoneyLog. This helps us improve our services and ensure smoother functionality. Please feel free and confident using our platform—we are always focused on your safety and satisfaction.",
 ];
 
 const PrivacyPolicy = () => {

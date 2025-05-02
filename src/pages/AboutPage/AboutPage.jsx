@@ -45,6 +45,25 @@ const AboutPage = () => {
           Receive notifications for pending payments, so you never miss an
           update on your finances.
         </p>
+
+        {/* Trust & Transparency Section */}
+        <h2>Your Trust, Our Priority</h2>
+        <p>
+          At MoneyLog, your security and privacy are our top priorities. All
+          your personal and financial information is stored securely using
+          advanced encryption protocols. We do not sell or share your data with
+          third parties without your consent.
+        </p>
+        <p>
+          We may use minimal, non-sensitive data like location or device type to
+          improve your overall experience, but this is handled with complete
+          transparency and care. You remain in full control of your data at all
+          times.
+        </p>
+        <p>
+          Our mission is to provide a transparent, trustworthy, and reliable
+          platform for managing your finances. Thank you for choosing MoneyLog.
+        </p>
       </section>
 
       {/* Footer Section */}
