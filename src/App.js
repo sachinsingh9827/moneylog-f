@@ -21,6 +21,7 @@ import ContactUsPage from "./pages/ContactUsPage/ContactUsPage";
 import TermsAndConditions from "./pages/TermsAndConditions/TermsAndConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 import HelpCenter from "./pages/HelpCenter/HelpCenter";
+import AllUsersLastLoginPage from "./pages/AULLogin/AllUsersLastLoginPage";
 
 function App() {
   return (
@@ -57,6 +58,10 @@ function App() {
             <Route path="add-customer" element={<AddCustomer />} />
             <Route path="add-transaction" element={<AddTransaction />} />
             <Route path="history/:id" element={<HistoryPage />} />
+            <Route
+              path="all-users-last-login/admin"
+              element={<AllUsersLastLoginPage />}
+            />
           </Route>
 
           <Route path="*" element={<NotFound />} />

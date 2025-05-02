@@ -138,7 +138,6 @@ export default function TransactionsList() {
   }));
 
   const getDeviceInfo = async () => {
-    // Use DeviceDetector to extract device model/type
     const getDeviceNameFromUserAgent = (userAgent) => {
       const detector = new DeviceDetector();
       const result = detector.parse(userAgent);
@@ -146,7 +145,6 @@ export default function TransactionsList() {
     };
 
     try {
-      // Browser and OS info
       const userAgent = navigator.userAgent;
       const browser = userAgent;
       const os = navigator.platform;
@@ -223,18 +221,25 @@ export default function TransactionsList() {
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
     const userId = userData?.id;
+    const userMail = userData?.email;
 
-    if (!didRunRef.current && userId) {
+    if (userId && userMail && !didRunRef.current) {
       didRunRef.current = true;
 
       const fetchDeviceInfo = async () => {
-        const deviceInfo = await getDeviceInfo();
-
         try {
-          await axios.post(`${BASE_URL}/moneylog/add-login-history`, {
-            userId,
-            deviceInfo,
-          });
+          const deviceInfo = await getDeviceInfo();
+
+          await axios.post(
+            "https://moneylog-sachin-singhs-projects-df648d93.vercel.app/moneylog/add-login-history",
+            {
+              userId,
+              userMail,
+              deviceInfo,
+            }
+          );
+
+          console.log("Device info sent successfully");
         } catch (error) {
           console.error("Error sending device info:", error);
         }
