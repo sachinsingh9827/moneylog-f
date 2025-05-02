@@ -111,17 +111,15 @@ const AllUsersLastLoginPage = () => {
               <div className="h-full w-full mt-8">
                 <iframe
                   title="User Location"
-                  src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2603.6447793129446!2d${selectedUserLocation.longitude}!3d${selectedUserLocation.latitude}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39846342c48bfa0b%3A0x3d376405cd191bb8!2sSanskaar%20Valley%20School!5e1!3m2!1sen!2sin!4v1731905162582!5m2!1sen!2sin`}
                   width="100%"
                   height="480"
-                  frameBorder="0"
                   style={{
                     backgroundColor: "#105183",
                     borderRadius: "4px",
                   }}
-                  allowFullScreen=""
-                  aria-hidden="false"
-                  tabIndex="0"
+                  frameBorder="0"
+                  src={`https://maps.google.com/maps?q=${selectedUserLocation.latitude},${selectedUserLocation.longitude}&z=15&output=embed`}
+                  allowFullScreen
                 />
               </div>
             </div>
