@@ -21,7 +21,7 @@ import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Toast, { showToast } from "../../components/Toast";
 import Loader from "../../components/Loader";
-
+import DeviceDetector from "device-detector-js";
 const BASE_URL =
   process.env.REACT_APP_BASE_URL ||
   "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
@@ -138,15 +138,11 @@ export default function TransactionsList() {
   }));
 
   const getDeviceInfo = async () => {
+    // Use DeviceDetector to extract device model/type
     const getDeviceNameFromUserAgent = (userAgent) => {
-      if (/iPhone/.test(userAgent)) return "iPhone";
-      if (/iPad/.test(userAgent)) return "iPad";
-      if (/Android/.test(userAgent)) {
-        const match = userAgent.match(/Android.*;\s([^)]+)/);
-        return match ? match[1] : "Android Device";
-      }
-      if (/Windows Phone/.test(userAgent)) return "Windows Phone";
-      return "Unknown Device";
+      const detector = new DeviceDetector();
+      const result = detector.parse(userAgent);
+      return result.device?.model || result.device?.type || "Unknown Device";
     };
 
     try {
