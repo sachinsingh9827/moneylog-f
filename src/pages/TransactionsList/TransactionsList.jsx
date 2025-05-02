@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Paper,
   Table,
@@ -213,23 +213,26 @@ export default function TransactionsList() {
     }
   };
 
+  // Fetch device information
+  const didRunRef = useRef(false);
+
   useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem("user")); // Get user data from localStorage
-    const userId = userData?.id; // Assuming userId is available
+    const userData = JSON.parse(localStorage.getItem("user"));
+    const userId = userData?.id;
 
-    if (userId) {
-      // Fetch device information
+    if (!didRunRef.current && userId) {
+      didRunRef.current = true;
+
       const fetchDeviceInfo = async () => {
-        const deviceInfo = await getDeviceInfo(); // Fetching device info
+        const deviceInfo = await getDeviceInfo();
 
-        // Send the device info and userId to the backend
         try {
           await axios.post("http://localhost:5000/moneylog/add-login-history", {
-            userId: userId, // Send the userId
-            deviceInfo: deviceInfo, // Send the device info
+            userId,
+            deviceInfo,
           });
         } catch (error) {
-          console.error("Error sending device info to backend:", error);
+          console.error("Error sending device info:", error);
         }
       };
 
