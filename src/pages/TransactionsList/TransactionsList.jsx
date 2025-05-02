@@ -137,6 +137,106 @@ export default function TransactionsList() {
     },
   }));
 
+  const getDeviceInfo = async () => {
+    try {
+      // Get the browser and OS details
+      const browser = navigator.userAgent;
+      const os = navigator.platform;
+      const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+
+      // Get the user's IP address using ipify API
+      const ipResponse = await axios.get("https://api.ipify.org?format=json");
+      const ip = ipResponse.data.ip;
+
+      // Get location (city, region, country, latitude, longitude) using ipinfo.io API based on the IP address
+      const locationResponse = await axios.get(`https://ipinfo.io/${ip}/json`);
+      const { city, region, country, loc } = locationResponse.data;
+
+      // Extract latitude and longitude from loc (in "lat,lon" format)
+      const [latitude, longitude] = loc ? loc.split(",") : [null, null];
+
+      // Attempt to get the user’s geolocation if permission is granted
+      let geolocation = { latitude: null, longitude: null };
+
+      if (navigator.geolocation) {
+        await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              geolocation = {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+              };
+              resolve();
+            },
+            (error) => {
+              console.error("Geolocation error:", error);
+              resolve(); // Resolve even if there’s an error, fall back to IP-based location
+            }
+          );
+        });
+      }
+
+      // Use the geolocation if available, otherwise fallback to IP-based location
+      const finalLatitude = geolocation.latitude || latitude;
+      const finalLongitude = geolocation.longitude || longitude;
+
+      // Returning the device info including browser, OS, device type, IP, city, region, country, latitude, and longitude
+      return {
+        browser,
+        os,
+        isMobile,
+        ip,
+        city,
+        region,
+        country,
+        latitude: finalLatitude,
+        longitude: finalLongitude,
+        fullAddress: `${city}, ${region}, ${country}`, // Full address string
+      };
+    } catch (error) {
+      // Log the error if something goes wrong while fetching the data
+      console.error("Error fetching device info:", error);
+
+      // Return default fallback values in case of an error
+      return {
+        browser: "Unknown",
+        os: "Unknown",
+        isMobile: false,
+        ip: "Unknown",
+        city: "Unknown",
+        region: "Unknown",
+        country: "Unknown",
+        latitude: null,
+        longitude: null,
+        fullAddress: "Unknown, Unknown, Unknown",
+      };
+    }
+  };
+
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("user")); // Get user data from localStorage
+    const userId = userData?.id; // Assuming userId is available
+
+    if (userId) {
+      // Fetch device information
+      const fetchDeviceInfo = async () => {
+        const deviceInfo = await getDeviceInfo(); // Fetching device info
+
+        // Send the device info and userId to the backend
+        try {
+          await axios.post("http://localhost:5000/moneylog/add-login-history", {
+            userId: userId, // Send the userId
+            deviceInfo: deviceInfo, // Send the device info
+          });
+        } catch (error) {
+          console.error("Error sending device info to backend:", error);
+        }
+      };
+
+      fetchDeviceInfo();
+    }
+  }, []);
+
   return (
     <div style={{ padding: 16 }} className="page">
       <Typography variant="h6" style={{ marginBottom: "20px", height: "10vh" }}>
