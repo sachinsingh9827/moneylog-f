@@ -20,6 +20,7 @@ import { styled } from "@mui/material/styles";
 import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Toast, { showToast } from "../../components/Toast";
+import Loader from "../../components/Loader";
 
 const BASE_URL =
   process.env.REACT_APP_BASE_URL ||
@@ -41,7 +42,7 @@ export default function TransactionsList() {
   const [totalDebit, setTotalDebit] = useState(0);
   const [userName, setUserName] = useState("");
   const [userSecName, setUserSecName] = useState("");
-
+  const [loading, setLoading] = useState(false);
   // Modal states
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [selectedCustomerId, setSelectedCustomerId] = useState(null);
@@ -60,6 +61,7 @@ export default function TransactionsList() {
 
       setUserName(userData.name);
       setUserSecName(userData.secName);
+      setLoading(true);
       const userId = userData.id;
       const response = await axios.get(
         `${BASE_URL}/moneylog/customers/get/${userId}`
@@ -81,8 +83,10 @@ export default function TransactionsList() {
 
       setTotalCredit(credit);
       setTotalDebit(debit);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching customer:", error);
+      setLoading(false);
     }
   };
 
@@ -149,6 +153,8 @@ export default function TransactionsList() {
           gap: 12,
         }}
       >
+        {" "}
+        {loading && <Loader />}
         <Typography variant="body1">
           <strong>Total Recive:</strong>{" "}
           <span style={{ color: "green", fontWeight: "bold" }}>

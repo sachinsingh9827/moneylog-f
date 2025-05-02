@@ -58,16 +58,25 @@ const MoneyLogPage = () => {
   return (
     <Box
       sx={{
-        backgroundColor: "#cbd5db",
-        borderRadius: "10px",
-        padding: "20px",
-        marginTop: "10px",
+        borderRadius: 3,
+        boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
+        p: 4,
+        margin: "10px",
+        backgroundColor: "rgba(208, 204, 204, 0.15)", // semi-transparent
+        backdropFilter: "blur(10px)",
+        WebkitBackdropFilter: "blur(10px)", // Safari support
       }}
     >
       <Typography
-        variant="h4"
         gutterBottom
-        style={{ color: "#004080", fontSize: "40px", fontWeight: "bold" }}
+        style={{
+          color: "#004080",
+          fontWeight: "bold",
+          fontSize: "3rem",
+          marginBottom: "20px",
+          textTransform: "uppercase",
+          letterSpacing: "1px",
+        }}
       >
         MoneyLog - Simplifying Your Business Finances
       </Typography>

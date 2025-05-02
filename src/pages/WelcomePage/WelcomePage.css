@@ -2,14 +2,15 @@
 
 /* Container setup */
 .welcome-container {
-    background: rgba(109, 106, 106, 0.3); /* Semi-transparent background */
+    background: rgba(222, 219, 219, 0.3); /* Semi-transparent background */
     backdrop-filter: blur(10px); /* Blur effect */
-    min-height: 70vh; /* Maximum height of 70vh */
+    min-height: 94vh; /* Maximum height of 70vh */
     display: flex;
     justify-content: center;
     align-items: center;
     color: #004080;
     border-radius: 15px; /* Rounded corners */
+   margin: 10px;
   }
   
   /* Heading style */

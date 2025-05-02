@@ -12,13 +12,8 @@ const WelcomePage = () => {
 
   return (
     <Box className="welcome-container">
-      <Container maxWidth="lg">
-        <Grid
-          container
-          spacing={2}
-          alignItems="center"
-          justifyContent="space-between"
-        >
+      <Container maxWidth="">
+        <Grid container alignItems="center" justifyContent="space-between">
           {/* Content on left side */}
           <Grid item xs={12} md={6}>
             <Typography variant="h3" align="left" className="welcome-heading">

@@ -85,6 +85,7 @@ const HistoryPage = () => {
   // Fetch user and transactions
   const fetchTransactionHistory = async (id, setTransactions, setUser) => {
     try {
+      setLoading(true);
       const response = await axios.get(
         `${BASE_URL}/moneylog/customers/transaction-history/${id}`
       );
@@ -98,6 +99,7 @@ const HistoryPage = () => {
           setUser(response.data.customer);
         }
       }
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching transaction history:", error);
     }
