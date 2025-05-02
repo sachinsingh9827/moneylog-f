@@ -138,28 +138,38 @@ export default function TransactionsList() {
   }));
 
   const getDeviceInfo = async () => {
-    try {
-      // Get the browser and OS details
-      const browser = navigator.userAgent;
-      const os = navigator.platform;
-      const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+    const getDeviceNameFromUserAgent = (userAgent) => {
+      if (/iPhone/.test(userAgent)) return "iPhone";
+      if (/iPad/.test(userAgent)) return "iPad";
+      if (/Android/.test(userAgent)) {
+        const match = userAgent.match(/Android.*;\s([^)]+)/);
+        return match ? match[1] : "Android Device";
+      }
+      if (/Windows Phone/.test(userAgent)) return "Windows Phone";
+      return "Unknown Device";
+    };
 
-      // Get the user's IP address using ipify API
+    try {
+      // Browser and OS info
+      const userAgent = navigator.userAgent;
+      const browser = userAgent;
+      const os = navigator.platform;
+      const isMobile = /Mobi|Android/i.test(userAgent);
+      const deviceName = getDeviceNameFromUserAgent(userAgent);
+
+      // IP Address
       const ipResponse = await axios.get("https://api.ipify.org?format=json");
       const ip = ipResponse.data.ip;
 
-      // Get location (city, region, country, latitude, longitude) using ipinfo.io API based on the IP address
+      // IP-based location info
       const locationResponse = await axios.get(`https://ipinfo.io/${ip}/json`);
       const { city, region, country, loc } = locationResponse.data;
-
-      // Extract latitude and longitude from loc (in "lat,lon" format)
       const [latitude, longitude] = loc ? loc.split(",") : [null, null];
 
-      // Attempt to get the user’s geolocation if permission is granted
+      // Geolocation if permission is granted
       let geolocation = { latitude: null, longitude: null };
-
       if (navigator.geolocation) {
-        await new Promise((resolve, reject) => {
+        await new Promise((resolve) => {
           navigator.geolocation.getCurrentPosition(
             (position) => {
               geolocation = {
@@ -170,38 +180,36 @@ export default function TransactionsList() {
             },
             (error) => {
               console.error("Geolocation error:", error);
-              resolve(); // Resolve even if there’s an error, fall back to IP-based location
+              resolve(); // fallback to IP location
             }
           );
         });
       }
 
-      // Use the geolocation if available, otherwise fallback to IP-based location
       const finalLatitude = geolocation.latitude || latitude;
       const finalLongitude = geolocation.longitude || longitude;
 
-      // Returning the device info including browser, OS, device type, IP, city, region, country, latitude, and longitude
       return {
         browser,
         os,
         isMobile,
+        deviceName,
         ip,
         city,
         region,
         country,
         latitude: finalLatitude,
         longitude: finalLongitude,
-        fullAddress: `${city}, ${region}, ${country}`, // Full address string
+        fullAddress: `${city}, ${region}, ${country}`,
       };
     } catch (error) {
-      // Log the error if something goes wrong while fetching the data
       console.error("Error fetching device info:", error);
 
-      // Return default fallback values in case of an error
       return {
         browser: "Unknown",
         os: "Unknown",
         isMobile: false,
+        deviceName: "Unknown Device",
         ip: "Unknown",
         city: "Unknown",
         region: "Unknown",
