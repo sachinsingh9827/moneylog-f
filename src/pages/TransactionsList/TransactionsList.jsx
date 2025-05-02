@@ -235,7 +235,7 @@ export default function TransactionsList() {
         const deviceInfo = await getDeviceInfo();
 
         try {
-          await axios.post("http://localhost:5000/moneylog/add-login-history", {
+          await axios.post(`${BASE_URL}/moneylog/add-login-history`, {
             userId,
             deviceInfo,
           });
