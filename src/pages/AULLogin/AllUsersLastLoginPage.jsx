@@ -32,7 +32,7 @@ const AllUsersLastLoginPage = () => {
 
   useEffect(() => {
     fetchUserLoginHistory();
-    const intervalId = setInterval(fetchUserLoginHistory, 2000);
+    const intervalId = setInterval(fetchUserLoginHistory, 15000);
 
     return () => clearInterval(intervalId); // Cleanup interval on unmount
   }, []);
