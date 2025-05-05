@@ -1,5 +1,5 @@
 // components/SlotsSignIn.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   FormControl,
@@ -145,6 +145,17 @@ export default function SlotsSignIn() {
   };
 
   const handleSubmit = async (values, { setSubmitting }) => {
+    const existingUser = localStorage.getItem("user");
+    const existingToken = localStorage.getItem("token");
+
+    // ✅ If already logged in, redirect directly
+    if (existingUser && existingToken) {
+      showToast("You're already logged in!", "info");
+      navigate("/dashboard");
+      setSubmitting(false);
+      return;
+    }
+
     try {
       const res = await axios.post(`${BASE_URL}/moneylog/users/login`, {
         email: values.email,
@@ -166,14 +177,13 @@ export default function SlotsSignIn() {
           navigate("/register");
         }, 1000);
       } else if (error.response && error.response.status === 403) {
-        // Handle the 403 Forbidden case (account deactivated)
         showToast(
           error.response.data?.message ||
-            "Your account has been deactivated. Please contact support for assistance.",
+            "Your account has been deactivated. Please contact support.",
           "error"
         );
         setTimeout(() => {
-          navigate("/contact-us"); // Navigate to the contact us page
+          navigate("/contact-us");
         }, 3000);
       } else {
         showToast("Login failed. Please check credentials.", "error");
@@ -182,6 +192,15 @@ export default function SlotsSignIn() {
       setSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    const token = localStorage.getItem("token");
+
+    if (user && token) {
+      navigate("/dashboard");
+    }
+  }, []);
 
   return (
     <Box

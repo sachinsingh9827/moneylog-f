@@ -22,11 +22,12 @@ import TermsAndConditions from "./pages/TermsAndConditions/TermsAndConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 import HelpCenter from "./pages/HelpCenter/HelpCenter";
 import AllUsersLastLoginPage from "./pages/AULLogin/AllUsersLastLoginPage";
+import PaymentPage from "./pages/PaymentPage/PaymentPage";
 
 function App() {
   return (
-    <AuthProvider>
-      <Router future={{ v7_relativeSplatPath: true }}>
+    <Router future={{ v7_relativeSplatPath: true }}>
+      <AuthProvider>
         <Navbar />
         <Toast />
         <Routes>
@@ -41,7 +42,6 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPasswordForm />} />
 
-          {/* ✅ Protected Route */}
           <Route
             path="/dashboard"
             element={
@@ -50,10 +50,7 @@ function App() {
               </PrivateRoute>
             }
           >
-            {/* Default route for /dashboard */}
             <Route index element={<TransactionsList />} />
-
-            {/* Nested dashboard pages */}
             <Route path="profile" element={<Profile />} />
             <Route path="add-customer" element={<AddCustomer />} />
             <Route path="add-transaction" element={<AddTransaction />} />
@@ -66,8 +63,8 @@ function App() {
 
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </Router>
   );
 }
 

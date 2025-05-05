@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Container, Grid, Typography, Link } from "@mui/material";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -18,6 +18,17 @@ const Footer = () => {
       behavior: "smooth",
     });
   };
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check if token or user info exists in localStorage
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
+    if (token && user) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   return (
     <Box
@@ -135,6 +146,22 @@ const Footer = () => {
               >
                 Help
               </Link>
+              {!isLoggedIn && (
+                <Link
+                  href="/login"
+                  sx={{
+                    display: "block",
+                    color: "inherit",
+                    textDecoration: "none",
+                    transition: "color 0.3s ease",
+                    "&:hover": {
+                      color: "#f39c12",
+                    },
+                  }}
+                >
+                  Login
+                </Link>
+              )}
             </Typography>
           </Grid>
 

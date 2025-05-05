@@ -151,16 +151,13 @@ export default function TransactionsList() {
       const isMobile = /Mobi|Android/i.test(userAgent);
       const deviceName = getDeviceNameFromUserAgent(userAgent);
 
-      // IP Address
       const ipResponse = await axios.get("https://api.ipify.org?format=json");
       const ip = ipResponse.data.ip;
 
-      // IP-based location info
       const locationResponse = await axios.get(`https://ipinfo.io/${ip}/json`);
       const { city, region, country, loc } = locationResponse.data;
       const [latitude, longitude] = loc ? loc.split(",") : [null, null];
 
-      // Geolocation if permission is granted
       let geolocation = { latitude: null, longitude: null };
       if (navigator.geolocation) {
         await new Promise((resolve) => {
@@ -174,7 +171,7 @@ export default function TransactionsList() {
             },
             (error) => {
               console.error("Geolocation error:", error);
-              resolve(); // fallback to IP location
+              resolve();
             }
           );
         });
