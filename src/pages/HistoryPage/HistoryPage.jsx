@@ -23,7 +23,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { RiAddLargeFill } from "react-icons/ri";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import axios from "axios";
 import { purple } from "@mui/material/colors";
@@ -42,7 +42,6 @@ const columns = [
 ];
 
 const HistoryPage = () => {
-  const { id } = useParams();
   const navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -60,10 +59,17 @@ const HistoryPage = () => {
     amount: "",
     type: "credit",
   });
-  const { search } = useLocation();
-  const queryParams = new URLSearchParams(search);
-  const name = queryParams.get("name"); // Retrieve the 'name' query parameter
+
   // Modal styling
+
+  const { id: encodedId } = useParams();
+  const [searchParams] = useSearchParams();
+  const encodedName = searchParams.get("name");
+
+  // Decode the values using atob
+  const id = atob(encodedId); // atob decodes a base64 string back to its original value
+  const name = atob(encodedName); // Similarly, decode the name
+
   const modalStyle = {
     position: "absolute",
     top: "50%",

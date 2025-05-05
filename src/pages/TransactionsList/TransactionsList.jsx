@@ -98,7 +98,12 @@ export default function TransactionsList() {
   };
 
   const handleRowClick = (id, name) => {
-    navigate(`/dashboard/history/${id}?name=${name}`);
+    // Encode the id and name to base64 using btoa (browser's base64 encoder)
+    const encodedId = btoa(id); // btoa encodes a string to base64
+    const encodedName = btoa(name); // Similarly, encode the name
+
+    // Navigate with the encoded values
+    navigate(`/dashboard/history/${encodedId}?name=${encodedName}`);
   };
 
   const handleAddCustomerClick = () => {
@@ -301,65 +306,74 @@ export default function TransactionsList() {
               {customerData && customerData.length > 0 ? (
                 customerData
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((customer, i) => (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={customer._id}
-                      sx={{ cursor: "pointer" }}
-                    >
-                      <TableCell align="left">
-                        {page * rowsPerPage + i + 1}.
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        onClick={() =>
-                          handleRowClick(customer._id, customer.name)
+                  .map((customer, i) => {
+                    // Calculate total balance for the customer
+                    const totalBalance = customer.transactions.reduce(
+                      (total, transaction) => {
+                        if (transaction.type === "credit") {
+                          return total + transaction.amount;
+                        } else if (transaction.type === "debit") {
+                          return total - transaction.amount;
                         }
+                        return total;
+                      },
+                      0
+                    );
+
+                    return (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={customer._id}
+                        sx={{ cursor: "pointer" }}
                       >
-                        {customer.name}
-                      </TableCell>
-                      <TableCell
-                        align="right"
-                        onClick={() =>
-                          handleRowClick(customer._id, customer.name)
-                        }
-                        style={{
-                          color:
-                            customer.transactions.length > 0 &&
-                            customer.transactions[
-                              customer.transactions.length - 1
-                            ]?.type === "credit"
-                              ? "green"
-                              : "red",
-                        }}
-                      >
-                        {customer.transactions.length > 0
-                          ? customer.transactions[
-                              customer.transactions.length - 1
-                            ]?.amount
-                          : 0}
-                        <br />
-                        <span style={{ fontSize: "12px", color: "gray" }}>
-                          {customer.transactions.length > 0 &&
-                          customer.transactions[
-                            customer.transactions.length - 1
-                          ]?.type === "credit"
-                            ? "Received"
-                            : "Sent"}
-                        </span>
-                      </TableCell>
-                      <TableCell align="right">
-                        <IconButton
-                          onClick={() => openDeleteModal(customer._id)}
-                          sx={{ color: red[500] }}
+                        <TableCell align="left">
+                          {page * rowsPerPage + i + 1}.
+                        </TableCell>
+                        <TableCell
+                          align="left"
+                          onClick={() =>
+                            handleRowClick(customer._id, customer.name)
+                          }
                         >
-                          <DeleteIcon />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ))
+                          {customer.name}
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          onClick={() =>
+                            handleRowClick(customer._id, customer.name)
+                          }
+                          style={{
+                            color:
+                              totalBalance > 0
+                                ? "green"
+                                : totalBalance < 0
+                                  ? "red"
+                                  : "black",
+                          }}
+                        >
+                          {totalBalance.toFixed(2)}
+                          <br />
+                          <span style={{ fontSize: "12px", color: "gray" }}>
+                            {totalBalance > 0
+                              ? "Total Balance (Credit)"
+                              : totalBalance < 0
+                                ? "Total Balance (Debit)"
+                                : "No Balance"}
+                          </span>
+                        </TableCell>
+                        <TableCell align="right">
+                          <IconButton
+                            onClick={() => openDeleteModal(customer._id)}
+                            sx={{ color: red[500] }}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
               ) : (
                 <TableRow>
                   <TableCell colSpan={4} align="center">
