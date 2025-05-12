@@ -11,6 +11,7 @@ import {
   Divider,
 } from "@mui/material";
 import Banner from "../../components/Banner";
+import Footer from "../Footer/Footer";
 
 const helpData = {
   login: [
@@ -300,22 +301,6 @@ export default function HelpCenter() {
           Start Over
         </Button>
         <Divider sx={{ my: 4 }} />
-        <Box sx={{ textAlign: "center", mt: 2 }}>
-          <Typography
-            variant="body2"
-            align="center"
-            sx={{
-              backgroundColor: "#f1f1f1",
-              padding: "10px 20px",
-              borderRadius: 2,
-              fontSize: "0.875rem",
-              color: "#757575",
-              mt: 4, // Added margin-top for spacing
-            }}
-          >
-            © 2025 MoneyLog. All rights reserved.
-          </Typography>
-        </Box>
         <style>
           {`
           @keyframes dot1 {
@@ -337,6 +322,7 @@ export default function HelpCenter() {
         `}
         </style>{" "}
       </Box>{" "}
+      <Footer />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Container, Typography, Divider } from "@mui/material";
 import Banner from "../../components/Banner";
+import Footer from "../Footer/Footer";
 
 // Updated privacy policy data for your MoneyLog project
 const privacyPolicyData = [
@@ -53,17 +54,9 @@ const PrivacyPolicy = () => {
               </Box>
             ))}
           </Box>
-
-          <Box sx={{ mt: 5, textAlign: "center" }}>
-            <Typography
-              variant="body2"
-              sx={{ fontSize: "0.875rem", color: "#757575" }}
-            >
-              © 2025 MoneyLog. All rights reserved.
-            </Typography>
-          </Box>
         </Container>
-      </Box>
+      </Box>{" "}
+      <Footer />
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Container, Typography, Divider } from "@mui/material";
 import Banner from "../../components/Banner";
+import Footer from "../Footer/Footer";
 
 // Updated Terms & Conditions data for MoneyLog project
 const termsAndConditionsData = [
@@ -46,16 +47,8 @@ const TermsAndConditions = () => {
             </Box>
           ))}
         </Box>
-
-        <Box sx={{ mt: 5, textAlign: "center" }}>
-          <Typography
-            variant="body2"
-            sx={{ fontSize: "0.875rem", color: "#757575" }}
-          >
-            © 2025 MoneyLog. All rights reserved.
-          </Typography>
-        </Box>
       </Container>
+      <Footer />
     </Box>
   );
 };

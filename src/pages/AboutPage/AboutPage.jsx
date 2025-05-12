@@ -1,6 +1,7 @@
 import React from "react";
 import "./AboutPage.css";
 import Banner from "../../components/Banner";
+import Footer from "../Footer/Footer";
 
 const AboutPage = () => {
   return (
@@ -66,8 +67,7 @@ const AboutPage = () => {
         </p>
       </section>
 
-      {/* Footer Section */}
-      <div className="about-footer" />
+      <Footer />
     </div>
   );
 };

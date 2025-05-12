@@ -115,7 +115,14 @@ export default function SlotsAddCustomer() {
               backgroundColor: "#fff",
             }}
           >
-            <h2 style={{ textAlign: "center", marginBottom: 16 }}>
+            <h2
+              style={{
+                fontWeight: "bold",
+                marginBottom: "20px",
+                height: "10vh",
+                color: "#004080",
+              }}
+            >
               Add Customer
             </h2>
 

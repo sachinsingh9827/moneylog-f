@@ -253,7 +253,15 @@ export default function TransactionsList() {
 
   return (
     <div style={{ padding: 16 }} className="page">
-      <Typography variant="h6" style={{ marginBottom: "20px", height: "10vh" }}>
+      <Typography
+        variant="h6"
+        style={{
+          fontWeight: "bold",
+          marginBottom: "20px",
+          height: "10vh",
+          color: "#004080",
+        }}
+      >
         Welcome, {userSecName || userName}
       </Typography>
       <Toast />

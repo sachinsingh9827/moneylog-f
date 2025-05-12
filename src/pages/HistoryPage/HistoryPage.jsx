@@ -269,7 +269,16 @@ const HistoryPage = () => {
           Back
         </Button>
         <Typography variant="h5">
-          <strong style={{ color: "" }}>{name.toUpperCase()}'s</strong>
+          <strong
+            style={{
+              fontWeight: "bold",
+              marginBottom: "20px",
+              height: "10vh",
+              color: "#004080",
+            }}
+          >
+            {name.toUpperCase()}'S
+          </strong>
         </Typography>
       </div>
       {/* Display total credit and debit amounts */}
@@ -323,8 +332,12 @@ const HistoryPage = () => {
         >
           <Typography
             variant="h5"
-            align="center"
-            style={{ marginBottom: "1rem" }}
+            style={{
+              fontWeight: "bold",
+              marginBottom: "20px",
+              height: "10vh",
+              color: "#004080",
+            }}
           >
             Add New Transaction
           </Typography>

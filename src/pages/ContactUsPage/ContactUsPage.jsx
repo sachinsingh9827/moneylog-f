@@ -16,6 +16,7 @@ import "./ContactUsPage.css";
 import Toast, { showToast } from "../../components/Toast";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Footer from "../Footer/Footer";
 
 const BASE_URL = "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
 const ContactUsPage = () => {
@@ -204,6 +205,7 @@ const ContactUsPage = () => {
           </Button>
         </DialogActions>
       </Dialog>
+      <Footer />
     </div>
   );
 };
