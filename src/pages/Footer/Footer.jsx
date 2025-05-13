@@ -14,18 +14,9 @@ import { Link as MuiLink } from "@mui/material";
 
 const Footer = () => {
   const navigate = useNavigate(); // Initialize the navigate function
-
-  // Function to navigate to the home page and scroll to the top smoothly
-  const handleLogoClick = () => {
-    navigate("/"); // Navigate to the home page
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    });
-  };
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [showInstallButton, setShowInstallButton] = useState(false);
 
   useEffect(() => {
     // Check if token or user info exists in localStorage
@@ -34,7 +25,39 @@ const Footer = () => {
     if (token && user) {
       setIsLoggedIn(true);
     }
+
+    // Detect PWA install prompt
+    const handleBeforeInstallPrompt = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setShowInstallButton(true); // Show the button when PWA is installable
+    };
+
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt
+      );
+    };
   }, []);
+
+  // Function to handle PWA installation
+  const handleInstallClick = () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt(); // Show the install prompt
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === "accepted") {
+          console.log("User accepted the install prompt");
+        } else {
+          console.log("User dismissed the install prompt");
+        }
+        setDeferredPrompt(null);
+        setShowInstallButton(false); // Hide the button after installation
+      });
+    }
+  };
 
   const location = useLocation();
 
@@ -77,7 +100,7 @@ const Footer = () => {
             >
               {/* Logo */}
               <Link
-                onClick={handleLogoClick}
+                onClick={() => navigate("/")}
                 underline="none"
                 sx={{
                   display: "flex",
@@ -106,6 +129,9 @@ const Footer = () => {
                   fontWeight="bold"
                   sx={{ fontSize: { xs: "1rem", sm: "1.25rem" } }}
                   style={{ marginLeft: "5px" }}
+                  onClick={() =>
+                    window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
+                  }
                 >
                   MoneyLog
                 </Typography>
@@ -136,7 +162,9 @@ const Footer = () => {
                       fontSize: { xs: "0.875rem", sm: "1rem" },
                       "&:hover": { color: "#f39c12" },
                     }}
-                    onClick={handleLogoClick}
+                    onClick={() =>
+                      window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
+                    }
                   >
                     <SendIcon sx={{ fontSize: 16, mr: 0.5 }} />
                     {item.label}
@@ -209,6 +237,7 @@ const Footer = () => {
                 © 2025 MoneyLog. All rights reserved.
               </Typography>
 
+              {/* Social Media Icons */}
               <Box sx={{ display: "flex", gap: 2 }}>
                 <Link
                   href="https://wa.me/123456789"
@@ -241,6 +270,31 @@ const Footer = () => {
               </Box>
             </Box>
           </Grid>
+
+          {/* PWA Install Button (in Footer) */}
+          {showInstallButton && (
+            <Grid item xs={12} sx={{ textAlign: "center", mt: 2 }}>
+              <button
+                onClick={handleInstallClick}
+                style={{
+                  padding: "10px 20px",
+                  backgroundColor: "#0077b6",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "5px",
+                  fontSize: "16px",
+                  cursor: "pointer",
+                  transition: "background-color 0.3s ease",
+                }}
+                onMouseOver={(e) =>
+                  (e.target.style.backgroundColor = "#f39c12")
+                }
+                onMouseOut={(e) => (e.target.style.backgroundColor = "#0077b6")}
+              >
+                Install MoneyLog App
+              </button>
+            </Grid>
+          )}
         </Grid>
       </Container>
     </Box>
