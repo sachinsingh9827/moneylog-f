@@ -297,7 +297,7 @@ export default function HelpCenter() {
           color="error"
           sx={{ mt: 2 }}
           onClick={handleReset}
-          fullWidth
+          maxWidth={2}
         >
           Start Over
         </Button>

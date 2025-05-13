@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "./css/Navbar.css";
-import { HiOutlineLogout, HiOutlineUser } from "react-icons/hi"; // Import profile icon
-import { IoHomeOutline } from "react-icons/io5";
-import { Typography } from "@mui/material";
+import { HiOutlineLogout } from "react-icons/hi"; // Import profile icon
 import { showToast } from "./Toast";
 import logo from "../assets/moneylog.png";
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [showTooltip, setShowTooltip] = useState(false);
+
   const { user, logout } = useAuth();
-  const [userName, setUserName] = useState(""); // <-- State for username
 
   const handleLogout = () => {
     showToast("You have been logged out successfully.", "info");
@@ -19,30 +16,25 @@ const Navbar = () => {
     setMenuOpen(false);
   };
 
-  // Fetching username from localStorage on component mount
-  useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem("user"));
-    if (userData && userData.name) {
-      setUserName(userData.name);
-    }
-  }, []);
-
   return (
     <nav className="navbar">
       <div
         className="navbar-logo"
         style={{ display: "flex", alignItems: "center", gap: "8px" }}
       >
-        <img
-          src={logo}
-          alt="Logo"
-          style={{
-            height: "30px",
-            width: "30px",
-            objectFit: "contain",
-            background: "transparent",
-          }}
-        />
+        <Link to="/">
+          <img
+            src={logo}
+            alt="Logo"
+            to="/"
+            style={{
+              height: "30px",
+              width: "30px",
+              objectFit: "contain",
+              background: "transparent",
+            }}
+          />
+        </Link>
         <Link
           to="/"
           style={{
@@ -98,11 +90,7 @@ const Navbar = () => {
               Profile
             </Link>
 
-            <div
-              className="logout-btn-wrapper"
-              onMouseEnter={() => setShowTooltip(true)}
-              onMouseLeave={() => setShowTooltip(false)}
-            >
+            <div className="logout-btn-wrapper">
               <button onClick={handleLogout} className="logout-btn">
                 <HiOutlineLogout size={20} />
               </button>

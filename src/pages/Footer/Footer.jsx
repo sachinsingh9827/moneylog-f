@@ -176,7 +176,9 @@ const Footer = () => {
 
               <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                 <PhoneIcon sx={{ color: "#ccc" }} />
-                <Typography variant="body2">+123 456 789</Typography>
+                <Typography variant="body2" sx={{ color: "#ff9800" }}>
+                  Coming Soon!
+                </Typography>
               </Box>
             </Box>
           </Grid>
