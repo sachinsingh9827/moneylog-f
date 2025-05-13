@@ -28,21 +28,20 @@ const ContactUsPage = () => {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
-  const navigate = useNavigate();
+  const [openModal, setOpenModal] = useState(false); // State to control modal visibility
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value.trimStart() })); // prevent leading spaces
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  // ✅ Secure frontend validation (Anti-XSS & SQLi safe)
   const validate = () => {
     const newErrors = {};
     const nameRegex = /^[a-zA-Z\s]{2,50}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const messageMaxLength = 1000;
-    const badCharsRegex = /[<>;"'`$%{}()=]/;
+    const messageRegex = /^[a-zA-Z\s]{2,1000}$/; // Only letters and spaces allowed (max 1000 chars)
 
     // Name validation
     if (!formData.name) {
@@ -61,10 +60,8 @@ const ContactUsPage = () => {
     // Message validation
     if (!formData.message) {
       newErrors.message = "Message is required";
-    } else if (formData.message.length > messageMaxLength) {
-      newErrors.message = `Message too long (max ${messageMaxLength} characters)`;
-    } else if (badCharsRegex.test(formData.message)) {
-      newErrors.message = "Message contains invalid characters";
+    } else if (!messageRegex.test(formData.message)) {
+      newErrors.message = "Invalid message (only letters and spaces allowed)";
     }
 
     return newErrors;
@@ -73,33 +70,39 @@ const ContactUsPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validate the form data
     const validationErrors = validate();
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
       setIsSubmitting(true);
       try {
+        // Make an API call to submit the contact form
         const response = await axios.post(
           `${BASE_URL}/moneylog/contact-us`,
           formData
         );
 
-        if (response?.data?.success) {
-          setFormData({ name: "", email: "", message: "" });
-          showToast("Thank you for contacting us!", "success");
-          setOpenModal(true);
+        if (response.data.success) {
+          // If the message is successfully saved
+          setFormData({ name: "", email: "", message: "" }); // Clear the form
+          showToast("Thank you for contacting us!", "success"); // Success message
+          setOpenModal(true); // Open the modal after successful submission
         } else {
-          showToast("Something went wrong. Please try again later.", "error");
+          showToast("Something went wrong. Please try again later.", "error"); // Handle failure if any
         }
       } catch (error) {
-        console.error("Contact form error:", error);
-        showToast("An error occurred. Please try again later.", "error");
+        console.error("Error submitting contact form:", error);
+        showToast(
+          "An error occurred while submitting the form. Please try again later.",
+          "error"
+        );
       } finally {
-        setIsSubmitting(false);
+        setIsSubmitting(false); // Reset the submitting state
       }
     }
   };
-
+  const navigate = useNavigate();
   const handleCloseModal = () => {
     setOpenModal(false);
     navigate("/");
@@ -107,16 +110,23 @@ const ContactUsPage = () => {
 
   return (
     <div className="image">
+      {/* Banner Section */}
       <Banner
         heading="Get in Touch with MoneyLog"
         description="We'd love to hear from you. Fill out the form below and we will respond as soon as possible."
       />
       <Toast />
+      {/* Main Content Section */}
       <Container sx={{ py: 6 }}>
         <Grid container justifyContent="center">
           <Grid item>
             <Paper
-              sx={{ padding: 4, width: "full", margin: "0 auto", boxShadow: 2 }}
+              sx={{
+                padding: 4,
+                width: "full",
+                margin: "0 auto",
+                boxShadow: 2,
+              }}
             >
               <Typography
                 variant="h5"
@@ -131,8 +141,9 @@ const ContactUsPage = () => {
                 Get in Touch
               </Typography>
 
-              <form onSubmit={handleSubmit} noValidate>
+              <form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
+                  {/* Name and Email in one row */}
                   <Grid item xs={12} md={6}>
                     <TextField
                       label="Your Name"
@@ -160,6 +171,8 @@ const ContactUsPage = () => {
                       helperText={errors.email}
                     />
                   </Grid>
+
+                  {/* Message in next row */}
                   <Grid item xs={12}>
                     <TextField
                       label="Your Message"
@@ -175,6 +188,8 @@ const ContactUsPage = () => {
                       helperText={errors.message}
                     />
                   </Grid>
+
+                  {/* Submit Button */}
                   <Grid item xs={12}>
                     <Button
                       type="submit"
@@ -193,12 +208,13 @@ const ContactUsPage = () => {
         </Grid>
       </Container>
 
+      {/* Modal (Dialog) for Success Message */}
       <Dialog open={openModal} onClose={handleCloseModal}>
         <DialogTitle>Message Received</DialogTitle>
         <DialogContent>
           <Typography variant="body1" sx={{ mb: 2 }}>
             MoneyLog is reviewing your message. You will receive a response
-            within 3 days.
+            within 3 days. Please wait for a response in your email.
           </Typography>
           <Typography variant="body2" color="textSecondary">
             If you don't hear from us within 3 days, please feel free to reach
