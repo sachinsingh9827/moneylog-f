@@ -65,9 +65,13 @@ const helpData = {
     "You selected: Account Issue",
     "Your account may have been deactivated.",
     "If you're seeing a '403 Forbidden' error during login, your account is inactive.",
-    "To reactivate your account, please contact support.",
     "You can also send a reactivation request through the contact form in the app.",
     "Our team will review and assist you with reactivating your account.",
+    "Example message for reactivation request:",
+    "Dear MoneyLog Support Team,I hope this message finds you well.I have recently discovered that my MoneyLog account has been deactivated.",
+    "I kindly request you to reactivate my account at your earliest convenience.",
+
+    "Thank you for your support and assistance.",
   ],
 };
 
@@ -191,8 +195,7 @@ export default function HelpCenter() {
             <MenuItem value="forgotPassword">Forgot Password</MenuItem>
             <MenuItem value="addCustomer">Add Customer</MenuItem>
             <MenuItem value="transaction">Add Transaction History</MenuItem>
-            <MenuItem value="updateProfile">Update Profile</MenuItem>
-            <MenuItem value="billing">Billing Issue</MenuItem>
+
             <MenuItem value="account">Account Issue</MenuItem>
           </Select>
         </FormControl>
