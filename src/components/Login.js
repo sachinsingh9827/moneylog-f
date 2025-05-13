@@ -158,10 +158,13 @@ export default function SlotsSignIn() {
     }
 
     try {
-      const res = await axios.post(`${BASE_URL}/moneylog/users/login`, {
-        email: values.email,
-        password: values.password,
-      });
+      const res = await axios.post(
+        "http://localhost:5000/moneylog/users/login",
+        {
+          email: values.email,
+          password: values.password,
+        }
+      );
 
       const { user, token } = res.data;
       login({ user, token }); // updates context + localStorage
@@ -173,10 +176,11 @@ export default function SlotsSignIn() {
         (error.response.status === 400 ||
           error.response.data?.message?.includes("User not found"))
       ) {
-        showToast("User not found. Redirecting to registration...", "info");
-        setTimeout(() => {
-          navigate("/register");
-        }, 1000);
+        showToast(
+          error.response.data?.message ||
+            "User not found. Redirecting to registration...",
+          "error"
+        );
       } else if (error.response && error.response.status === 403) {
         showToast(
           error.response.data?.message ||
