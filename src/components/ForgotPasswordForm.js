@@ -36,7 +36,7 @@ const sendOtpApi = async (email) => {
     if (response.ok) return data;
 
     // Show actual response message (data.msg) if available
-    throw new Error(data.msg || data.message || "Failed to send OTP");
+    throw new Error(data.msg || "Failed to send OTP");
   } catch (error) {
     console.error(error);
     // Show the exact error message
