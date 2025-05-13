@@ -30,12 +30,17 @@ const sendOtpApi = async (email) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),
     });
+
     const data = await response.json();
+
     if (response.ok) return data;
-    throw new Error(data.message || "Failed to send OTP");
+
+    // Show actual response message (data.msg) if available
+    throw new Error(data.msg || data.message || "Failed to send OTP");
   } catch (error) {
     console.error(error);
-    throw new Error("Network error, please try again later.");
+    // Show the exact error message
+    throw new Error(error.message || "Network error, please try again later.");
   }
 };
 
