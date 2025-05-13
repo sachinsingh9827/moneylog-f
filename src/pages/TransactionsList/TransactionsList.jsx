@@ -363,11 +363,21 @@ export default function TransactionsList() {
                         >
                           {totalBalance.toFixed(2)}
                           <br />
-                          <span style={{ fontSize: "12px", color: "gray" }}>
+                          <span
+                            style={{
+                              fontSize: "12px",
+                              color:
+                                totalBalance > 0
+                                  ? "green"
+                                  : totalBalance < 0
+                                    ? "red"
+                                    : "gray",
+                            }}
+                          >
                             {totalBalance > 0
-                              ? "Total Balance (Credit)"
+                              ? `Remaining Credit Balance: ₹${totalBalance}`
                               : totalBalance < 0
-                                ? "Total Balance (Debit)"
+                                ? `Exceeded Debit Balance: ₹${Math.abs(totalBalance)}`
                                 : "No Balance"}
                           </span>
                         </TableCell>
@@ -392,7 +402,6 @@ export default function TransactionsList() {
             </TableBody>
           </Table>
         </TableContainer>
-
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"

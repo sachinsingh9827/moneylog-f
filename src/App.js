@@ -23,6 +23,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 import HelpCenter from "./pages/HelpCenter/HelpCenter";
 import AllUsersLastLoginPage from "./pages/AULLogin/AllUsersLastLoginPage";
 import PaymentPage from "./pages/PaymentPage/PaymentPage";
+import BudgetPage from "./pages/BudgetPage/BudgetPage";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/register" element={<Register />} />
           <Route path="/help" element={<HelpCenter />} />
+          <Route path="/budget" element={<BudgetPage />} />
 
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPasswordForm />} />

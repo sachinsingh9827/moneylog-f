@@ -6,7 +6,7 @@ import { HiOutlineLogout, HiOutlineUser } from "react-icons/hi"; // Import profi
 import { IoHomeOutline } from "react-icons/io5";
 import { Typography } from "@mui/material";
 import { showToast } from "./Toast";
-
+import logo from "../assets/moneylog.png";
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
@@ -29,9 +29,32 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <div className="navbar-logo">
-        <Link to="/">Moneylog</Link>
+      <div
+        className="navbar-logo"
+        style={{ display: "flex", alignItems: "center", gap: "8px" }}
+      >
+        <img
+          src={logo}
+          alt="Logo"
+          style={{
+            height: "30px",
+            width: "30px",
+            objectFit: "contain",
+            background: "transparent",
+          }}
+        />
+        <Link
+          to="/"
+          style={{
+            textDecoration: "none",
+            color: "inherit",
+            fontWeight: "bold",
+          }}
+        >
+          Moneylog
+        </Link>
       </div>
+
       {/* <Typography variant="h6" style={{}}>
         {userName}
       </Typography> */}

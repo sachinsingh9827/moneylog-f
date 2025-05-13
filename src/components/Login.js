@@ -25,6 +25,7 @@ import axios from "axios";
 import Toast, { showToast } from "./Toast"; // Assuming you've created this for showing toast messages
 import { useAuth } from "../context/AuthContext";
 import "./css/Login.css";
+import Footer from "../pages/Footer/Footer";
 
 const BASE_URL = "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
 
@@ -203,107 +204,112 @@ export default function SlotsSignIn() {
   }, []);
 
   return (
-    <Box
-      sx={{
-        backgroundColor: "#f5f5f5",
-        minHeight: "95.4vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-      className="image"
-    >
-      <Toast />
-      <Container maxWidth="sm">
-        <Box
-          sx={{
-            border: "1px solid rgba(255, 255, 255, 0.3)",
-            borderRadius: 3,
-            boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
-            p: 4,
-            maxWidth: 500,
-            mx: "auto",
-            backgroundColor: "rgba(255, 255, 255, 0.15)", // semi-transparent
-            backdropFilter: "blur(10px)",
-            WebkitBackdropFilter: "blur(10px)", // Safari support
-          }}
-        >
-          <h2 style={{ marginBottom: 16, textAlign: "center", color: "#000" }}>
-            Login
-          </h2>
-
-          <Formik
-            initialValues={initialValues}
-            validate={validate}
-            onSubmit={handleSubmit}
+    <>
+      <Box
+        sx={{
+          backgroundColor: "#f5f5f5",
+          minHeight: "95.4vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+        className="image"
+      >
+        <Toast />
+        <Container maxWidth="sm">
+          <Box
+            sx={{
+              border: "1px solid rgba(255, 255, 255, 0.3)",
+              borderRadius: 3,
+              boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
+              p: 4,
+              maxWidth: 500,
+              mx: "auto",
+              backgroundColor: "rgba(255, 255, 255, 0.15)", // semi-transparent
+              backdropFilter: "blur(10px)",
+              WebkitBackdropFilter: "blur(10px)", // Safari support
+            }}
           >
-            {({ errors, isSubmitting }) => (
-              <Form>
-                {Object.values(errors).length > 0 && (
-                  <Alert severity="warning" sx={{ mb: 2 }}>
-                    {Object.values(errors).map((err, i) => (
-                      <div key={i}>- {err}</div>
-                    ))}
-                  </Alert>
-                )}
+            <h2
+              style={{ marginBottom: 16, textAlign: "center", color: "#000" }}
+            >
+              Login
+            </h2>
 
-                <CustomEmailField />
-                <CustomPasswordField
-                  showPassword={showPassword}
-                  toggleShowPassword={toggleShowPassword}
-                />
+            <Formik
+              initialValues={initialValues}
+              validate={validate}
+              onSubmit={handleSubmit}
+            >
+              {({ errors, isSubmitting }) => (
+                <Form>
+                  {Object.values(errors).length > 0 && (
+                    <Alert severity="warning" sx={{ mb: 2 }}>
+                      {Object.values(errors).map((err, i) => (
+                        <div key={i}>- {err}</div>
+                      ))}
+                    </Alert>
+                  )}
 
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    mt: 2,
-                  }}
-                >
-                  <Field name="tandc">
-                    {({ field }) => (
-                      <FormControlLabel
-                        control={<Checkbox {...field} color="primary" />}
-                        label="I agree with the T&C"
-                        sx={{ fontSize: 14 }}
-                      />
-                    )}
-                  </Field>
+                  <CustomEmailField />
+                  <CustomPasswordField
+                    showPassword={showPassword}
+                    toggleShowPassword={toggleShowPassword}
+                  />
 
-                  <Link
-                    href="/forgot-password"
-                    variant="body2"
-                    style={{ marginTop: "10px", color: "#333" }}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      mt: 2,
+                    }}
                   >
-                    Forgot password?
-                  </Link>
-                </Box>
+                    <Field name="tandc">
+                      {({ field }) => (
+                        <FormControlLabel
+                          control={<Checkbox {...field} color="primary" />}
+                          label="I agree with the T&C"
+                          sx={{ fontSize: 14 }}
+                        />
+                      )}
+                    </Field>
 
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="info"
-                  size="small"
-                  fullWidth
-                  sx={{ my: 2 }}
-                  disabled={isSubmitting}
-                >
-                  Login
-                </Button>
-
-                <Box sx={{ textAlign: "center" }}>
-                  <p style={{ color: "#000" }}>
-                    Don't have an account?{" "}
-                    <Link href="/register" variant="body2">
-                      Register here
+                    <Link
+                      href="/forgot-password"
+                      variant="body2"
+                      style={{ marginTop: "10px", color: "#333" }}
+                    >
+                      Forgot password?
                     </Link>
-                  </p>
-                </Box>
-              </Form>
-            )}
-          </Formik>
-        </Box>
-      </Container>
-    </Box>
+                  </Box>
+
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="info"
+                    size="small"
+                    fullWidth
+                    sx={{ my: 2 }}
+                    disabled={isSubmitting}
+                  >
+                    Login
+                  </Button>
+
+                  <Box sx={{ textAlign: "center" }}>
+                    <p style={{ color: "#000" }}>
+                      Don't have an account?{" "}
+                      <Link href="/register" variant="body2">
+                        Register here
+                      </Link>
+                    </p>
+                  </Box>
+                </Form>
+              )}
+            </Formik>
+          </Box>
+        </Container>
+      </Box>{" "}
+      <Footer />
+    </>
   );
 }

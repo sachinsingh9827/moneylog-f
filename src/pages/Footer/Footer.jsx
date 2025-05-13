@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Box, Container, Grid, Typography, Link, Divider } from "@mui/material";
+import { Box, Container, Grid, Typography, Link } from "@mui/material";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import PhoneIcon from "@mui/icons-material/Phone";
 import SendIcon from "@mui/icons-material/Send";
-import PaymentsIcon from "@mui/icons-material/Payments";
+import logo from "../../assets/moneylog.png";
+import { Link as RouterLink, useLocation } from "react-router-dom";
+import { Link as MuiLink } from "@mui/material";
+
 const Footer = () => {
   const navigate = useNavigate(); // Initialize the navigate function
 
@@ -40,114 +43,130 @@ const Footer = () => {
       sx={{
         backgroundColor: "#063852",
         color: "#fff",
-        py: 2,
+        py: 4,
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
       }}
     >
       <Container>
-        <Grid container spacing={4} direction="column" sx={{ mt: 2 }}>
+        <Grid container spacing={4}>
           {/* About Section */}
-          <Grid item xs={12}>
+          <Grid item xs={12} md={6}>
+            <Typography variant="h6" fontWeight="bold" mb={1}>
+              About MoneyLog
+            </Typography>
+            <Typography variant="body2" sx={{ color: "#ccc" }}>
+              MoneyLog is a smart financial tracking app that helps you manage
+              expenses, monitor budgets, and reach your financial goals with
+              ease. We aim to simplify money management for individuals and
+              businesses.
+            </Typography>
+          </Grid>
+
+          {/* Branding & Links */}
+          <Grid item xs={12} md={6}>
             <Box
               sx={{
                 display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
                 justifyContent: "space-between",
-                alignItems: "center",
+                alignItems: { xs: "flex-start", sm: "center" },
                 flexWrap: "wrap",
-                padding: "10px",
+                gap: 2,
               }}
             >
-              <Typography
-                variant="h6"
+              {/* Logo */}
+              <Link
+                onClick={handleLogoClick}
+                underline="none"
                 sx={{
-                  fontWeight: "bold",
                   display: "flex",
                   alignItems: "center",
+                  color: "#0077b6",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    color: "#f39c12",
+                    transform: "scale(1.05)",
+                  },
                 }}
               >
-                <Link
-                  onClick={handleLogoClick}
-                  sx={{
-                    color: "#0077b6",
-                    textDecoration: "none",
-                    cursor: "pointer",
-                    transition: "all 0.3s ease",
-                    display: "flex",
-                    alignItems: "center",
-                    "&:hover": {
-                      color: "#f39c12",
-                      transform: "scale(1.05)",
-                    },
+                <img
+                  src={logo}
+                  alt="Logo"
+                  style={{
+                    height: "30px",
+                    width: "30px",
+                    objectFit: "contain",
+                    background: "transparent",
                   }}
+                />
+                <Typography
+                  variant="h6"
+                  fontWeight="bold"
+                  sx={{ fontSize: { xs: "1rem", sm: "1.25rem" } }}
+                  style={{ marginLeft: "5px" }}
                 >
-                  <PaymentsIcon sx={{ marginRight: 1 }} />
                   MoneyLog
-                </Link>
-              </Typography>
+                </Typography>
+              </Link>
 
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: 2,
-                  alignItems: "center",
-                  flexWrap: "wrap", // Wrap content on smaller screens
-                }}
-              >
+              {/* Navigation Links */}
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
                 {[
                   { label: "About Us", href: "/about" },
                   { label: "Contact Us", href: "/contact-us" },
                   { label: "Terms & Conditions", href: "/terms" },
                   { label: "Privacy Policy", href: "/privacy" },
                   { label: "Help", href: "/help" },
+                  { label: "Budget", href: "/budget" },
                   ...(isLoggedIn ? [] : [{ label: "Login", href: "/login" }]),
                 ].map((item) => (
-                  <Link
+                  <MuiLink
+                    component={RouterLink}
+                    to={item.href}
                     key={item.href}
-                    href={item.href}
                     sx={{
                       display: "flex",
                       alignItems: "center",
+                      textDecoration: "none",
                       color:
                         location.pathname === item.href ? "#f39c12" : "inherit",
-                      textDecoration: "none",
                       transition: "color 0.3s ease",
-                      "&:hover": {
-                        color: "#f39c12",
-                      },
-                      fontSize: { xs: "0.875rem", sm: "1rem" }, // Responsive font size
+                      fontSize: { xs: "0.875rem", sm: "1rem" },
+                      "&:hover": { color: "#f39c12" },
                     }}
+                    onClick={handleLogoClick}
                   >
-                    <SendIcon sx={{ marginRight: 1 }} />
+                    <SendIcon sx={{ fontSize: 16, mr: 0.5 }} />
                     {item.label}
-                  </Link>
+                  </MuiLink>
                 ))}
               </Box>
             </Box>
           </Grid>
 
-          {/* Contact Section */}
+          {/* Contact Info */}
           <Grid item xs={12}>
             <Box
               sx={{
                 display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
                 justifyContent: "space-between",
                 alignItems: "center",
                 flexWrap: "wrap",
-                padding: "10px",
-                borderRadius: 2,
+                gap: 2,
+                px: 2,
+                py: 1,
               }}
             >
-              <Box
-                sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}
-              >
-                <MailOutlineIcon sx={{ color: "#757575" }} />
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <MailOutlineIcon sx={{ color: "#ccc" }} />
                 <Link
                   href="mailto:moneylog.team@gmail.com"
                   sx={{
                     textDecoration: "none",
                     color: "inherit",
-                    transition: "color 0.3s ease",
                     "&:hover": { color: "#f39c12" },
                   }}
                 >
@@ -155,95 +174,65 @@ const Footer = () => {
                 </Link>
               </Box>
 
-              <Box
-                sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}
-              >
-                <PhoneIcon sx={{ color: "#757575" }} />
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <PhoneIcon sx={{ color: "#ccc" }} />
                 <Typography variant="body2">+123 456 789</Typography>
               </Box>
             </Box>
           </Grid>
 
-          {/* Footer Text */}
+          {/* Social & Copyright */}
           <Grid item xs={12}>
             <Box
               sx={{
                 display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
                 justifyContent: "space-between",
                 alignItems: "center",
-                flexWrap: "wrap",
-                backgroundColor: "skyblue",
-                padding: "10px 20px",
+                backgroundColor: "#272d30",
+                px: 2,
+                py: 2,
                 borderRadius: 2,
+                gap: 2,
               }}
             >
-              {/* Left Side Text */}
               <Typography
                 variant="body2"
                 sx={{
                   fontSize: "0.875rem",
-                  color: "#757575",
-                  textAlign: { xs: "", sm: "left" }, // Center on mobile, left on larger
-                  width: { xs: "100%", sm: "auto" }, // Full width on mobile, auto on larger
-                  mb: { xs: 2, sm: 0 }, // Margin bottom on mobile for spacing
+                  color: "#",
+                  textAlign: { xs: "center", sm: "left" },
                 }}
               >
                 © 2025 MoneyLog. All rights reserved.
               </Typography>
 
-              {/* Right Side Icons */}
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: 2,
-                  justifyContent: { xs: "center", sm: "flex-end" }, // Center icons on mobile, right on larger
-                  width: { xs: "50%", sm: "auto" }, // Full width on mobile, auto on larger
-                }}
-              >
+              <Box sx={{ display: "flex", gap: 2 }}>
                 <Link
                   href="https://wa.me/123456789"
                   target="_blank"
-                  sx={{
-                    color: "inherit",
-                    transition: "color 0.3s ease",
-                    "&:hover": { color: "#25D366" },
-                  }}
+                  sx={{ color: "inherit", "&:hover": { color: "#25D366" } }}
                 >
                   <WhatsAppIcon />
                 </Link>
-
                 <Link
                   href="https://instagram.com/yourprofile"
                   target="_blank"
-                  sx={{
-                    color: "inherit",
-                    transition: "color 0.3s ease",
-                    "&:hover": { color: "#E1306C" },
-                  }}
+                  sx={{ color: "inherit", "&:hover": { color: "#E1306C" } }}
                 >
                   <InstagramIcon />
                 </Link>
-
                 <Link
                   href="https://twitter.com/yourprofile"
                   target="_blank"
-                  sx={{
-                    color: "inherit",
-                    transition: "color 0.3s ease",
-                    "&:hover": { color: "#1DA1F2" },
-                  }}
+                  sx={{ color: "inherit", "&:hover": { color: "#1DA1F2" } }}
                 >
                   <TwitterIcon />
                 </Link>
-
                 <Link
                   href="https://linkedin.com/in/yourprofile"
                   target="_blank"
-                  sx={{
-                    color: "inherit",
-                    transition: "color 0.3s ease",
-                    "&:hover": { color: "#0077B5" },
-                  }}
+                  sx={{ color: "inherit", "&:hover": { color: "#0077B5" } }}
                 >
                   <LinkedInIcon />
                 </Link>

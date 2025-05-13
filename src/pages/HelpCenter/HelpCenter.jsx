@@ -152,14 +152,15 @@ export default function HelpCenter() {
       />
       <Box
         sx={{
-          maxWidth: "full",
-          margin: "0 auto",
+          maxWidth: "auto",
+          margin: "10px",
           padding: "2rem",
         }}
         style={{
           backgroundColor: "#fff",
           borderRadius: "10px",
           marginTop: "10px",
+          marginBottom: "20px",
         }}
       >
         <Typography

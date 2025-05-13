@@ -29,6 +29,7 @@ const PrivacyPolicy = () => {
             backgroundColor: "#fff",
             borderRadius: "10px",
             marginTop: "10px",
+            marginBottom: "20px",
           }}
         >
           <Typography

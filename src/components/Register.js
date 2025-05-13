@@ -22,6 +22,7 @@ import { Formik, Field, Form } from "formik";
 import axios from "axios";
 import PersonIcon from "@mui/icons-material/Person";
 import { showToast } from "./Toast";
+import Footer from "../pages/Footer/Footer";
 
 const BASE_URL = "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
 
@@ -266,87 +267,93 @@ export default function RegisterForm() {
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: "95.4vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-      className="image"
-    >
-      <Container maxWidth="sm">
-        <Box
-          sx={{
-            border: "1px solid rgba(255, 255, 255, 0.3)",
-            borderRadius: 3,
-            boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
-            p: 4,
-            maxWidth: 500,
-            mx: "auto",
-            backgroundColor: "rgba(255, 255, 255, 0.15)", // Glassmorphism feel
-            backdropFilter: "blur(10px)",
-            WebkitBackdropFilter: "blur(10px)", // Safari support
-            marginTop: "20px",
-          }}
-        >
-          <h2 style={{ marginBottom: 24, textAlign: "center", color: "#000" }}>
-            Register
-          </h2>
-          <Formik
-            initialValues={initialValues}
-            validate={validate}
-            onSubmit={handleSubmit}
+    <>
+      <Box
+        sx={{
+          minHeight: "95.4vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+        className="image"
+      >
+        <Container maxWidth="sm">
+          <Box
+            sx={{
+              border: "1px solid rgba(255, 255, 255, 0.3)",
+              borderRadius: 3,
+              boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
+              p: 4,
+              maxWidth: 500,
+              mx: "auto",
+              backgroundColor: "rgba(255, 255, 255, 0.15)", // Glassmorphism feel
+              backdropFilter: "blur(10px)",
+              WebkitBackdropFilter: "blur(10px)", // Safari support
+              marginTop: "20px",
+              marginBottom: "10px",
+            }}
           >
-            {({ errors, isSubmitting }) => (
-              <Form noValidate>
-                {Object.keys(errors).length > 0 && (
-                  <Alert severity="warning" sx={{ mb: 2 }}>
-                    {Object.values(errors).map((err, i) => (
-                      <div key={i}>• {err}</div>
-                    ))}
-                  </Alert>
-                )}
+            <h2
+              style={{ marginBottom: 24, textAlign: "center", color: "#000" }}
+            >
+              Register
+            </h2>
+            <Formik
+              initialValues={initialValues}
+              validate={validate}
+              onSubmit={handleSubmit}
+            >
+              {({ errors, isSubmitting }) => (
+                <Form noValidate>
+                  {Object.keys(errors).length > 0 && (
+                    <Alert severity="warning" sx={{ mb: 2 }}>
+                      {Object.values(errors).map((err, i) => (
+                        <div key={i}>• {err}</div>
+                      ))}
+                    </Alert>
+                  )}
 
-                <CustomNameField />
-                <CustomEmailField />
-                <CustomPasswordField
-                  showPassword={showPassword}
-                  handleClickShowPassword={handleClickShowPassword}
-                  handleMouseDownPassword={handleMouseDownPassword}
-                />
-                <CustomConfirmPasswordField
-                  showPassword={showPassword}
-                  handleClickShowPassword={handleClickShowPassword}
-                  handleMouseDownPassword={handleMouseDownPassword}
-                />
-                <Box sx={{ mt: 2 }}>
-                  <AgreeWithTerms />
-                </Box>
+                  <CustomNameField />
+                  <CustomEmailField />
+                  <CustomPasswordField
+                    showPassword={showPassword}
+                    handleClickShowPassword={handleClickShowPassword}
+                    handleMouseDownPassword={handleMouseDownPassword}
+                  />
+                  <CustomConfirmPasswordField
+                    showPassword={showPassword}
+                    handleClickShowPassword={handleClickShowPassword}
+                    handleMouseDownPassword={handleMouseDownPassword}
+                  />
+                  <Box sx={{ mt: 2 }}>
+                    <AgreeWithTerms />
+                  </Box>
 
-                <Button
-                  type="submit"
-                  variant="contained"
-                  fullWidth
-                  sx={{ mt: 3 }}
-                  disabled={isSubmitting}
-                >
-                  Register
-                </Button>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    fullWidth
+                    sx={{ mt: 3 }}
+                    disabled={isSubmitting}
+                  >
+                    Register
+                  </Button>
 
-                <Link
-                  href="/login"
-                  variant="body2"
-                  display="block"
-                  sx={{ mt: 2, textAlign: "center", color: "#333" }}
-                >
-                  Back to login
-                </Link>
-              </Form>
-            )}
-          </Formik>
-        </Box>
-      </Container>
-    </Box>
+                  <Link
+                    href="/login"
+                    variant="body2"
+                    display="block"
+                    sx={{ mt: 2, textAlign: "center", color: "#333" }}
+                  >
+                    Back to login
+                  </Link>
+                </Form>
+              )}
+            </Formik>
+          </Box>
+        </Container>
+      </Box>
+      <Footer />
+    </>
   );
 }

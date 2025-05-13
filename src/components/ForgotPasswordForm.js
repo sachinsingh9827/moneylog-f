@@ -18,6 +18,7 @@ import { Formik, Field, Form } from "formik";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Footer from "../pages/Footer/Footer";
 
 const BASE_URL = "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
 
@@ -265,70 +266,77 @@ export default function ForgotPasswordForm() {
   }
 
   return (
-    <Container
-      maxWidth="full"
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
-        textAlign: "center",
-        backgroundColor: "#f5f5f5",
-      }}
-      className="image"
-    >
-      <Box
+    <>
+      <Container
+        maxWidth="full"
         sx={{
-          border: "1px solid #ccc",
-          borderRadius: 2,
-          boxShadow: 3,
-          p: 3,
-          maxWidth: 400,
-          mx: "auto",
-          backgroundColor: "#fff",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
+          textAlign: "center",
+          backgroundColor: "#f5f5f5",
         }}
+        className="image"
       >
-        <Title text={"Forgot Password"} />
-        <Formik
-          initialValues={initialValues}
-          validate={validate}
-          onSubmit={handleSubmit}
+        <Box
+          sx={{
+            border: "1px solid #ccc",
+            borderRadius: 2,
+            boxShadow: 3,
+            p: 3,
+            maxWidth: 400,
+            mx: "auto",
+            backgroundColor: "#fff",
+          }}
         >
-          {({ touched, errors }) => (
-            <Form>
-              {Object.values(errors).length > 0 && (
-                <Alert severity="warning" sx={{ mb: 2 }}>
-                  {Object.values(errors).map((error, i) => (
-                    <div key={i}>- {error}</div>
-                  ))}
-                </Alert>
-              )}
-              <CustomEmailField />
-              {otpSent && !otpVerified && <CustomOtpField />}
-              {otpVerified && (
-                <CustomPasswordField
-                  showPassword={showPassword}
-                  toggleShowPassword={toggleShowPassword}
+          <Title text={"Forgot Password"} />
+          <Formik
+            initialValues={initialValues}
+            validate={validate}
+            onSubmit={handleSubmit}
+          >
+            {({ touched, errors }) => (
+              <Form>
+                {Object.values(errors).length > 0 && (
+                  <Alert severity="warning" sx={{ mb: 2 }}>
+                    {Object.values(errors).map((error, i) => (
+                      <div key={i}>- {error}</div>
+                    ))}
+                  </Alert>
+                )}
+                <CustomEmailField />
+                {otpSent && !otpVerified && <CustomOtpField />}
+                {otpVerified && (
+                  <CustomPasswordField
+                    showPassword={showPassword}
+                    toggleShowPassword={toggleShowPassword}
+                  />
+                )}
+                <CustomButton
+                  label={
+                    !otpSent
+                      ? "Send OTP"
+                      : otpSent && !otpVerified
+                        ? "Verify OTP"
+                        : "Update Password"
+                  }
                 />
-              )}
-              <CustomButton
-                label={
-                  !otpSent
-                    ? "Send OTP"
-                    : otpSent && !otpVerified
-                      ? "Verify OTP"
-                      : "Update Password"
-                }
-              />
-              <div
-                style={{ display: "flex", justifyContent: "end", marginTop: 8 }}
-              >
-                <BackToLoginLink onClick={handleBackToLoginClick} />
-              </div>
-            </Form>
-          )}
-        </Formik>
-      </Box>
-    </Container>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "end",
+                    marginTop: 8,
+                  }}
+                >
+                  <BackToLoginLink onClick={handleBackToLoginClick} />
+                </div>
+              </Form>
+            )}
+          </Formik>
+        </Box>{" "}
+      </Container>{" "}
+      <Footer />
+    </>
   );
 }
