@@ -158,13 +158,10 @@ export default function SlotsSignIn() {
     }
 
     try {
-      const res = await axios.post(
-        "http://localhost:5000/moneylog/users/login",
-        {
-          email: values.email,
-          password: values.password,
-        }
-      );
+      const res = await axios.post(`${BASE_URL}/moneylog/users/login`, {
+        email: values.email,
+        password: values.password,
+      });
 
       const { user, token } = res.data;
       login({ user, token }); // updates context + localStorage
