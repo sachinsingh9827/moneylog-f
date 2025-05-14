@@ -740,8 +740,15 @@ const HistoryPage = () => {
                       onClick={async () => {
                         try {
                           const response = await axios.delete(
-                            `${BASE_URL}/moneylog/customers/customers/${id}/transactions/${selectedTransaction._id}`
+                            `${BASE_URL}/moneylog/customers/customers/${id}/transactions/${selectedTransaction._id}`,
+                            {
+                              headers: {
+                                "Content-Type": "application/json",
+                                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                              },
+                            }
                           );
+
                           if (response.status === 200) {
                             showToast(
                               "Transaction deleted successfully!",
@@ -754,12 +761,49 @@ const HistoryPage = () => {
                             );
                             setOpenModal(false); // Close detail modal
                             setSelectedTransaction(null);
+                          } else {
+                            showToast(
+                              "Failed to delete transaction. Please try again.",
+                              "error"
+                            );
                           }
                         } catch (error) {
                           console.error("Error deleting transaction:", error);
-                          showToast("Failed to delete transaction.");
+
+                          if (error.response) {
+                            const errorMessage =
+                              error.response.data?.message ||
+                              "An error occurred.";
+                            showToast(errorMessage, "error");
+
+                            if (error.response.status === 401) {
+                              // Session expired or invalid token - log out user
+                              toast.error(
+                                "Session expired. Please log in again."
+                              );
+
+                              // Clear token and user data from localStorage
+                              localStorage.removeItem("token");
+                              localStorage.removeItem("user");
+
+                              // Redirect to login page
+                              navigate("/login");
+                            } else {
+                              showToast(
+                                "Failed to delete transaction. Please try again.",
+                                "error"
+                              );
+                            }
+                          } else {
+                            // Handle network errors or other issues
+                            showToast(
+                              "Failed to delete transaction. Please check your connection.",
+                              "error"
+                            );
+                          }
+                        } finally {
+                          setOpenConfirmModal(false); // Close confirmation modal
                         }
-                        setOpenConfirmModal(false); // Close confirm modal
                       }}
                     >
                       Yes, Delete
