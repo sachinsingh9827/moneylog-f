@@ -244,7 +244,7 @@ const ContactUsPage = () => {
 
       {/* Modal (Dialog) for Success Message */}
       <Dialog open={openModal} onClose={handleCloseModal}>
-        <DialogTitle>Message Received</DialogTitle>
+        <DialogTitle style={{ color: "#063852" }}>Message Received</DialogTitle>
         <DialogContent>
           <Typography variant="body1" sx={{ mb: 2 }}>
             MoneyLog is reviewing your message. You will receive a response
