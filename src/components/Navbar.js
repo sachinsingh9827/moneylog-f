@@ -14,6 +14,7 @@ const Navbar = () => {
     showToast("You have been logged out successfully.", "info");
     logout();
     setMenuOpen(false);
+    window.location.reload(); // This will reload the page
   };
 
   return (
