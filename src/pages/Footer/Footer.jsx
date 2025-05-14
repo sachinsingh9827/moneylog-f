@@ -172,7 +172,11 @@ const Footer = () => {
               <MailOutlineIcon sx={{ mr: 1, color: "#ccc" }} />
               <Link
                 href="mailto:moneylog.team@gmail.com"
-                sx={{ color: "#ccc", "&:hover": { color: "#f39c12" } }}
+                sx={{
+                  color: "#ccc",
+                  textDecoration: "none", // Remove underline
+                  "&:hover": { color: "#f39c12" },
+                }}
               >
                 moneylog.team@gmail.com
               </Link>
