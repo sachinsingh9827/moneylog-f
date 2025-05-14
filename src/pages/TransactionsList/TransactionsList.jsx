@@ -22,6 +22,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Toast, { showToast } from "../../components/Toast";
 import Loader from "../../components/Loader";
 import DeviceDetector from "device-detector-js";
+import { toast } from "react-toastify";
 const BASE_URL =
   process.env.REACT_APP_BASE_URL ||
   "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
@@ -52,6 +53,13 @@ export default function TransactionsList() {
   }, []);
 
   const fetchCustomer = async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      toast.error("You are not logged in. Please log in again.");
+      setLoading(false);
+      return;
+    }
     try {
       const userData = JSON.parse(localStorage.getItem("user"));
       if (!userData || !userData.id) {
@@ -64,7 +72,13 @@ export default function TransactionsList() {
       setLoading(true);
       const userId = userData.id;
       const response = await axios.get(
-        `${BASE_URL}/moneylog/customers/get/${userId}`
+        `${BASE_URL}/moneylog/customers/get/${userId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       setCustomerData(response.data.customer);
