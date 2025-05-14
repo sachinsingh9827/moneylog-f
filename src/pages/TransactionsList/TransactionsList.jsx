@@ -146,29 +146,76 @@ export default function TransactionsList() {
   };
 
   const confirmDeleteCustomer = async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      toast.error("You are not logged in. Please log in again.");
+      setLoading(false);
+      return;
+    }
+
     try {
-      await axios.delete(
-        `${BASE_URL}/moneylog/customers/customers/${selectedCustomerId}`
+      const response = await axios.delete(
+        `${BASE_URL}/moneylog/customers/customers/${selectedCustomerId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
-      setCustomerData((prev) =>
-        prev.filter((customer) => customer._id !== selectedCustomerId)
-      );
-      showToast("Customers deleted successfully!", "success");
-      fetchCustomer();
+
+      if (response.status === 200) {
+        setCustomerData((prev) =>
+          prev.filter((customer) => customer._id !== selectedCustomerId)
+        );
+        showToast("Customer deleted successfully!", "success");
+        fetchCustomer(); // Refresh the customer list after deletion
+      } else {
+        showToast("Failed to delete customer. Please try again.", "error");
+      }
     } catch (error) {
       console.error("Error deleting customer:", error);
-      showToast("Failed to delete customer. Try again.");
+
+      if (error.response) {
+        // If the error comes from the server
+        const errorMessage =
+          error.response.data?.message || "An error occurred.";
+        showToast(errorMessage, "error");
+
+        if (error.response.status === 401) {
+          // Invalid token or session expired - log out user
+          toast.error("Session expired. Please log in again.");
+
+          // Clear token and user data
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+
+          // Redirect to login page
+          navigate("/login");
+        } else {
+          toast.error("Failed to delete customer. Please try again.");
+        }
+      } else {
+        // Network error or other issues
+        showToast(
+          "Failed to delete customer. Please check your connection.",
+          "error"
+        );
+      }
     } finally {
-      setOpenConfirmModal(false);
-      setSelectedCustomerId(null);
+      setOpenConfirmModal(false); // Close the confirmation modal
+      setSelectedCustomerId(null); // Clear the selected customer id
+      setLoading(false); // Reset loading state
     }
   };
 
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(purple[500]),
-    backgroundColor: purple[500],
+    backgroundColor: "#004080",
     "&:hover": {
-      backgroundColor: purple[700],
+      backgroundColor: "skyblue",
+      color: "black",
     },
   }));
 

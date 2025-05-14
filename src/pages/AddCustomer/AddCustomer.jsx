@@ -98,18 +98,14 @@ export default function SlotsAddCustomer() {
       setSubmitting(false);
     }
   };
+
   const handleBack = () => {
     window.history.back(); // Navigates to the previous page
   };
 
   return (
     <div className="page">
-      {" "}
-      <Button
-        variant="outlined"
-        onClick={() => navigate(-1)}
-        style={{ margin: 16 }}
-      >
+      <Button variant="outlined" onClick={handleBack} style={{ margin: 16 }}>
         Back
       </Button>
       <Toast />
@@ -121,14 +117,13 @@ export default function SlotsAddCustomer() {
           justifyContent: "center",
         }}
       >
-        <Container maxWidth="sm">
+        <Container maxWidth="md">
           <Box
             sx={{
               border: "1px solid #ccc",
               borderRadius: 2,
               boxShadow: 3,
               p: 3,
-              maxWidth: 500,
               mx: "auto",
               backgroundColor: "#fff",
             }}
@@ -137,7 +132,6 @@ export default function SlotsAddCustomer() {
               style={{
                 fontWeight: "bold",
                 marginBottom: "20px",
-                height: "10vh",
                 color: "#004080",
               }}
             >
@@ -166,7 +160,7 @@ export default function SlotsAddCustomer() {
                       <FormControl fullWidth margin="normal">
                         <TextField
                           {...field}
-                          label="Name"
+                          label="Customer Name"
                           variant="outlined"
                           size="small"
                           error={touched.name && Boolean(errors.name)}
@@ -184,7 +178,7 @@ export default function SlotsAddCustomer() {
                       <FormControl fullWidth margin="normal">
                         <TextField
                           {...field}
-                          label="Email"
+                          label="Customer Email"
                           variant="outlined"
                           size="small"
                           type="email"
@@ -203,7 +197,7 @@ export default function SlotsAddCustomer() {
                       <FormControl fullWidth margin="normal">
                         <TextField
                           {...field}
-                          label="Mobile"
+                          label="Customer Mobile"
                           variant="outlined"
                           size="small"
                           type="tel"
@@ -222,7 +216,7 @@ export default function SlotsAddCustomer() {
                       <FormControl fullWidth margin="normal">
                         <TextField
                           {...field}
-                          label="Address"
+                          label="Customer Address"
                           variant="outlined"
                           size="small"
                           error={touched.address && Boolean(errors.address)}
@@ -240,7 +234,14 @@ export default function SlotsAddCustomer() {
                     variant="contained"
                     color="primary"
                     fullWidth
-                    sx={{ mt: 2 }}
+                    sx={{
+                      mt: 2,
+                      backgroundColor: "#004080", // Custom background color
+                      color: "#fff", // Text color
+                      "&:hover": {
+                        backgroundColor: "#003366", // Hover color
+                      },
+                    }}
                     disabled={isSubmitting}
                   >
                     Add Customer
@@ -249,13 +250,15 @@ export default function SlotsAddCustomer() {
               )}
             </Formik>
           </Box>
+
           <InstructionsPage
-            title="Steps to Add a New Product"
+            title="Steps to Add a New Customer"
             steps={[
-              "Fill in product details.",
-              "Upload product images.",
-              "Click Save.",
-              "Publish the product to the store.",
+              "Enter customer name.",
+              "Enter customer email.",
+              "Enter customer mobile number.",
+              "Enter customer address (optional).",
+              "Click 'Add Customer' button.",
             ]}
           />
         </Container>
