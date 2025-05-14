@@ -1,36 +1,40 @@
 import React, { useEffect, useState } from "react";
-import { Box, Container, Grid, Typography, Link } from "@mui/material";
+import {
+  Box,
+  Container,
+  Grid,
+  Typography,
+  Link,
+  IconButton,
+  Button,
+} from "@mui/material";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import { useNavigate } from "react-router-dom";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import PhoneIcon from "@mui/icons-material/Phone";
+import InstallMobileIcon from "@mui/icons-material/InstallMobile";
 import SendIcon from "@mui/icons-material/Send";
+import { useNavigate, useLocation } from "react-router-dom";
 import logo from "../../assets/moneylog.png";
-import { Link as RouterLink, useLocation } from "react-router-dom";
-import { Link as MuiLink } from "@mui/material";
 
 const Footer = () => {
-  const navigate = useNavigate(); // Initialize the navigate function
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showInstallButton, setShowInstallButton] = useState(false);
 
   useEffect(() => {
-    // Check if token or user info exists in localStorage
     const token = localStorage.getItem("token");
     const user = localStorage.getItem("user");
-    if (token && user) {
-      setIsLoggedIn(true);
-    }
+    if (token && user) setIsLoggedIn(true);
 
-    // Detect PWA install prompt
     const handleBeforeInstallPrompt = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
-      setShowInstallButton(true); // Show the button when PWA is installable
+      setShowInstallButton(true);
     };
 
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
@@ -43,23 +47,25 @@ const Footer = () => {
     };
   }, []);
 
-  // Function to handle PWA installation
   const handleInstallClick = () => {
     if (deferredPrompt) {
-      deferredPrompt.prompt(); // Show the install prompt
-      deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === "accepted") {
-          console.log("User accepted the install prompt");
-        } else {
-          console.log("User dismissed the install prompt");
-        }
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.finally(() => {
         setDeferredPrompt(null);
-        setShowInstallButton(false); // Hide the button after installation
+        setShowInstallButton(false);
       });
     }
   };
 
-  const location = useLocation();
+  const navLinks = [
+    { label: "About", path: "/about" },
+    { label: "Contact", path: "/contact-us" },
+    { label: "Privacy", path: "/privacy" },
+    { label: "Terms", path: "/terms" },
+    { label: "Help", path: "/help" },
+    { label: "Budget", path: "/budget" },
+    ...(isLoggedIn ? [] : [{ label: "Login", path: "/login" }]),
+  ];
 
   return (
     <Box
@@ -73,32 +79,9 @@ const Footer = () => {
     >
       <Container>
         <Grid container spacing={4}>
-          {/* About Section */}
-          <Grid item xs={12} md={6}>
-            <Typography variant="h6" fontWeight="bold" mb={1}>
-              About MoneyLog
-            </Typography>
-            <Typography variant="body2" sx={{ color: "#ccc" }}>
-              MoneyLog is a smart financial tracking app that helps you manage
-              expenses, monitor budgets, and reach your financial goals with
-              ease. We aim to simplify money management for individuals and
-              businesses.
-            </Typography>
-          </Grid>
-
           {/* Branding & Links */}
           <Grid item xs={12} md={6}>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: { xs: "column", sm: "row" },
-                justifyContent: "space-between",
-                alignItems: { xs: "flex-start", sm: "center" },
-                flexWrap: "wrap",
-                gap: 2,
-              }}
-            >
-              {/* Logo */}
+            <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
               <Link
                 onClick={() => navigate("/")}
                 underline="none"
@@ -136,166 +119,137 @@ const Footer = () => {
                   MoneyLog
                 </Typography>
               </Link>
-
-              {/* Navigation Links */}
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
-                {[
-                  { label: "About Us", href: "/about" },
-                  { label: "Contact Us", href: "/contact-us" },
-                  { label: "Terms & Conditions", href: "/terms" },
-                  { label: "Privacy Policy", href: "/privacy" },
-                  { label: "Help", href: "/help" },
-                  { label: "Budget", href: "/budget" },
-                  ...(isLoggedIn ? [] : [{ label: "Login", href: "/login" }]),
-                ].map((item) => (
-                  <MuiLink
-                    component={RouterLink}
-                    to={item.href}
-                    key={item.href}
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      textDecoration: "none",
-                      color:
-                        location.pathname === item.href ? "#f39c12" : "inherit",
-                      transition: "color 0.3s ease",
-                      fontSize: { xs: "0.875rem", sm: "1rem" },
-                      "&:hover": { color: "#f39c12" },
-                    }}
-                    onClick={() =>
-                      window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
-                    }
-                  >
-                    <SendIcon sx={{ fontSize: 16, mr: 0.5 }} />
-                    {item.label}
-                  </MuiLink>
-                ))}
-              </Box>
             </Box>
-          </Grid>
-
-          {/* Contact Info */}
-          <Grid item xs={12}>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: { xs: "column", sm: "row" },
-                justifyContent: "space-between",
-                alignItems: "center",
-                flexWrap: "wrap",
-                gap: 2,
-                px: 2,
-                py: 1,
-              }}
-            >
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <MailOutlineIcon sx={{ color: "#ccc" }} />
+            <Typography variant="body2" sx={{ color: "#ccc", mb: 3 }}>
+              Smart expense tracking and budgeting app to manage your finances
+              with ease.
+            </Typography>
+            <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
+              {navLinks.map((link) => (
                 <Link
-                  href="mailto:moneylog.team@gmail.com"
+                  key={link.path}
+                  href={link.path}
+                  underline="none"
                   sx={{
-                    textDecoration: "none",
-                    color: "inherit",
-                    "&:hover": { color: "#f39c12" },
+                    color: location.pathname === link.path ? "#f39c12" : "#ccc",
+                    fontSize: "1rem",
+                    fontWeight: "bold",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 0.2,
+                    "& .hover-icon": {
+                      opacity: 0,
+                      transform: "translateX(-5px)",
+                      transition: "all 0.3s ease",
+                    },
+                    "&:hover .hover-icon": {
+                      opacity: 1,
+                      transform: "translateX(0)",
+                    },
+                    "&:hover": {
+                      color: "#f39c12",
+                    },
                   }}
+                  onClick={() =>
+                    window.scrollTo({ top: 0, behavior: "smooth" })
+                  }
                 >
-                  moneylog.team@gmail.com
+                  <Box component="span" className="hover-icon">
+                    <SendIcon sx={{ mt: 1, fontSize: 16 }} />
+                  </Box>
+                  {link.label}
                 </Link>
-              </Box>
-
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <PhoneIcon sx={{ color: "#ccc" }} />
-                <Typography variant="body2" sx={{ color: "#ff9800" }}>
-                  Coming Soon!
-                </Typography>
-              </Box>
+              ))}
             </Box>
           </Grid>
 
-          {/* Social & Copyright */}
-          <Grid item xs={12}>
-            <Box
+          {/* Contact & Social */}
+          <Grid item xs={12} md={6}>
+            <Typography variant="h6" sx={{ mb: 2 }}>
+              Contact
+            </Typography>
+            <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+              <MailOutlineIcon sx={{ mr: 1, color: "#ccc" }} />
+              <Link
+                href="mailto:moneylog.team@gmail.com"
+                sx={{ color: "#ccc", "&:hover": { color: "#f39c12" } }}
+              >
+                moneylog.team@gmail.com
+              </Link>
+            </Box>
+            <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
+              <PhoneIcon sx={{ mr: 1, color: "#ccc" }} />
+              <Typography sx={{ color: "#ff9800" }}>Coming Soon!</Typography>
+            </Box>
+            <Box sx={{ display: "flex", gap: 2 }}>
+              <IconButton
+                component="a"
+                href="https://wa.me/123456789"
+                target="_blank"
+                sx={{ color: "#ccc", "&:hover": { color: "#25D366" } }}
+              >
+                <WhatsAppIcon />
+              </IconButton>
+              <IconButton
+                component="a"
+                href="https://instagram.com/yourprofile"
+                target="_blank"
+                sx={{ color: "#ccc", "&:hover": { color: "#E1306C" } }}
+              >
+                <InstagramIcon />
+              </IconButton>
+              <IconButton
+                component="a"
+                href="https://twitter.com/yourprofile"
+                target="_blank"
+                sx={{ color: "#ccc", "&:hover": { color: "#1DA1F2" } }}
+              >
+                <TwitterIcon />
+              </IconButton>
+              <IconButton
+                component="a"
+                href="https://linkedin.com/in/yourprofile"
+                target="_blank"
+                sx={{ color: "#ccc", "&:hover": { color: "#0077B5" } }}
+              >
+                <LinkedInIcon />
+              </IconButton>
+            </Box>
+          </Grid>
+        </Grid>
+
+        {/* Install App Button */}
+        {showInstallButton && (
+          <Box sx={{ textAlign: "center", mt: 4 }}>
+            <Button
+              variant="contained"
+              startIcon={<InstallMobileIcon />}
+              onClick={handleInstallClick}
               sx={{
-                display: "flex",
-                flexDirection: { xs: "column", sm: "row" },
-                justifyContent: "space-between",
-                alignItems: "center",
-                backgroundColor: "#272d30",
-                px: 2,
-                py: 2,
-                borderRadius: 2,
-                gap: 2,
+                backgroundColor: "#f39c12",
+                color: "#fff",
+                px: 3,
+                "&:hover": { backgroundColor: "#e67e22" },
               }}
             >
-              <Typography
-                variant="body2"
-                sx={{
-                  fontSize: "0.875rem",
-                  color: "#",
-                  textAlign: { xs: "center", sm: "left" },
-                }}
-              >
-                © 2025 MoneyLog. All rights reserved.
-              </Typography>
+              Install MoneyLog App
+            </Button>
+          </Box>
+        )}
 
-              {/* Social Media Icons */}
-              <Box sx={{ display: "flex", gap: 2 }}>
-                <Link
-                  href="https://wa.me/123456789"
-                  target="_blank"
-                  sx={{ color: "inherit", "&:hover": { color: "#25D366" } }}
-                >
-                  <WhatsAppIcon />
-                </Link>
-                <Link
-                  href="https://instagram.com/yourprofile"
-                  target="_blank"
-                  sx={{ color: "inherit", "&:hover": { color: "#E1306C" } }}
-                >
-                  <InstagramIcon />
-                </Link>
-                <Link
-                  href="https://twitter.com/yourprofile"
-                  target="_blank"
-                  sx={{ color: "inherit", "&:hover": { color: "#1DA1F2" } }}
-                >
-                  <TwitterIcon />
-                </Link>
-                <Link
-                  href="https://linkedin.com/in/yourprofile"
-                  target="_blank"
-                  sx={{ color: "inherit", "&:hover": { color: "#0077B5" } }}
-                >
-                  <LinkedInIcon />
-                </Link>
-              </Box>
-            </Box>
-          </Grid>
-
-          {/* PWA Install Button (in Footer) */}
-          {showInstallButton && (
-            <Grid item xs={12} sx={{ textAlign: "center", mt: 2 }}>
-              <button
-                onClick={handleInstallClick}
-                style={{
-                  padding: "10px 20px",
-                  backgroundColor: "#0077b6",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: "5px",
-                  fontSize: "16px",
-                  cursor: "pointer",
-                  transition: "background-color 0.3s ease",
-                }}
-                onMouseOver={(e) =>
-                  (e.target.style.backgroundColor = "#f39c12")
-                }
-                onMouseOut={(e) => (e.target.style.backgroundColor = "#0077b6")}
-              >
-                Install MoneyLog App
-              </button>
-            </Grid>
-          )}
-        </Grid>
+        {/* Footer Bottom */}
+        <Box
+          sx={{
+            borderTop: "1px solid #444",
+            mt: 5,
+            pt: 3,
+            textAlign: "center",
+            fontSize: "0.85rem",
+            color: "#aaa",
+          }}
+        >
+          © 2025 MoneyLog. All rights reserved.
+        </Box>
       </Container>
     </Box>
   );
