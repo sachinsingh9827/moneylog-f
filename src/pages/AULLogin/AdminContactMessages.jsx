@@ -109,32 +109,45 @@ const AdminContactMessages = () => {
                   <TableCell>{msg.message}</TableCell>
                   <TableCell>{msg.resolve ? "Resolved" : "Pending"}</TableCell>
                   <TableCell>
-                    {/* Resolve button */}
-                    {!msg.resolve && (
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => setSelectedMessage(msg)}
-                      >
-                        Resolve
-                      </Button>
-                    )}
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        flexWrap: "wrap",
+                        gap: "8px",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      {/* Resolve button */}
+                      {!msg.resolve && (
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={() => setSelectedMessage(msg)}
+                          style={{ minWidth: "120px", flex: "1 1 auto" }}
+                        >
+                          Resolve
+                        </Button>
+                      )}
 
-                    {/* Activate Account button */}
-                    {!msg.resolve && (
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={() => handleActivateAccount(msg.userId)} // Pass userId here
-                        disabled={activating}
-                      >
-                        {activating ? (
-                          <CircularProgress size={20} />
-                        ) : (
-                          "Activate Account"
-                        )}
-                      </Button>
-                    )}
+                      {/* Activate Account button */}
+                      {!msg.resolve && (
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          onClick={() => handleActivateAccount(msg.userId)}
+                          disabled={activating}
+                          style={{ minWidth: "150px", flex: "1 1 auto" }}
+                        >
+                          {activating ? (
+                            <CircularProgress size={20} color="inherit" />
+                          ) : (
+                            "Activate Account"
+                          )}
+                        </Button>
+                      )}
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}
