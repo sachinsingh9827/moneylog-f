@@ -108,14 +108,12 @@ const MoneyLogPage = () => {
       <Typography
         variant="h3"
         sx={{
-          fontWeight: "700",
+          fontWeight: "500",
           mb: 1,
           letterSpacing: 2,
           textAlign: "center",
           color: "#004080",
           textTransform: "uppercase",
-          userSelect: "text",
-          fontSize: { xs: "2rem", sm: "2.8rem", md: "3.5rem" },
         }}
       >
         MoneyLog
