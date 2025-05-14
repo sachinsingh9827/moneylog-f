@@ -204,17 +204,15 @@ const HistoryPage = () => {
   const [loading, setLoading] = useState(false);
 
   const refreshTransactions = async () => {
-    setLoading(true); // Show loader when fetching data
-
-    const timeout = setTimeout(() => {
-      setLoading(false); // Hide loader after 5 seconds if it hasn't already been hidden
-    }, 2000); // Set timeout to 5 seconds
     const token = localStorage.getItem("token");
 
     if (!token) {
       toast.error("You are not logged in. Please log in again.");
       return;
     }
+
+    setLoading(true); // Show loader when fetching data
+
     try {
       // Wait for a minimum of 5 seconds
       await new Promise((resolve) => setTimeout(resolve, 5000));
@@ -253,8 +251,11 @@ const HistoryPage = () => {
       } else {
         toast.error("Failed to fetch transaction history. Please try again.");
       }
+    } finally {
+      setLoading(false); // Hide loader when done (success or fail)
     }
   };
+
   const [rotating, setRotating] = useState(false); // Track rotation state
 
   const handleMouseEnter = () => {
