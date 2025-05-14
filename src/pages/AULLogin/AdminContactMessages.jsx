@@ -16,12 +16,14 @@ import {
   CircularProgress,
 } from "@mui/material";
 import axios from "axios";
+import Toast, { showToast } from "../../components/Toast";
 
 const AdminContactMessages = () => {
   const [messages, setMessages] = useState([]);
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [resolving, setResolving] = useState(false);
+  const [activating, setActivating] = useState(false); // State to handle account activation
 
   // Fetch All Contact Messages
   const fetchMessages = async () => {
@@ -50,19 +52,37 @@ const AdminContactMessages = () => {
       const res = await axios.put(
         `https://moneylog-sachin-singhs-projects-df648d93.vercel.app/moneylog/resolve/${selectedMessage._id}`
       );
-      alert(res.data.message);
+      showToast(res.data.message, "success");
       fetchMessages();
       setSelectedMessage(null);
     } catch (error) {
       console.error("Error resolving message:", error);
-      alert("Failed to resolve message.");
+      showToast("Failed to resolve message.");
     } finally {
       setResolving(false);
     }
   };
 
+  // Handle Activate User Account
+  const handleActivateAccount = async (userId) => {
+    setActivating(true);
+    try {
+      const res = await axios.put(
+        `https://moneylog-sachin-singhs-projects-df648d93.vercel.app/moneylog/activate/${userId}`
+      );
+      showToast(res.data.message, "success");
+      fetchMessages(); // Re-fetch messages after activation
+    } catch (error) {
+      console.error("Error activating account:", error);
+      showToast("Failed to activate account.");
+    } finally {
+      setActivating(false);
+    }
+  };
+
   return (
     <div style={{ padding: "20px" }}>
+      <Toast />
       <Typography variant="h4" gutterBottom>
         Contact Messages
       </Typography>
@@ -89,6 +109,7 @@ const AdminContactMessages = () => {
                   <TableCell>{msg.message}</TableCell>
                   <TableCell>{msg.resolve ? "Resolved" : "Pending"}</TableCell>
                   <TableCell>
+                    {/* Resolve button */}
                     {!msg.resolve && (
                       <Button
                         variant="contained"
@@ -96,6 +117,22 @@ const AdminContactMessages = () => {
                         onClick={() => setSelectedMessage(msg)}
                       >
                         Resolve
+                      </Button>
+                    )}
+
+                    {/* Activate Account button */}
+                    {!msg.resolve && (
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => handleActivateAccount(msg.userId)} // Pass userId here
+                        disabled={activating}
+                      >
+                        {activating ? (
+                          <CircularProgress size={20} />
+                        ) : (
+                          "Activate Account"
+                        )}
                       </Button>
                     )}
                   </TableCell>

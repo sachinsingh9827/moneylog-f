@@ -21,6 +21,7 @@ import Loader from "../../components/Loader";
 import EditIcon from "@mui/icons-material/Edit";
 import { showToast } from "../../components/Toast";
 import axios from "axios";
+import ResolvedMessagesPage from "./ResolvedMessagesPage";
 
 const BASE_URL = "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
 
@@ -137,13 +138,13 @@ const Profile = () => {
 
   return (
     <div className="page">
-      <Container style={{ padding: "20px" }}>
+      <Container style={{ padding: "10px" }}>
         <ToastContainer />
 
         {/* Profile Header */}
         <Box
           sx={{
-            background: "linear-gradient(135deg, #6A1B9A, #8E24AA)",
+            background: "#004080",
             color: "white",
             padding: 2,
             borderRadius: 2,
@@ -165,13 +166,15 @@ const Profile = () => {
         </Box>
 
         {/* Profile Information */}
-        <Card sx={{ marginBottom: 3 }}>
+        <Card
+          sx={{ marginBottom: 3, backgroundColor: "#004080", color: "white" }}
+        >
           <CardContent>
             <Typography variant="h6" gutterBottom>
               Profile Information
             </Typography>
-            <Typography variant="body2">Email: {userData.email}</Typography>
-            <Typography variant="body2">
+            <Typography variant="body1">Email: {userData.email}</Typography>
+            <Typography variant="body1">
               Mobile: {userData.mobile || "Mobile not added"}
             </Typography>
           </CardContent>
@@ -189,7 +192,7 @@ const Profile = () => {
             Edit Profile
           </Button>
         )}
-
+        <ResolvedMessagesPage />
         {/* Edit Profile Drawer */}
         <Drawer
           anchor="right"
