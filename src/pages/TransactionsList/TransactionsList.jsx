@@ -60,6 +60,7 @@ export default function TransactionsList() {
       setLoading(false);
       return;
     }
+
     try {
       const userData = JSON.parse(localStorage.getItem("user"));
       if (!userData || !userData.id) {
@@ -71,6 +72,7 @@ export default function TransactionsList() {
       setUserSecName(userData.secName);
       setLoading(true);
       const userId = userData.id;
+
       const response = await axios.get(
         `${BASE_URL}/moneylog/customers/get/${userId}`,
         {
@@ -101,6 +103,20 @@ export default function TransactionsList() {
     } catch (error) {
       console.error("Error fetching customer:", error);
       setLoading(false);
+
+      if (error.response && error.response.status === 401) {
+        // Invalid token - log out user
+        toast.error("Session expired. Please log in again.");
+
+        // Clear token and user data
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+
+        // Redirect to login page (adjust according to your routing)
+        navigate("/login");
+      } else {
+        toast.error("Failed to fetch customer data. Please try again.");
+      }
     }
   };
 
