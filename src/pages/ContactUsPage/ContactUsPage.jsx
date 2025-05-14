@@ -70,7 +70,6 @@ const ContactUsPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate the form data
     const validationErrors = validate();
     setErrors(validationErrors);
 
@@ -78,7 +77,6 @@ const ContactUsPage = () => {
       setIsSubmitting(true);
 
       try {
-        // Make API call to submit the contact form
         const response = await axios.post(
           `${BASE_URL}/moneylog/contact-us`,
           formData
@@ -87,25 +85,51 @@ const ContactUsPage = () => {
         const { success, message } = response.data;
 
         if (success) {
-          // Success: Clear form, show toast, open modal
+          // Success flow
           setFormData({ name: "", email: "", message: "" });
           showToast(message || "Thank you for contacting us!", "success");
           setOpenModal(true);
         } else {
-          // Failure but server responded with message
+          // Failure flow
           showToast(
             message || "Something went wrong. Please try again later.",
             "error"
           );
+
+          if (
+            message ===
+            "You are not a registered member. Please register first."
+          ) {
+            // Reset form
+            setFormData({ name: "", email: "", message: "" });
+
+            // Navigate to Register page after 5 seconds
+            setTimeout(() => {
+              navigate("/register");
+            }, 5000);
+          }
         }
       } catch (error) {
         console.error("Error submitting contact form:", error);
 
-        // Show backend error message if available
         const errorMessage =
           error.response?.data?.message ||
           "An error occurred while submitting the form. Please try again later.";
+
         showToast(errorMessage, "error");
+
+        if (
+          errorMessage ===
+          "You are not a registered member. Please register first."
+        ) {
+          // Reset form
+          setFormData({ name: "", email: "", message: "" });
+
+          // Navigate to Register page after 5 seconds
+          setTimeout(() => {
+            navigate("/register");
+          }, 5000);
+        }
       } finally {
         setIsSubmitting(false);
       }
