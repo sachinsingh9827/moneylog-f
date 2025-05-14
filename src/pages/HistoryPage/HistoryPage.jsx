@@ -91,24 +91,54 @@ const HistoryPage = () => {
   }));
   // Fetch user and transactions
   const fetchTransactionHistory = async (id, setTransactions, setUser) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      toast.error("You are not logged in. Please log in again.");
+      navigate("/login");
+      return;
+    }
+
     try {
       setLoading(true);
+
       const response = await axios.get(
-        `${BASE_URL}/moneylog/customers/transaction-history/${id}`
+        `${BASE_URL}/moneylog/customers/transaction-history/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
+
       if (response.data) {
         if (Array.isArray(response.data.transactions)) {
           setTransactions(response.data.transactions);
         } else {
           setTransactions([]);
         }
+
         if (response.data.customer) {
           setUser(response.data.customer);
         }
       }
+
       setLoading(false);
     } catch (error) {
       console.error("Error fetching transaction history:", error);
+      setLoading(false);
+
+      if (error.response && error.response.status === 401) {
+        toast.error("Session expired. Please log in again.");
+
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+
+        navigate("/login");
+      } else {
+        toast.error("Failed to fetch transaction history. Please try again.");
+      }
     }
   };
 
@@ -139,6 +169,13 @@ const HistoryPage = () => {
   };
 
   const handleSubmitTransaction = async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      showToast("You are not logged in. Please log in again.", "error");
+      return;
+    }
+
     try {
       const userData = JSON.parse(localStorage.getItem("user"));
       const userId = userData?.id;
@@ -155,11 +192,20 @@ const HistoryPage = () => {
           userId,
           customerId: id,
           amount: Number(newTransaction.amount),
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
       if (response.status === 200) {
-        showToast("Transaction added successfully!", "success");
+        showToast(
+          response.data.message || "Transaction added successfully!",
+          "success"
+        );
 
         // Re-fetch updated transaction history
         fetchTransactionHistory(id, setTransactions, setUser);
@@ -170,7 +216,24 @@ const HistoryPage = () => {
       }
     } catch (error) {
       console.error("Error adding new transaction:", error);
-      showToast("Something went wrong while adding the transaction.", "error");
+
+      if (error.response && error.response.status === 401) {
+        // Invalid token - log out user
+        showToast("Session expired. Please log in again.", "error");
+
+        // Clear token and user data
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+
+        // Redirect to login page
+        navigate("/login");
+      } else {
+        showToast(
+          error.response?.data?.message ||
+            "Failed to add transaction. Please try again.",
+          "error"
+        );
+      }
     }
   };
 
