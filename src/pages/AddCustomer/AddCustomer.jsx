@@ -23,7 +23,12 @@ const validationSchema = Yup.object().shape({
   email: Yup.string()
     .email("Invalid email format")
     .required("Email is required"),
-  mobile: Yup.string().required("Mobile number is required"),
+  mobile: Yup.string()
+    .matches(
+      /^[6-9]\d{9}$/,
+      "Mobile number must be a valid 10-digit Indian number"
+    )
+    .required("Mobile number is required"),
   address: Yup.string(), // Optional field
 });
 
