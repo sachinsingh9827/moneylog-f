@@ -238,11 +238,21 @@ const HistoryPage = () => {
         }
       }
     } catch (error) {
-      console.error("Error refreshing transaction history:", error);
-    } finally {
-      // Ensure the loader is hidden after the timeout (or earlier if data is fetched)
-      clearTimeout(timeout); // Clear the timeout if the request completes before 5 seconds
-      setLoading(false); // Hide loader
+      console.error("Error fetching transaction history:", error);
+
+      if (error.response && error.response.status === 401) {
+        // Invalid token - log out user
+        toast.error("Session expired. Please log in again.");
+
+        // Clear token and user data
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+
+        // Redirect to login page
+        navigate("/login");
+      } else {
+        toast.error("Failed to fetch transaction history. Please try again.");
+      }
     }
   };
   const [rotating, setRotating] = useState(false); // Track rotation state
