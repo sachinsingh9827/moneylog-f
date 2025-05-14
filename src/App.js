@@ -24,6 +24,7 @@ import HelpCenter from "./pages/HelpCenter/HelpCenter";
 import AllUsersLastLoginPage from "./pages/AULLogin/AllUsersLastLoginPage";
 import PaymentPage from "./pages/PaymentPage/PaymentPage";
 import BudgetPage from "./pages/BudgetPage/BudgetPage";
+import AdminContactMessages from "./pages/AULLogin/AdminContactMessages";
 
 function App() {
   return (
@@ -60,6 +61,10 @@ function App() {
             <Route
               path="all-users-last-login/admin"
               element={<AllUsersLastLoginPage />}
+            />
+            <Route
+              path="admin-contact-messages/admin"
+              element={<AdminContactMessages />}
             />
           </Route>
 
