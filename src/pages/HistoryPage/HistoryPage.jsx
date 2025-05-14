@@ -19,6 +19,7 @@ import {
   TextField,
   IconButton,
   styled,
+  Stack,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { RiAddLargeFill } from "react-icons/ri";
@@ -36,10 +37,10 @@ const BASE_URL = "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
 
 const columns = [
   { id: "#", label: "#", minWidth: 5, align: "left" },
-  { id: "date", label: "Date", minWidth: 10, align: "left" },
-  { id: "time", label: "Time", minWidth: 10, align: "left" },
-  { id: "amount", label: "Amount", minWidth: 10, align: "right" },
-  { id: "type", label: "Type", minWidth: 10, align: "right" },
+  { id: "date", label: "Date", minWidth: 5, align: "left" },
+  { id: "time", label: "Time", minWidth: 5, align: "left" },
+  { id: "amount", label: "Amount", minWidth: 5, align: "right" },
+  { id: "type", label: "Type", minWidth: 5, align: "right" },
 ];
 
 const HistoryPage = () => {
@@ -84,9 +85,10 @@ const HistoryPage = () => {
   };
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(purple[500]),
-    backgroundColor: purple[500],
+    backgroundColor: "#004080",
     "&:hover": {
-      backgroundColor: purple[700],
+      backgroundColor: "skyblue",
+      color: "black",
     },
   }));
   // Fetch user and transactions
@@ -346,62 +348,62 @@ const HistoryPage = () => {
     <div style={{ padding: 10 }} className="page">
       {" "}
       <Toast />
-      <div style={{ display: "flex", alignItems: "center", margin: 16 }}>
-        <Button
-          variant="outlined"
-          onClick={() => navigate(-1)}
-          style={{ marginRight: 16 }}
-        >
-          Back
-        </Button>
-        <Typography variant="h5">
-          <strong
-            style={{
-              fontWeight: "bold",
-              marginBottom: "20px",
-              height: "10vh",
-              color: "#004080",
-            }}
-          >
-            {name.toUpperCase()}'S
-          </strong>
-        </Typography>
-      </div>
       {/* Display total credit and debit amounts */}
-      <div
-        variant="body1"
-        style={{
-          margin: 10,
+      <Box
+        sx={{
+          m: 2,
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
           flexWrap: "wrap",
-          gap: 12,
+          gap: 2,
         }}
       >
-        <Typography variant="h6">
-          <strong>TC: </strong>{" "}
-          <span
-            style={{
-              color: "green",
+        {/* Left Part - Back Button & Name */}
+        <Stack direction="row" alignItems="center" spacing={2} flexWrap="wrap">
+          <Button variant="outlined" size="small" onClick={() => navigate(-1)}>
+            Back
+          </Button>
+          <Typography
+            variant={{ xs: "h6", sm: "h5", md: "h5" }}
+            sx={{
               fontWeight: "bold",
+              color: "#004080",
+              textTransform: "uppercase",
             }}
+          >
+            {name}'s
+          </Typography>
+        </Stack>
+
+        {/* Right Part - TC & TD */}
+        <Stack direction="row" alignItems="center" spacing={1} flexWrap="wrap">
+          <Typography
+            variant={{ xs: "body2", sm: "body1" }}
+            sx={{ color: "#004080", fontWeight: 500 }}
+          >
+            TC:
+          </Typography>
+          <Typography
+            variant={{ xs: "body2", sm: "body1" }}
+            sx={{ color: "red", fontWeight: "bold" }}
           >
             ₹ {totalCredit.toFixed(2)}
-          </span>
-        </Typography>
-        <Typography variant="h6">
-          <strong>TD: </strong>{" "}
-          <span
-            style={{
-              color: "red",
-              fontWeight: "bold",
-            }}
+          </Typography>
+          <Typography
+            variant={{ xs: "body2", sm: "body1" }}
+            sx={{ color: "#004080", fontWeight: 500, ml: 2 }}
+          >
+            TD:
+          </Typography>
+          <Typography
+            variant={{ xs: "body2", sm: "body1" }}
+            sx={{ color: "green", fontWeight: "bold" }}
           >
             ₹ {totalDebit.toFixed(2)}
-          </span>
-        </Typography>
-      </div>
+          </Typography>
+        </Stack>
+      </Box>
       {loading && <Loader />}
       {showForm && (
         <div

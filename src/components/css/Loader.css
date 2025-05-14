@@ -13,8 +13,6 @@
   .loader {
     width: 60%;
     height: 2%;
-    background-color: white;
-    border: 2px solid #ccc;
     position: relative;
     overflow: hidden;
     display: flex;
@@ -27,10 +25,10 @@
     height: 100%;
     background: repeating-linear-gradient(
       45deg,
-      #d860e8 0px,
-      #e062d7 10px,
-      #d582ca 10px,
-      #e0e0e0 20px
+      #063852 0px,
+      #064567 10px,
+      #124764 10px,
+      #085a86 20px
     );
     animation: scratch 2.5s infinite linear;
   }

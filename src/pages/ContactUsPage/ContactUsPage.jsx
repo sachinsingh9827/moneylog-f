@@ -41,7 +41,7 @@ const ContactUsPage = () => {
     const newErrors = {};
     const nameRegex = /^[a-zA-Z\s]{2,50}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const messageRegex = /^[a-zA-Z\s]{2,1000}$/; // Only letters and spaces allowed (max 1000 chars)
+    const messageRegex = /^[a-zA-Z\s.,]{2,1000}$/; // Allows letters, spaces, ., and , (max 1000 chars)
 
     // Name validation
     if (!formData.name) {
@@ -61,7 +61,8 @@ const ContactUsPage = () => {
     if (!formData.message) {
       newErrors.message = "Message is required";
     } else if (!messageRegex.test(formData.message)) {
-      newErrors.message = "Invalid message (only letters and spaces allowed)";
+      newErrors.message =
+        "Invalid message (only letters, spaces, '.', ',', '!', '?', '-' are allowed)";
     }
 
     return newErrors;

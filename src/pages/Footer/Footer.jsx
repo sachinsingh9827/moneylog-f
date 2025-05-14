@@ -184,7 +184,7 @@ const Footer = () => {
             <Box sx={{ display: "flex", gap: 2 }}>
               <IconButton
                 component="a"
-                href="https://wa.me/123456789"
+                href="https://wa.me/7987723186"
                 target="_blank"
                 sx={{ color: "#ccc", "&:hover": { color: "#25D366" } }}
               >
