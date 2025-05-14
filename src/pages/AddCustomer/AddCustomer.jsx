@@ -74,13 +74,26 @@ export default function SlotsAddCustomer() {
         `${BASE_URL}/moneylog/customers/create`,
         customerData
       );
-      showToast("Customer added successfully!", "success");
+
+      // Show success toast with the message from the response or a default message
+      showToast(
+        response.data.message || "Customer added successfully!",
+        "success"
+      );
+
+      // Reset the form and navigate after a short delay
       resetForm();
       setTimeout(() => {
         navigate("/dashboard");
       }, 1000);
     } catch (error) {
-      showToast("Failed to add customer. Please try again.", "error");
+      // If the error is from the response, show the error message
+      const errorMessage =
+        error.response?.data?.message ||
+        "Failed to add customer. Please try again.";
+
+      // Show error toast with the message
+      showToast(errorMessage, "error");
     } finally {
       setSubmitting(false);
     }

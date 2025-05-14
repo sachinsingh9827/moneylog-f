@@ -278,14 +278,14 @@ export default function TransactionsList() {
         {" "}
         {loading && <Loader />}
         <Typography variant="body1">
-          <strong>Total Recive:</strong>{" "}
-          <span style={{ color: "green", fontWeight: "bold" }}>
+          <strong style={{ color: "#004080" }}>Total Receive:</strong>{" "}
+          <span style={{ color: "red", fontWeight: "bold" }}>
             ₹ {totalCredit}
-          </span>{" "}
+          </span>
         </Typography>
         <Typography variant="body1">
-          <strong>Total Send:</strong>{" "}
-          <span style={{ color: "red", fontWeight: "bold" }}>
+          <strong style={{ color: "#004080" }}>Total Send:</strong>{" "}
+          <span style={{ color: "green", fontWeight: "bold" }}>
             ₹ {totalDebit}
           </span>
         </Typography>
@@ -346,7 +346,12 @@ export default function TransactionsList() {
                           }
                         >
                           {customer.name}
+                          <br />
+                          <span style={{ fontSize: "10px", color: "black" }}>
+                            -{customer.mobile}
+                          </span>
                         </TableCell>
+
                         <TableCell
                           align="right"
                           onClick={() =>
@@ -355,9 +360,9 @@ export default function TransactionsList() {
                           style={{
                             color:
                               totalBalance > 0
-                                ? "green"
+                                ? "red"
                                 : totalBalance < 0
-                                  ? "red"
+                                  ? "green"
                                   : "black",
                           }}
                         >
@@ -365,19 +370,19 @@ export default function TransactionsList() {
                           <br />
                           <span
                             style={{
-                              fontSize: "12px",
+                              fontSize: "10px",
                               color:
                                 totalBalance > 0
-                                  ? "green"
+                                  ? "red"
                                   : totalBalance < 0
-                                    ? "red"
+                                    ? "green"
                                     : "gray",
                             }}
                           >
                             {totalBalance > 0
-                              ? `Remaining Credit Balance: ₹${totalBalance}`
+                              ? `Remaining: ₹${totalBalance}`
                               : totalBalance < 0
-                                ? `Exceeded Debit Balance: ₹${Math.abs(totalBalance)}`
+                                ? `Exceeded: ₹${Math.abs(totalBalance)}`
                                 : "No Balance"}
                           </span>
                         </TableCell>

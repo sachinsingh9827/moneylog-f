@@ -517,7 +517,7 @@ const HistoryPage = () => {
                     <TableCell
                       align="right"
                       style={{
-                        color: transaction.type === "credit" ? "green" : "red",
+                        color: transaction.type === "credit" ? "red" : "green",
                       }}
                     >
                       {transaction.amount}
@@ -525,7 +525,7 @@ const HistoryPage = () => {
                     <TableCell
                       align="right"
                       style={{
-                        color: transaction.type === "credit" ? "green" : "red",
+                        color: transaction.type === "credit" ? "red" : "green",
                       }}
                     >
                       {transaction.type === "credit" ? "recive " : "send"}
