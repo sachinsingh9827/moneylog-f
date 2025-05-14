@@ -76,32 +76,42 @@ const ContactUsPage = () => {
 
     if (Object.keys(validationErrors).length === 0) {
       setIsSubmitting(true);
+
       try {
-        // Make an API call to submit the contact form
+        // Make API call to submit the contact form
         const response = await axios.post(
           `${BASE_URL}/moneylog/contact-us`,
           formData
         );
 
-        if (response.data.success) {
-          // If the message is successfully saved
-          setFormData({ name: "", email: "", message: "" }); // Clear the form
-          showToast("Thank you for contacting us!", "success"); // Success message
-          setOpenModal(true); // Open the modal after successful submission
+        const { success, message } = response.data;
+
+        if (success) {
+          // Success: Clear form, show toast, open modal
+          setFormData({ name: "", email: "", message: "" });
+          showToast(message || "Thank you for contacting us!", "success");
+          setOpenModal(true);
         } else {
-          showToast("Something went wrong. Please try again later.", "error"); // Handle failure if any
+          // Failure but server responded with message
+          showToast(
+            message || "Something went wrong. Please try again later.",
+            "error"
+          );
         }
       } catch (error) {
         console.error("Error submitting contact form:", error);
-        showToast(
-          "An error occurred while submitting the form. Please try again later.",
-          "error"
-        );
+
+        // Show backend error message if available
+        const errorMessage =
+          error.response?.data?.message ||
+          "An error occurred while submitting the form. Please try again later.";
+        showToast(errorMessage, "error");
       } finally {
-        setIsSubmitting(false); // Reset the submitting state
+        setIsSubmitting(false);
       }
     }
   };
+
   const navigate = useNavigate();
   const handleCloseModal = () => {
     setOpenModal(false);
