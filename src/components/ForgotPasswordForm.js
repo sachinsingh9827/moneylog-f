@@ -51,12 +51,27 @@ const verifyOtpApi = async (email, otp) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, otp }),
     });
+
     const data = await response.json();
-    if (response.ok) return data;
-    throw new Error(data.message || "Invalid OTP");
+
+    if (response.ok) {
+      // Return data when the response is successful
+      return data;
+    } else {
+      // Check for custom error messages in response
+      const errorMessage =
+        data.msg || data.message || "Invalid OTP or something went wrong.";
+      throw new Error(errorMessage);
+    }
   } catch (error) {
-    console.error(error);
-    throw new Error("Network error, please try again later.");
+    console.error("Error verifying OTP:", error);
+
+    // If the error was thrown in the catch block, handle it appropriately
+    const errorMessage =
+      error.message || "Network error, please try again later.";
+
+    // Return the error message to be displayed to the user
+    throw new Error(errorMessage);
   }
 };
 
@@ -67,12 +82,18 @@ const resetPasswordApi = async (email, password) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
+
     const data = await response.json();
+
     if (response.ok) return data;
-    throw new Error(data.message || "Failed to reset password");
+
+    // Properly show API response message if available (e.g., data.msg)
+    throw new Error(data.msg || data.message || "Failed to reset password");
   } catch (error) {
     console.error(error);
-    throw new Error("Network error, please try again later.");
+
+    // Show exact error message from response or network error fallback
+    throw new Error(error.message || "Network error, please try again later.");
   }
 };
 
@@ -123,13 +144,22 @@ function CustomOtpField() {
           <TextField
             {...field}
             label="Enter OTP"
-            type="text"
             size="small"
             required
             fullWidth
             variant="outlined"
+            inputProps={{
+              inputMode: "numeric",
+              maxLength: 6, // Prevents typing more than 6 digits
+            }}
+            onChange={(e) => {
+              // Allow only numeric characters and limit to 6 digits
+              const numericValue = e.target.value
+                .replace(/[^0-9]/g, "")
+                .slice(0, 6);
+              form.setFieldValue("otp", numericValue);
+            }}
           />
-          <FormHelperText>{form.touched.otp && form.errors.otp}</FormHelperText>
         </FormControl>
       )}
     </Field>
@@ -230,11 +260,24 @@ export default function ForgotPasswordForm() {
     }
 
     if (otpSent && !otpVerified && !values.otp) {
-      errors.otp = "OTP is required";
+      errors.otp = "OTP is required"; // Set error if OTP is not provided
+    }
+
+    // Additional validation to ensure OTP is exactly 6 digits
+    if (values.otp && !/^\d{6}$/.test(values.otp)) {
+      errors.otp = "OTP must be exactly 6 digits";
     }
 
     if (otpVerified && !values.password) {
       errors.password = "Password is required";
+    } else if (values.password) {
+      if (values.password.length < 6) {
+        errors.password = "Password must be at least 6 characters long";
+      } else if (!/[a-zA-Z]/.test(values.password)) {
+        errors.password = "Password must contain at least one letter";
+      } else if (!/[0-9]/.test(values.password)) {
+        errors.password = "Password must contain at least one digit";
+      }
     }
 
     return errors;
