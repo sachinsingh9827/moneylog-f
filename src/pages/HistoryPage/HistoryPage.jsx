@@ -30,6 +30,7 @@ import { purple } from "@mui/material/colors";
 import { MdRefresh } from "react-icons/md";
 import Loader from "../../components/Loader";
 import Toast, { showToast } from "../../components/Toast";
+import { toast } from "react-toastify";
 
 const BASE_URL = "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
 
@@ -208,14 +209,25 @@ const HistoryPage = () => {
     const timeout = setTimeout(() => {
       setLoading(false); // Hide loader after 5 seconds if it hasn't already been hidden
     }, 2000); // Set timeout to 5 seconds
+    const token = localStorage.getItem("token");
 
+    if (!token) {
+      toast.error("You are not logged in. Please log in again.");
+      return;
+    }
     try {
       // Wait for a minimum of 5 seconds
       await new Promise((resolve) => setTimeout(resolve, 5000));
 
       // Make the API call after the delay
       const response = await axios.get(
-        `${BASE_URL}/moneylog/customers/transaction-history/${id}`
+        `${BASE_URL}/moneylog/customers/transaction-history/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       if (response.data) {
