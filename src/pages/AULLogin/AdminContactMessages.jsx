@@ -82,91 +82,108 @@ const AdminContactMessages = () => {
 
   return (
     <div style={{ padding: "20px" }}>
-      <Toast />
-      <Typography variant="h4" gutterBottom>
+      <Typography
+        variant="h4"
+        gutterBottom
+        style={{ color: "#004080", textAlign: "start" }}
+      >
         Contact Messages
       </Typography>
 
       {loading ? (
         <CircularProgress />
       ) : (
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Message</TableCell>
-                <TableCell>Resolve Status</TableCell>
-                <TableCell>Action</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {messages.map((msg) => (
-                <TableRow key={msg._id}>
-                  <TableCell>{msg.name}</TableCell>
-                  <TableCell>{msg.email}</TableCell>
-                  <TableCell>{msg.message}</TableCell>
-                  <TableCell>{msg.resolve ? "Resolved" : "Pending"}</TableCell>
-                  <TableCell>
-                    <div
+        <div style={{ width: "100%", overflowX: "auto" }}>
+          <TableContainer component={Paper} style={{ minWidth: "600px" }}>
+            <Table size="small">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Email</TableCell>
+                  <TableCell>Message</TableCell>
+                  <TableCell>Resolve Status</TableCell>
+                  <TableCell>Action</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {messages.map((msg) => (
+                  <TableRow key={msg._id}>
+                    <TableCell>{msg.name}</TableCell>
+                    <TableCell>{msg.email}</TableCell>
+                    <TableCell style={{ whiteSpace: "pre-wrap" }}>
+                      {msg.message}
+                    </TableCell>
+                    <TableCell
                       style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        flexWrap: "wrap",
-                        gap: "8px",
-                        justifyContent: "center",
-                        alignItems: "center",
+                        color: msg.resolve ? "green" : "red",
+                        fontWeight: "bold",
                       }}
                     >
-                      {/* Resolve button */}
-                      {!msg.resolve && (
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={() => setSelectedMessage(msg)}
-                          style={{ minWidth: "120px", flex: "1 1 auto" }}
-                        >
-                          Resolve
-                        </Button>
-                      )}
+                      {msg.resolve ? "Resolved" : "Pending"}
+                    </TableCell>
 
-                      {/* Activate Account button */}
-                      {!msg.resolve && (
-                        <Button
-                          variant="contained"
-                          color="secondary"
-                          onClick={() => handleActivateAccount(msg.userId)}
-                          disabled={activating}
-                          style={{ minWidth: "150px", flex: "1 1 auto" }}
-                        >
-                          {activating ? (
-                            <CircularProgress size={20} color="inherit" />
-                          ) : (
-                            "Activate Account"
-                          )}
-                        </Button>
-                      )}
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                    <TableCell>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "8px",
+                        }}
+                      >
+                        {!msg.resolve && (
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={() => setSelectedMessage(msg)}
+                            fullWidth
+                            size="small"
+                          >
+                            Resolve
+                          </Button>
+                        )}
+
+                        {!msg.resolve && (
+                          <Button
+                            variant="contained"
+                            color="secondary"
+                            onClick={() => handleActivateAccount(msg.userId)}
+                            disabled={activating}
+                            fullWidth
+                            size="small"
+                          >
+                            {activating ? (
+                              <CircularProgress size={16} color="inherit" />
+                            ) : (
+                              "Activate Account"
+                            )}
+                          </Button>
+                        )}
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
       )}
 
       {/* Resolve Dialog */}
-      <Dialog open={!!selectedMessage} onClose={() => setSelectedMessage(null)}>
+      <Dialog
+        fullWidth
+        maxWidth="sm"
+        open={!!selectedMessage}
+        onClose={() => setSelectedMessage(null)}
+      >
         <DialogTitle>Resolve Message</DialogTitle>
         <DialogContent>
-          <Typography>
+          <Typography variant="body1" gutterBottom>
             <strong>Name:</strong> {selectedMessage?.name}
           </Typography>
-          <Typography>
+          <Typography variant="body1" gutterBottom>
             <strong>Email:</strong> {selectedMessage?.email}
           </Typography>
-          <Typography>
+          <Typography variant="body1">
             <strong>Message:</strong> {selectedMessage?.message}
           </Typography>
         </DialogContent>
