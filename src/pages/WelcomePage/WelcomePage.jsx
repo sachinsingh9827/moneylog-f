@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"; // React Router for navigation
-import { Container, Grid, Typography, Box } from "@mui/material";
+import { Container, Grid, Typography, Box, Button } from "@mui/material";
 import "./WelcomePage.css"; // Importing the custom CSS
 
 const WelcomePage = () => {
@@ -26,32 +26,24 @@ const WelcomePage = () => {
 
           {/* Button on right side */}
           <Grid item xs={12} md={4}>
-            <button
+            <Button
+              className="register-button"
               onClick={handleRegisterPress}
-              style={{
-                background: "linear-gradient(45deg, #2196f3 30%, #21cbf3 90%)",
-                borderRadius: 20,
-                boxShadow: "0 3px 5px 2px rgba(33, 203, 243, .3)",
-                color: "white",
-                fontWeight: "bold",
-                fontSize: "1rem",
-                padding: "10px 24px",
-                border: "none",
-                cursor: "pointer",
-                outline: "none",
-                transition: "background 0.3s ease",
+              sx={{
+                backgroundColor: "#004080",
+                color: "#fff",
+                px: 4,
+                py: 1.5,
+                fontWeight: 600,
+                fontSize: { xs: "1rem", md: "1.25rem" },
+                "&:hover": {
+                  backgroundColor: "#003366",
+                },
+                borderRadius: 2,
               }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.background =
-                  "linear-gradient(45deg, #1976d2 30%, #1e88e5 90%)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.background =
-                  "linear-gradient(45deg, #2196f3 30%, #21cbf3 90%)")
-              }
             >
               Register Now
-            </button>
+            </Button>
           </Grid>
         </Grid>
       </Container>
