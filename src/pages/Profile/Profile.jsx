@@ -157,10 +157,10 @@ const Profile = () => {
             textAlign: "center",
           }}
         >
-          <Avatar
+          {/* <Avatar
             sx={{ width: 80, height: 80, margin: "0 auto", marginBottom: 2 }}
             src={userData.profileImage || "https://via.placeholder.com/150"}
-          />
+          /> */}
           <Typography variant="h5">{userData.name}</Typography>
           <Typography variant="body1">{userData.email}</Typography>
         </Box>
