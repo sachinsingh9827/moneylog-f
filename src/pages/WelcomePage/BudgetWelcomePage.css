@@ -1,0 +1,39 @@
+.budget-hero-section {
+    background: rgba(222, 219, 219, 0.3); /* Semi-transparent background */
+    backdrop-filter: blur(10px); /* Blur effect */
+    min-height: 40vh; /* Maximum height of 70vh */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #004080;
+    border-radius: 15px; /* Rounded corners */
+   margin: 10px;
+  }
+  
+  .budget-icon {
+    font-size: 80px;
+    color: #004080;
+  }
+  
+  .budget-title {
+    font-weight: bold;
+    font-size: 3rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #004080;
+  }
+  
+  .budget-description {
+    font-size: 1.1rem;
+    color: #004080;
+    max-width: 400px;
+  }
+  
+  .budget-button {
+    margin-top: 20px;
+    padding: 10px 30px;
+    border-radius: 30px;
+    font-size: 1rem;
+  }
+  

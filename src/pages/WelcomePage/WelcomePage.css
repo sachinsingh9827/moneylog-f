@@ -4,7 +4,7 @@
 .welcome-container {
     background: rgba(222, 219, 219, 0.3); /* Semi-transparent background */
     backdrop-filter: blur(10px); /* Blur effect */
-    min-height: 94vh; /* Maximum height of 70vh */
+    min-height: 40vh; /* Maximum height of 70vh */
     display: flex;
     justify-content: center;
     align-items: center;

@@ -70,6 +70,15 @@ const Navbar = () => {
       <div className={`navbar-links ${menuOpen ? "active" : ""}`}>
         {!user ? (
           <>
+            <Link to="/about" onClick={() => setMenuOpen(false)}>
+              About
+            </Link>
+            <Link to="/contact-us" onClick={() => setMenuOpen(false)}>
+              Contact
+            </Link>
+            <Link to="/help" onClick={() => setMenuOpen(false)}>
+              Help
+            </Link>
             <Link to="/login" onClick={() => setMenuOpen(false)}>
               Login
             </Link>
@@ -90,7 +99,6 @@ const Navbar = () => {
             >
               Profile
             </Link>
-
             <div className="logout-btn-wrapper">
               <button onClick={handleLogout} className="logout-btn">
                 <HiOutlineLogout size={20} />

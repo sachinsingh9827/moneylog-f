@@ -6,6 +6,7 @@ import {
   Divider,
   Container,
   useMediaQuery,
+  Box,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import axios from "axios";
@@ -15,9 +16,11 @@ const ResolvedMessagesPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
 
   useEffect(() => {
     const userString = localStorage.getItem("user");
@@ -41,6 +44,9 @@ const ResolvedMessagesPage = () => {
         );
         if (response.data.success) {
           setMessages(response.data.data);
+          if (response.data.data.length > 0) {
+            setName(response.data.data[0].name);
+          }
         } else {
           setError(response.data.message || "No resolved messages found.");
         }
@@ -70,33 +76,51 @@ const ResolvedMessagesPage = () => {
   };
 
   return (
-    <Container maxWidth="full" style={{ marginTop: "20px" }}>
+    <Container maxWidth="xl" sx={{ paddingY: 2 }}>
       <Typography
-        variant={isMobile ? "h5" : "h4"}
+        variant={isMobile ? "h5" : isTablet ? "h4" : "h3"}
         gutterBottom
-        style={{ color: "#004080", textAlign: "start" }}
       >
-        Resolved Messages for {email}
+        Resolved Messages :
+        <span
+          style={{
+            color: "#004080",
+            textAlign: "start",
+            fontWeight: 600,
+            paddingX: isMobile ? 1 : 2,
+          }}
+        >
+          {name}
+        </span>
       </Typography>
 
       {loading ? (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "40px",
+        <Box display="flex" justifyContent="center" mt={5}>
+          <CircularProgress />
+        </Box>
+      ) : error ? (
+        <Typography
+          align="center"
+          sx={{
+            marginTop: 3,
+            border: "1px solid #ccc", // light gray border
+            backgroundColor: "#f0f0f0", // light gray background
+            padding: 2, // some padding inside
+            borderRadius: 2, // rounded corners
           }}
         >
-          <CircularProgress />
-        </div>
-      ) : error ? (
-        <Typography color="error" align="center">
-          <Typography align="center" color="textSecondary">
-            No resolved messages found.
-          </Typography>
+          No Messages
         </Typography>
       ) : (
-        <>
+        <Box
+          display="grid"
+          gridTemplateColumns={{
+            xs: "1fr",
+            sm: "1fr 1fr",
+            md: "1fr 1fr 1fr",
+          }}
+          gap={3}
+        >
           {messages.length === 0 ? (
             <Typography align="center" color="textSecondary">
               No resolved messages found.
@@ -105,29 +129,41 @@ const ResolvedMessagesPage = () => {
             messages.map((message) => (
               <Paper
                 key={message._id}
-                elevation={2}
-                style={{
-                  padding: isMobile ? "12px" : "16px",
-                  marginBottom: "15px",
+                elevation={3}
+                sx={{
+                  padding: 2,
                   borderRadius: "12px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  height: "100%",
+                  backgroundColor: "#f9f9f9",
+                  transition: "transform 0.2s",
+                  "&:hover": { transform: "translateY(-4px)" },
                 }}
               >
-                <Typography variant="subtitle1" gutterBottom>
+                <Typography
+                  variant="subtitle2"
+                  sx={{ color: "#004080", fontWeight: 500, mb: 1 }}
+                >
                   Message:
                 </Typography>
-                <Typography variant="body1" style={{ wordWrap: "break-word" }}>
+                <Typography
+                  variant="body2"
+                  sx={{ wordWrap: "break-word", mb: 2 }}
+                >
                   {message.message}
                 </Typography>
 
-                <Divider style={{ margin: "10px 0" }} />
+                <Divider sx={{ my: 1 }} />
 
                 <Typography variant="caption" color="textSecondary">
-                  Created At: {formatDate(message.createdAt)}
+                  Date: {formatDate(message.createdAt)}
                 </Typography>
               </Paper>
             ))
           )}
-        </>
+        </Box>
       )}
     </Container>
   );
