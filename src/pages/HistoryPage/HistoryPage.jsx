@@ -451,7 +451,7 @@ const HistoryPage = () => {
           justifyContent: "space-between",
           alignItems: "center",
           flexWrap: "wrap",
-          gap: 2,
+          gap: 1,
         }}
       >
         <Stack
@@ -620,19 +620,23 @@ const HistoryPage = () => {
             }}
           >
             {/* Filter Dropdown */}
-            <FormControl size="small" style={{ minWidth: 150 }}>
-              <InputLabel>Filter</InputLabel>
-              <Select
-                value={filterType}
-                onChange={handleFilterChange}
-                label="Filter"
-                fullWidth
-              >
-                <MenuItem value="all">All</MenuItem>
-                <MenuItem value="credit">Receive</MenuItem>
-                <MenuItem value="debit">Send</MenuItem>
-              </Select>
-            </FormControl>
+            {transactions.length === 0 ? (
+              <div />
+            ) : (
+              <FormControl size="small" style={{ minWidth: 150 }}>
+                <InputLabel>Filter</InputLabel>
+                <Select
+                  value={filterType}
+                  onChange={handleFilterChange}
+                  label="Filter"
+                  fullWidth
+                >
+                  <MenuItem value="all">All</MenuItem>
+                  <MenuItem value="credit">Receive</MenuItem>
+                  <MenuItem value="debit">Send</MenuItem>
+                </Select>
+              </FormControl>
+            )}
 
             <IconButton
               aria-label="more"
@@ -752,9 +756,9 @@ const HistoryPage = () => {
                           boxShadow: "0 0 10px #004080",
                         }}
                       >
-                        <span style={{ color: "#004080" }}>
-                          Transaction Not Found
-                        </span>
+                        <div style={{ color: "#004080" }}>
+                          No data, please add transaction first.
+                        </div>
                       </div>
                     </TableCell>
                   </TableRow>
