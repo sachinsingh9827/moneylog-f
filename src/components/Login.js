@@ -178,6 +178,13 @@ export default function SlotsSignIn() {
             "User not found. Redirecting to registration...",
           "error"
         );
+      } else if (error.response && error.response.status === 401) {
+        // Handle 401 Unauthorized with the custom message from API
+        showToast(
+          error.response.data?.message ||
+            "Your email or password is incorrect.",
+          "error"
+        );
       } else if (error.response && error.response.status === 403) {
         showToast(
           error.response.data?.message ||
