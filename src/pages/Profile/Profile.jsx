@@ -368,7 +368,7 @@ const Profile = () => {
               variant="contained"
               color="error"
               onClick={() => {
-                toast.info("Delete functionality not implemented yet");
+                handleDeactivate();
                 setOpenConfirmModal(false);
               }}
               sx={{ mr: 2 }}
