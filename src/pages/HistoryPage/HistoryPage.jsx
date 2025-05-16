@@ -272,6 +272,10 @@ const HistoryPage = () => {
 
   const { totalCredit, totalDebit } = calculateTotals();
   const handleDownloadTransaction = () => {
+    if (!transactions || transactions.length === 0) {
+      showToast("No transaction data to Download.");
+      return;
+    }
     const formatDate = (dateStr) => {
       if (!dateStr) return "-";
       const date = new Date(dateStr);
@@ -381,7 +385,7 @@ const HistoryPage = () => {
   };
   const handleShareTransactionWhatsApp = () => {
     if (!transactions || transactions.length === 0) {
-      alert("No transaction data to share.");
+      showToast("No transaction data to share.");
       return;
     }
 
@@ -659,26 +663,36 @@ const HistoryPage = () => {
                   handleMenuClose();
                 }}
               >
-                Add New
+                <span style={{ color: "#004080", fontWeight: "bold" }}>
+                  Add New
+                </span>{" "}
               </MenuItem>
               <MenuItem onClick={toggleSort} disabled={!isSortEnabled()}>
-                Sort by {sortRecent ? "Oldest" : "Recent"}
+                <span style={{ color: "#004080", fontWeight: "bold" }}>
+                  Sort by {sortRecent ? "Oldest" : "Recent"}
+                </span>
               </MenuItem>
               <MenuItem
                 onClick={() => {
                   handleShareTransactionWhatsApp();
                   handleMenuClose();
                 }}
+                disabled={transactions.length === 0}
               >
-                Share on WhatsApp
+                <span style={{ color: "#004080", fontWeight: "bold" }}>
+                  Share on WhatsApp
+                </span>
               </MenuItem>
               <MenuItem
                 onClick={() => {
                   handleDownloadTransaction();
                   handleMenuClose();
                 }}
+                disabled={transactions.length === 0}
               >
-                Download
+                <span style={{ color: "#004080", fontWeight: "bold" }}>
+                  Download
+                </span>
               </MenuItem>
             </Menu>
           </div>
