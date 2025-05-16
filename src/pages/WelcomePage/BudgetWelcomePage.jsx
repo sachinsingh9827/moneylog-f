@@ -7,7 +7,7 @@ const BudgetWelcomePage = () => {
   const navigate = useNavigate();
 
   const handleCreateBudget = () => {
-    navigate("/create-budget"); // Navigate to your budget creation page
+    navigate("/budget"); // Navigate to your budget creation page
   };
 
   return (

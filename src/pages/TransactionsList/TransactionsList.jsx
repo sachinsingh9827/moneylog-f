@@ -379,7 +379,8 @@ export default function TransactionsList() {
                     align={col.align}
                     style={{
                       minWidth: col.minWidth,
-                      backgroundColor: "skyblue",
+                      backgroundColor: "#004080",
+                      color: "white",
                     }}
                   >
                     {col.label}
@@ -422,10 +423,24 @@ export default function TransactionsList() {
                             handleRowClick(customer._id, customer.name)
                           }
                         >
-                          {customer.name}
+                          <span
+                            style={{
+                              fontWeight: "bold",
+                              color: "ActiveBorder",
+                            }}
+                          >
+                            {customer.name}
+                          </span>
                           <br />
-                          <span style={{ fontSize: "10px", color: "black" }}>
-                            -{customer.mobile}
+                          <span
+                            style={{
+                              fontSize: "15px",
+                              color: "black",
+                              display: "flex",
+                              justifyContent: "flex-start",
+                            }}
+                          >
+                            {customer.mobile}
                           </span>
                         </TableCell>
 
@@ -477,7 +492,25 @@ export default function TransactionsList() {
               ) : (
                 <TableRow>
                   <TableCell colSpan={4} align="center">
-                    No customers found
+                    <div
+                      style={{
+                        width: "100%",
+                        minHeight: "200px",
+                        backgroundColor: "white",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        color: "black",
+                        fontSize: "18px",
+                        fontWeight: "bold",
+                        borderRadius: "8px",
+                        boxShadow: "0 0 10px #004080",
+                      }}
+                    >
+                      <span style={{ color: "#004080" }}>
+                        Customer Not Found
+                      </span>
+                    </div>
                   </TableCell>
                 </TableRow>
               )}

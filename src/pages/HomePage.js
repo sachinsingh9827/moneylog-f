@@ -6,6 +6,7 @@ import GstinPage from "./GstinPage/GstinPage";
 import WelcomePage from "./WelcomePage/WelcomePage";
 import BudgetWelcomePage from "./WelcomePage/BudgetWelcomePage";
 import ThoughtCard from "./Thought/ThoughtCard";
+import DemoTransactionPage from "./WelcomePage/DemoTransactionPage";
 
 export default function HomePage() {
   // const navigate = useNavigate();
@@ -15,7 +16,7 @@ export default function HomePage() {
       <HeroSection />
       <WelcomePage />
       <ThoughtCard />
-
+      <DemoTransactionPage />
       <BudgetWelcomePage />
       <GstinPage />
       {/* <MoneyLogSwiper /> */}

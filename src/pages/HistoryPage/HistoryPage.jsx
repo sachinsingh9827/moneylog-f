@@ -25,10 +25,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import { RiAddLargeFill } from "react-icons/ri";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-
 import axios from "axios";
 import { purple } from "@mui/material/colors";
-import { MdRefresh } from "react-icons/md";
 import Loader from "../../components/Loader";
 import Toast, { showToast } from "../../components/Toast";
 import { toast } from "react-toastify";
@@ -36,7 +34,7 @@ import { toast } from "react-toastify";
 const BASE_URL = "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
 
 const columns = [
-  { id: "#", label: "#", minWidth: 5, align: "left" },
+  { id: "#", label: "#", minWidth: 2, align: "left" },
   { id: "date", label: "Date", minWidth: 5, align: "left" },
   { id: "time", label: "Time", minWidth: 5, align: "left" },
   { id: "amount", label: "Amount", minWidth: 5, align: "right" },
@@ -78,7 +76,7 @@ const HistoryPage = () => {
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: 300,
-    bgcolor: "skyblue",
+    bgcolor: "white",
     p: 4,
     boxShadow: 24,
     borderRadius: 2,
@@ -91,7 +89,7 @@ const HistoryPage = () => {
       color: "black",
     },
   }));
-  // Fetch user and transactions
+
   const fetchTransactionHistory = async (id, setTransactions, setUser) => {
     const token = localStorage.getItem("token");
 
@@ -143,8 +141,6 @@ const HistoryPage = () => {
       }
     }
   };
-
-  // Inside your component
   useEffect(() => {
     fetchTransactionHistory(id, setTransactions, setUser);
   }, [id]);
@@ -208,26 +204,18 @@ const HistoryPage = () => {
           response.data.message || "Transaction added successfully!",
           "success"
         );
-
-        // Re-fetch updated transaction history
         fetchTransactionHistory(id, setTransactions, setUser);
-
-        // Reset form and close modal
         setShowForm(false);
         setNewTransaction({ date: "", time: "", amount: "", type: "credit" });
       }
     } catch (error) {
       console.error("Error adding new transaction:", error);
-
       if (error.response && error.response.status === 401) {
         // Invalid token - log out user
         showToast("Session expired. Please log in again.", "error");
-
         // Clear token and user data
         localStorage.removeItem("token");
         localStorage.removeItem("user");
-
-        // Redirect to login page
         navigate("/login");
       } else {
         showToast(
@@ -268,69 +256,6 @@ const HistoryPage = () => {
   );
   const [loading, setLoading] = useState(false);
 
-  const refreshTransactions = async () => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      toast.error("You are not logged in. Please log in again.");
-      return;
-    }
-
-    setLoading(true); // Show loader when fetching data
-
-    try {
-      // Wait for a minimum of 5 seconds
-      await new Promise((resolve) => setTimeout(resolve, 5000));
-
-      // Make the API call after the delay
-      const response = await axios.get(
-        `${BASE_URL}/moneylog/customers/transaction-history/${id}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (response.data) {
-        if (Array.isArray(response.data.transactions)) {
-          setTransactions(response.data.transactions);
-        } else {
-          setTransactions([]);
-        }
-      }
-    } catch (error) {
-      console.error("Error fetching transaction history:", error);
-
-      if (error.response && error.response.status === 401) {
-        // Invalid token - log out user
-        toast.error("Session expired. Please log in again.");
-
-        // Clear token and user data
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-
-        // Redirect to login page
-        navigate("/login");
-      } else {
-        toast.error("Failed to fetch transaction history. Please try again.");
-      }
-    } finally {
-      setLoading(false); // Hide loader when done (success or fail)
-    }
-  };
-
-  const [rotating, setRotating] = useState(false); // Track rotation state
-
-  const handleMouseEnter = () => {
-    setRotating(true); // Start rotation on hover
-  };
-
-  const handleMouseLeave = () => {
-    setRotating(false); // Reset rotation when hover ends
-  };
-
   // Calculate total credit and debit amounts
   const calculateTotals = () => {
     const totalCredit = transactions
@@ -344,14 +269,120 @@ const HistoryPage = () => {
   };
 
   const { totalCredit, totalDebit } = calculateTotals();
+  const handleDownloadTransaction = () => {
+    const formatDate = (dateStr) => {
+      if (!dateStr) return "-";
+      const date = new Date(dateStr);
+      return `${String(date.getDate()).padStart(2, "0")}-${String(
+        date.getMonth() + 1
+      ).padStart(2, "0")}-${date.getFullYear()}`;
+    };
+
+    const formatTime = (timeStr) => {
+      if (!timeStr) return "-";
+      if (/^\d{2}:\d{2}$/.test(timeStr)) return timeStr;
+      const date = new Date(timeStr);
+      return `${String(date.getHours()).padStart(2, "0")}:${String(
+        date.getMinutes()
+      ).padStart(2, "0")}`;
+    };
+    const itemsPerPage = 20;
+    const pages = [];
+
+    for (let i = 0; i < transactions.length; i += itemsPerPage) {
+      const chunk = transactions.slice(i, i + itemsPerPage);
+      pages.push(chunk);
+    }
+    // Generate the full HTML with multiple pages
+    const pagesHTML = pages
+      .map((pageData, pageIndex) => {
+        const startIndex = pageIndex * itemsPerPage;
+        return `
+        <div class="page">
+          <h2 style="color: #004080;">Moneylog Transaction History Report</h2>
+          <h3> <span style="color: #004080;">${name}</span></h3>
+          <table>
+            <thead>
+              <tr>
+                <th>SN.</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Amount</th>
+                <th>Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${pageData
+                .map(
+                  (item, index) => `
+                <tr>
+                  <td>${startIndex + index + 1}.</td>
+                  <td>${formatDate(item.date)}</td>
+                  <td>${formatTime(item.time)}</td>
+                  <td>${item.amount || "-"}</td>
+                  <td style="color: ${
+                    item.type?.toLowerCase() === "credit" ? "red" : "green"
+                  };">
+                    ${item.type || "-"}
+                  </td>
+                </tr>
+              `
+                )
+                .join("")}
+            </tbody>
+          </table>
+        </div>
+        <div style="page-break-after: always;"></div>
+      `;
+      })
+      .join("");
+
+    const tableHTML = `
+      <html>
+        <head>
+          <title>Moneylog Transaction History</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 20px; margin: 0; }
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+            th, td { border: 1px solid #004080; padding: 8px; text-align: center; }
+            th { background-color: #004080; color: white; }
+            .page { page-break-after: always; }
+            /* Remove page-break-after on last page */
+            .page:last-child { page-break-after: auto; }
+          </style>
+        </head>
+        <body>
+          ${pagesHTML}
+        </body>
+      </html>
+    `;
+
+    const blob = new Blob([tableHTML], { type: "text/html" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "Moneylog Transaction_History.html";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+  const isSortEnabled = () => {
+    if (!paginatedTransactions || paginatedTransactions.length <= 1)
+      return false;
+
+    // Extract all unique dates in string format
+    const uniqueDates = new Set(
+      paginatedTransactions.map((tx) => new Date(tx.date).toLocaleDateString())
+    );
+
+    // Enable only if more than one unique date exists
+    return uniqueDates.size > 1;
+  };
+
   return (
     <div style={{ padding: 10 }} className="page">
-      {" "}
       <Toast />
-      {/* Display total credit and debit amounts */}
       <Box
         sx={{
-          m: 2,
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
@@ -359,24 +390,42 @@ const HistoryPage = () => {
           gap: 2,
         }}
       >
-        {/* Left Part - Back Button & Name */}
-        <Stack direction="row" alignItems="center" spacing={2} flexWrap="wrap">
-          <Button variant="outlined" size="small" onClick={() => navigate(-1)}>
-            Back
-          </Button>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          flexWrap="wrap"
+          spacing={1}
+          sx={{ width: "100%" }}
+        >
           <Typography
-            variant={{ xs: "h6", sm: "h5", md: "h5" }}
+            variant="h6"
             sx={{
               fontWeight: "bold",
               color: "#004080",
               textTransform: "uppercase",
+              fontSize: { xs: "14px", sm: "18px", md: "20px" },
             }}
           >
             {name}'s
-          </Typography>
+          </Typography>{" "}
+          {!showForm && (
+            <ColorButton
+              variant="outlined"
+              size="small"
+              onClick={() => navigate(-1)}
+              style={{
+                height: 36,
+                minWidth: 100,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              Back
+            </ColorButton>
+          )}
         </Stack>
-
-        {/* Right Part - TC & TD */}
         <Stack direction="row" alignItems="center" spacing={1} flexWrap="wrap">
           <Typography
             variant={{ xs: "body2", sm: "body1" }}
@@ -504,33 +553,44 @@ const HistoryPage = () => {
               gap: 12,
             }}
           >
-            <FormControl size="small" style={{ minWidth: 120, flex: 1 }}>
+            <FormControl size="small" style={{ minWidth: 90 }}>
               <InputLabel>Filter</InputLabel>
               <Select
                 value={filterType}
                 onChange={handleFilterChange}
                 label="Filter"
                 fullWidth
+                style={{
+                  marginBottom: 16,
+                  height: "100%", // Ensures same height for the buttons
+                  minWidth: 100, // Set a minimum width for consistency
+                  display: "flex", // Ensure it's flexed to match the height of other elements
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
               >
                 <MenuItem value="all">All</MenuItem>
                 <MenuItem value="credit">Receive</MenuItem>
                 <MenuItem value="debit">Send</MenuItem>
               </Select>
             </FormControl>
-            <Button
-              variant="outlined"
+            <ColorButton
+              variant="contained"
+              color="primary"
               onClick={toggleSort}
               style={{
                 marginBottom: 16,
-                height: "100%", // Same height as the above button
-                minWidth: 200, // Consistent width
-                display: "flex", // Ensures proper height alignment
+                height: "100%",
+                minWidth: 100,
+                display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
               }}
+              disabled={!isSortEnabled()}
             >
               Sort by {sortRecent ? "Oldest" : "Recent"}
-            </Button>
+            </ColorButton>
+
             <ColorButton
               variant="contained"
               color="primary"
@@ -549,7 +609,6 @@ const HistoryPage = () => {
             </ColorButton>
             <ColorButton
               variant="contained"
-              onClick={() => refreshTransactions()}
               style={{
                 marginBottom: 16,
                 height: "100%",
@@ -558,16 +617,9 @@ const HistoryPage = () => {
                 justifyContent: "center",
                 alignItems: "center",
               }}
+              onClick={handleDownloadTransaction}
             >
-              <MdRefresh
-                size={25}
-                style={{
-                  transition: "transform 1s ease", // Slower transition for the rotation
-                  transform: rotating ? "rotate(90deg)" : "rotate(0deg)", // Apply rotation on hover
-                }}
-                onMouseEnter={handleMouseEnter} // Start rotation on hover
-                onMouseLeave={handleMouseLeave} // Reset rotation when hover ends
-              />
+              Download
             </ColorButton>
           </div>
 
@@ -581,7 +633,8 @@ const HistoryPage = () => {
                       align={column.align}
                       style={{
                         minWidth: column.minWidth,
-                        backgroundColor: "skyblue",
+                        backgroundColor: "#004080",
+                        color: "white",
                       }}
                     >
                       {column.label}
@@ -590,39 +643,70 @@ const HistoryPage = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {paginatedTransactions.reverse().map((transaction, i) => (
-                  <TableRow
-                    hover
-                    key={transaction._id}
-                    onClick={() => handleRowClick(transaction)}
-                  >
-                    {" "}
-                    <TableCell align="left">{i + 1}.</TableCell>
-                    <TableCell align="left">
-                      {new Date(transaction.date).toLocaleDateString()}
-                    </TableCell>
-                    <TableCell align="left">{transaction.time}</TableCell>
-                    <TableCell
-                      align="right"
-                      style={{
-                        color: transaction.type === "credit" ? "red" : "green",
-                      }}
-                    >
-                      {transaction.amount}
-                    </TableCell>
-                    <TableCell
-                      align="right"
-                      style={{
-                        color: transaction.type === "credit" ? "red" : "green",
-                      }}
-                    >
-                      {transaction.type === "credit" ? "recive " : "send"}
+                {paginatedTransactions && paginatedTransactions.length > 0 ? (
+                  paginatedTransactions
+                    .slice()
+                    .reverse()
+                    .map((transaction, i) => (
+                      <TableRow
+                        hover
+                        key={transaction._id}
+                        onClick={() => handleRowClick(transaction)}
+                      >
+                        <TableCell align="left">{i + 1}.</TableCell>
+                        <TableCell align="left">
+                          {new Date(transaction.date).toLocaleDateString()}
+                        </TableCell>
+                        <TableCell align="left">{transaction.time}</TableCell>
+                        <TableCell
+                          align="right"
+                          style={{
+                            color:
+                              transaction.type === "credit" ? "red" : "green",
+                          }}
+                        >
+                          {transaction.amount}
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          style={{
+                            color:
+                              transaction.type === "credit" ? "red" : "green",
+                          }}
+                        >
+                          {transaction.type === "credit" ? "receive" : "send"}
+                        </TableCell>
+                      </TableRow>
+                    ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={6} align="center">
+                      <div
+                        style={{
+                          width: "100%",
+                          minHeight: "200px",
+                          backgroundColor: "white",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          color: "black",
+                          fontSize: "18px",
+                          fontWeight: "bold",
+                          borderRadius: "8px",
+                          boxShadow: "0 0 10px #004080",
+                        }}
+                      >
+                        <span style={{ color: "#004080" }}>
+                          Transaction Not Found
+                        </span>
+                      </div>
                     </TableCell>
                   </TableRow>
-                ))}
+                )}
               </TableBody>
             </Table>
           </TableContainer>
+
           <TablePagination
             component="div"
             count={sortedTransactions.length}
@@ -650,7 +734,7 @@ const HistoryPage = () => {
             </IconButton>
           </div>
           {selectedTransaction && (
-            <Box mt={2}>
+            <Box mt={2} style={{ color: "#004080" }}>
               {/* Transaction Details */}
               <Typography>
                 <strong>Date:</strong>{" "}
