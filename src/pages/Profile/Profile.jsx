@@ -159,7 +159,7 @@ const Profile = () => {
         // Optional: logout user, clear localStorage, redirect to login
         localStorage.removeItem("token");
         localStorage.removeItem("user");
-        // navigate('/login');
+        navigate("/login");
       } else {
         toast.error(result.message || "Failed to deactivate account.");
       }
