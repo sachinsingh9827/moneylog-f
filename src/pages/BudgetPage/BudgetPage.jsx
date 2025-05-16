@@ -19,6 +19,7 @@ import {
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import Footer from "../Footer/Footer";
+import Banner from "../../components/Banner";
 
 const BudgetPage = () => {
   const [userType, setUserType] = useState("");
@@ -157,6 +158,11 @@ const BudgetPage = () => {
 
   return (
     <div className="image">
+      {" "}
+      <Banner
+        heading="Welcome to Budget Planner"
+        description="Plan smart and save more every month"
+      />
       <div style={{ padding: "20px" }}>
         <Container
           maxWidth="lg"
