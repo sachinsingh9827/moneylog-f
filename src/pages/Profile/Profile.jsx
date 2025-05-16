@@ -132,6 +132,44 @@ const Profile = () => {
       setLoading(false);
     }
   };
+  const handleDeactivate = async () => {
+    setLoading(true);
+
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      toast.error("You are not logged in. Please log in again.");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const res = await fetch(`${BASE_URL}/moneylog/users/deactivate`, {
+        method: "PATCH", // PATCH as per your route
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const result = await res.json();
+
+      if (res.ok) {
+        toast.success(result.message || "Account deactivated successfully.");
+        // Optional: logout user, clear localStorage, redirect to login
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        // navigate('/login');
+      } else {
+        toast.error(result.message || "Failed to deactivate account.");
+      }
+    } catch (err) {
+      console.error("Deactivate error:", err);
+      toast.error("Something went wrong while deactivating the account!");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (!userData) {
     return (
