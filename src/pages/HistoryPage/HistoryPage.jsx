@@ -32,7 +32,7 @@ import Loader from "../../components/Loader";
 import Toast, { showToast } from "../../components/Toast";
 import { toast } from "react-toastify";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-
+import * as Yup from "yup";
 const BASE_URL = "https://moneylog-sachin-singhs-projects-df648d93.vercel.app";
 
 const columns = [
@@ -159,6 +159,15 @@ const HistoryPage = () => {
     setOpenModal(true);
   };
 
+  const transactionSchema = Yup.object().shape({
+    date: Yup.string().required("Date is required"),
+    time: Yup.string().required("Time is required"),
+    amount: Yup.number()
+      .typeError("Amount must be a number")
+      .required("Amount is required"),
+    type: Yup.string().required("Transaction type is required"),
+  });
+
   const handleFilterChange = (event) => {
     setFilterType(event.target.value);
     setPage(0);
@@ -173,6 +182,16 @@ const HistoryPage = () => {
 
     if (!token) {
       showToast("You are not logged in. Please log in again.", "error");
+      return;
+    }
+
+    if (
+      !newTransaction.date ||
+      !newTransaction.time ||
+      !newTransaction.amount ||
+      !newTransaction.type
+    ) {
+      showToast("Please fill all the fields before submitting.", "error");
       return;
     }
 
@@ -213,9 +232,7 @@ const HistoryPage = () => {
     } catch (error) {
       console.error("Error adding new transaction:", error);
       if (error.response && error.response.status === 401) {
-        // Invalid token - log out user
         showToast("Session expired. Please log in again.", "error");
-        // Clear token and user data
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         navigate("/login");
@@ -494,32 +511,39 @@ const HistoryPage = () => {
             </ColorButton>
           )}
         </Stack>
-        <Stack direction="row" alignItems="center" spacing={1} flexWrap="wrap">
-          <Typography
-            variant={{ xs: "body2", sm: "body1" }}
-            sx={{ color: "#004080", fontWeight: 500 }}
+        {!showForm && (
+          <Stack
+            direction="row"
+            alignItems="center"
+            spacing={1}
+            flexWrap="wrap"
           >
-            TC:
-          </Typography>
-          <Typography
-            variant={{ xs: "body2", sm: "body1" }}
-            sx={{ color: "red", fontWeight: "bold" }}
-          >
-            ₹ {totalCredit.toFixed(2)}
-          </Typography>
-          <Typography
-            variant={{ xs: "body2", sm: "body1" }}
-            sx={{ color: "#004080", fontWeight: 500, ml: 2 }}
-          >
-            TD:
-          </Typography>
-          <Typography
-            variant={{ xs: "body2", sm: "body1" }}
-            sx={{ color: "green", fontWeight: "bold" }}
-          >
-            ₹ {totalDebit.toFixed(2)}
-          </Typography>
-        </Stack>
+            <Typography
+              variant={{ xs: "body2", sm: "body1" }}
+              sx={{ color: "#004080", fontWeight: 500 }}
+            >
+              TC:
+            </Typography>
+            <Typography
+              variant={{ xs: "body2", sm: "body1" }}
+              sx={{ color: "red", fontWeight: "bold" }}
+            >
+              ₹ {totalCredit.toFixed(2)}
+            </Typography>
+            <Typography
+              variant={{ xs: "body2", sm: "body1" }}
+              sx={{ color: "#004080", fontWeight: 500, ml: 2 }}
+            >
+              TD:
+            </Typography>
+            <Typography
+              variant={{ xs: "body2", sm: "body1" }}
+              sx={{ color: "green", fontWeight: "bold" }}
+            >
+              ₹ {totalDebit.toFixed(2)}
+            </Typography>
+          </Stack>
+        )}
       </Box>
       {loading && <Loader />}
       {showForm && (
@@ -592,21 +616,32 @@ const HistoryPage = () => {
             </Select>
           </FormControl>
 
-          <div style={{ marginTop: 16 }}>
-            <Button
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginTop: "1.5rem",
+              gap: "8px",
+              flexWrap: "wrap",
+            }}
+          >
+            <Button variant="outlined" onClick={() => setShowForm(false)}>
+              Cancel
+            </Button>
+            <ColorButton
               variant="contained"
-              color="primary"
+              size="small"
+              style={{
+                height: 36,
+                minWidth: 100,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
               onClick={handleSubmitTransaction}
             >
               Submit
-            </Button>
-            <Button
-              variant="outlined"
-              onClick={() => setShowForm(false)}
-              style={{ marginLeft: 8 }}
-            >
-              Cancel
-            </Button>
+            </ColorButton>
           </div>
         </div>
       )}
