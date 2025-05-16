@@ -129,10 +129,10 @@ const DemoTransactionPage = () => {
 
       {/* Phone Body */}
       <Paper
-        elevation={6}
+        elevation={8}
         sx={{
           flex: { xs: "1 1 350px", md: "0 0 350px" },
-          height: { xs: "500px", md: "600px" },
+          height: { xs: "550px", md: "600px" },
           borderRadius: "40px",
           overflow: "hidden",
           position: "relative",
@@ -142,7 +142,6 @@ const DemoTransactionPage = () => {
           border: "8px solid black",
           mx: "auto",
           maxWidth: "100%",
-          transform: "rotate(10deg)", // rotate by 10 degrees, change value as needed
         }}
       >
         {/* Speaker */}
