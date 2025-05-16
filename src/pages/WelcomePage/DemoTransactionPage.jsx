@@ -17,6 +17,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import DownloadIcon from "@mui/icons-material/Download";
 import ShareIcon from "@mui/icons-material/Share";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import PanoramaFishEyeIcon from "@mui/icons-material/PanoramaFishEye";
 import "./WelcomePage.css";
 
 const transactions = [
@@ -307,14 +308,9 @@ const DemoTransactionPage = () => {
           <IconButton size="small">
             <ArrowBackIosNewIcon fontSize="small" />
           </IconButton>
-          <Box
-            sx={{
-              width: "24px",
-              height: "24px",
-              backgroundColor: "#000",
-              borderRadius: "50%",
-            }}
-          ></Box>
+          <IconButton>
+            <PanoramaFishEyeIcon fontSize="small" />
+          </IconButton>
           <IconButton size="small">
             <MenuIcon fontSize="small" />
           </IconButton>
