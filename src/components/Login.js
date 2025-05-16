@@ -185,7 +185,7 @@ export default function SlotsSignIn() {
             "Your email or password is incorrect.",
           "error"
         );
-      } else if (error.response && error.response.status === 423) {
+      } else if (error.response && error.response.status === 403) {
         showToast(
           error.response.data?.message ||
             "Your account has been deactivated. Please contact support.",
